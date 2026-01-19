@@ -1,0 +1,245 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --feely-green: #22c55e;
+  --feely-dark: #0a0a0a;
+  --feely-light: #fafafa;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--feely-dark);
+  color: var(--feely-light);
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--feely-green);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #16a34a;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #22c55e 0%, #10b981 50%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animated gradient background */
+.gradient-bg {
+  background: linear-gradient(-45deg, #0a0a0a, #14532d, #0a0a0a, #134e4a);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Glow effect */
+.glow {
+  box-shadow: 0 0 60px rgba(34, 197, 94, 0.3);
+}
+
+.glow-sm {
+  box-shadow: 0 0 30px rgba(34, 197, 94, 0.2);
+}
+
+/* Glass morphism */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Animated border */
+.animated-border {
+  position: relative;
+}
+
+.animated-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(135deg, #22c55e, #10b981, #06b6d4, #22c55e);
+  background-size: 300% 300%;
+  animation: borderGradient 4s ease infinite;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+@keyframes borderGradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Floating animation */
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+/* Pulse glow */
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.6); }
+}
+
+/* Grid pattern background */
+.grid-pattern {
+  background-image:
+    linear-gradient(rgba(34, 197, 94, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 197, 94, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Noise texture overlay */
+.noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* Button hover effects */
+.btn-primary {
+  @apply relative overflow-hidden bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold py-4 px-8 rounded-full transition-all duration-300;
+}
+
+.btn-primary:hover {
+  @apply shadow-lg shadow-green-500/30 scale-105;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+.btn-secondary {
+  @apply relative border-2 border-green-500 text-green-500 font-semibold py-4 px-8 rounded-full transition-all duration-300;
+}
+
+.btn-secondary:hover {
+  @apply bg-green-500 text-white shadow-lg shadow-green-500/30;
+}
+
+/* Card hover effects */
+.card-hover {
+  @apply transition-all duration-500;
+}
+
+.card-hover:hover {
+  @apply -translate-y-2 shadow-2xl shadow-green-500/10;
+}
+
+/* Section transitions */
+.section-fade {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.section-fade.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Feature icon animation */
+.feature-icon {
+  @apply transition-all duration-300;
+}
+
+.feature-icon:hover {
+  @apply scale-110 rotate-3;
+}
+
+/* Legal pages styling */
+.legal-content h2 {
+  @apply text-2xl font-bold text-white mt-8 mb-4;
+}
+
+.legal-content h3 {
+  @apply text-xl font-semibold text-green-400 mt-6 mb-3;
+}
+
+.legal-content p {
+  @apply text-gray-300 mb-4 leading-relaxed;
+}
+
+.legal-content ul {
+  @apply list-disc list-inside text-gray-300 mb-4 space-y-2;
+}
+
+.legal-content a {
+  @apply text-green-400 hover:text-green-300 underline;
+}
+
+/* Responsive typography */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem !important;
+  }
+}
