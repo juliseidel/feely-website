@@ -7,14 +7,12 @@ const footerLinks = {
   produkt: [
     { name: 'Features', href: '#features' },
     { name: 'Für Nutzer', href: '#nutzer' },
-    { name: 'Für Anbieter', href: '#anbieter' },
     { name: 'Premium', href: '#download' },
     { name: 'Download', href: '#download' },
   ],
-  unternehmen: [
-    { name: 'Über uns', href: '#' },
-    { name: 'Karriere', href: '#' },
-    { name: 'Presse', href: '#' },
+  partner: [
+    { name: 'Für Supermärkte', href: '/partner/supermaerkte' },
+    { name: 'Für Hofläden', href: '/partner/hoflaeden' },
     { name: 'Investoren', href: '/investoren' },
     { name: 'Kontakt', href: '#kontakt' },
   ],
@@ -22,13 +20,10 @@ const footerLinks = {
     { name: 'AGB', href: '/agb' },
     { name: 'Datenschutz', href: '/datenschutz' },
     { name: 'Impressum', href: '/impressum' },
-    { name: 'Cookie-Einstellungen', href: '#' },
   ],
   support: [
-    { name: 'Hilfe-Center', href: '#' },
+    { name: 'E-Mail', href: 'mailto:hello@feelyapp.de' },
     { name: 'FAQ', href: '#' },
-    { name: 'Community', href: '#' },
-    { name: 'Status', href: '#' },
   ],
 }
 
@@ -90,9 +85,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-white font-semibold mb-4">Unternehmen</h4>
+            <h4 className="text-white font-semibold mb-4">Partner werden</h4>
             <ul className="space-y-3">
-              {footerLinks.unternehmen.map((link) => (
+              {footerLinks.partner.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}

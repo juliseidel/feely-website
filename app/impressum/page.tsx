@@ -47,54 +47,30 @@ export default function Impressum() {
             <div className="legal-content space-y-8">
               <section>
                 <h2>Angaben gemäß § 5 TMG</h2>
-                <p>
-                  <strong>FEELY GmbH</strong><br />
-                  Musterstraße 123<br />
-                  12345 Musterstadt<br />
-                  Deutschland
-                </p>
-              </section>
-
-              <section>
-                <h2>Vertreten durch</h2>
-                <p>
-                  Geschäftsführer: [Name des Geschäftsführers]
-                </p>
+                <div className="glass rounded-xl p-6 mt-4">
+                  <p>
+                    <strong className="text-white">Julian Seidel</strong><br />
+                    Kirchweg 3<br />
+                    73485 Unterschneidheim<br />
+                    Deutschland
+                  </p>
+                </div>
               </section>
 
               <section>
                 <h2>Kontakt</h2>
                 <p>
-                  Telefon: +49 123 456 789<br />
-                  E-Mail: hello@feely.app<br />
-                  Website: www.feely.app
-                </p>
-              </section>
-
-              <section>
-                <h2>Registereintrag</h2>
-                <p>
-                  Eintragung im Handelsregister<br />
-                  Registergericht: Amtsgericht Musterstadt<br />
-                  Registernummer: HRB 12345
-                </p>
-              </section>
-
-              <section>
-                <h2>Umsatzsteuer-ID</h2>
-                <p>
-                  Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br />
-                  DE 123 456 789
+                  E-Mail: <a href="mailto:hello@feelyapp.de">hello@feelyapp.de</a><br />
+                  Website: <a href="https://feelyapp.info">www.feelyapp.info</a>
                 </p>
               </section>
 
               <section>
                 <h2>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h2>
                 <p>
-                  [Name des Verantwortlichen]<br />
-                  FEELY GmbH<br />
-                  Musterstraße 123<br />
-                  12345 Musterstadt
+                  Julian Seidel<br />
+                  Kirchweg 3<br />
+                  73485 Unterschneidheim
                 </p>
               </section>
 
@@ -149,19 +125,21 @@ export default function Impressum() {
               </section>
 
               <section>
-                <h2>Quellenangaben für verwendete Bilder und Grafiken</h2>
+                <h2>Quellenangaben</h2>
                 <p>
                   Icons: Lucide Icons (MIT License)<br />
                   Schriftart: Inter (OFL License)
                 </p>
               </section>
+            </div>
 
-              <section className="glass rounded-2xl p-8 mt-12">
-                <h3 className="text-green-400 mb-4">Hinweis</h3>
-                <p className="text-gray-400 text-sm">
-                  Dieses Impressum ist ein Muster und muss vor der Veröffentlichung mit den korrekten Unternehmensdaten ergänzt werden. Bitte konsultieren Sie einen Rechtsanwalt für die rechtssichere Gestaltung Ihres Impressums.
-                </p>
-              </section>
+            <div className="mt-12 pt-8 border-t border-white/10">
+              <p className="text-gray-500 text-sm">
+                <strong>Letzte Aktualisierung:</strong> Januar 2026
+              </p>
+              <p className="text-gray-600 text-sm mt-2">
+                © 2026 FEELY - Gesund Einkaufen. Alle Rechte vorbehalten.
+              </p>
             </div>
           </motion.div>
         </div>
