@@ -1,10 +1,28 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, Sparkles, ShoppingCart, Heart, Store, Leaf } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
+
+const screenshots = [
+  { src: '/images/screenshot-home.png', alt: 'FEELY Home Screen' },
+  { src: '/images/screenshot-products.png', alt: 'Produktübersicht mit Gesundheitsinfos' },
+  { src: '/images/screenshot-allergies.png', alt: 'Allergen-Warnung' },
+  { src: '/images/screenshot-onboarding.png', alt: 'FEELY Onboarding' },
+]
 
 export default function Hero() {
+  const [currentScreenshot, setCurrentScreenshot] = useState(0)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentScreenshot((prev) => (prev + 1) % screenshots.length)
+    }, 3000)
+    return () => clearInterval(timer)
+  }, [])
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden gradient-bg">
       {/* Animated background elements */}
@@ -128,7 +146,7 @@ export default function Hero() {
           ))}
         </motion.div>
 
-        {/* Phone mockup placeholder */}
+        {/* Phone mockup with real screenshots */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -138,57 +156,45 @@ export default function Hero() {
           <div className="relative mx-auto w-72 md:w-80">
             {/* Phone frame */}
             <div className="relative bg-gradient-to-b from-gray-800 to-gray-900 rounded-[3rem] p-3 shadow-2xl glow">
-              <div className="bg-black rounded-[2.5rem] overflow-hidden aspect-[9/19]">
-                {/* Screen content */}
-                <div className="h-full bg-gradient-to-b from-green-900/20 to-black p-6 flex flex-col">
-                  {/* Status bar */}
-                  <div className="flex justify-between items-center text-white/60 text-xs mb-6">
-                    <span>9:41</span>
-                    <div className="flex gap-1">
-                      <div className="w-4 h-2 bg-white/60 rounded-sm" />
-                    </div>
-                  </div>
-
-                  {/* App header */}
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-emerald-600 rounded-xl flex items-center justify-center">
-                      <Leaf className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="text-white font-bold">FEELY</h3>
-                      <p className="text-gray-400 text-xs">Guten Morgen!</p>
-                    </div>
-                  </div>
-
-                  {/* Quick actions */}
-                  <div className="grid grid-cols-2 gap-3 mb-6">
-                    {['Supermärkte', 'Hofläden', 'Angebote', 'Scanner'].map((action) => (
-                      <div key={action} className="bg-white/5 rounded-xl p-3 text-center">
-                        <div className="w-8 h-8 bg-green-500/20 rounded-lg mx-auto mb-2" />
-                        <span className="text-xs text-gray-300">{action}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Product card */}
-                  <div className="bg-white/5 rounded-2xl p-4 mt-auto">
-                    <div className="flex gap-3">
-                      <div className="w-16 h-16 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-xl" />
-                      <div className="flex-1">
-                        <p className="text-white font-medium text-sm">Bio Apfel</p>
-                        <p className="text-green-400 text-xs">Hofladen Müller</p>
-                        <div className="flex items-center gap-1 mt-2">
-                          <Heart className="w-3 h-3 text-green-400" />
-                          <span className="text-xs text-gray-400">Für dich geeignet</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div className="bg-black rounded-[2.5rem] overflow-hidden aspect-[9/19.5]">
+                {/* Screenshot slideshow */}
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentScreenshot}
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -50 }}
+                    transition={{ duration: 0.5 }}
+                    className="relative w-full h-full"
+                  >
+                    <Image
+                      src={screenshots[currentScreenshot].src}
+                      alt={screenshots[currentScreenshot].alt}
+                      fill
+                      className="object-cover object-top"
+                      priority
+                    />
+                  </motion.div>
+                </AnimatePresence>
               </div>
 
               {/* Notch */}
               <div className="absolute top-6 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full" />
+            </div>
+
+            {/* Slideshow indicators */}
+            <div className="flex justify-center gap-2 mt-4">
+              {screenshots.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentScreenshot(index)}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    index === currentScreenshot
+                      ? 'bg-green-400 w-6'
+                      : 'bg-white/30 hover:bg-white/50'
+                  }`}
+                />
+              ))}
             </div>
 
             {/* Glow effect */}

@@ -54,12 +54,12 @@ export default function Datenschutz() {
                   Verantwortlich für die Datenverarbeitung auf dieser Website und in der FEELY-App ist:
                 </p>
                 <p>
-                  FEELY GmbH<br />
-                  Musterstraße 123<br />
-                  12345 Musterstadt<br />
+                  Julian Seidel<br />
+                  Kirchweg 3<br />
+                  73485 Unterschneidheim<br />
                   Deutschland<br /><br />
-                  E-Mail: datenschutz@feely.app<br />
-                  Telefon: +49 123 456 789
+                  E-Mail: hello@feelyapp.de<br />
+                  Telefon: +49 176 68263213
                 </p>
               </section>
 
@@ -167,7 +167,7 @@ export default function Datenschutz() {
                   <li><strong>Widerruf der Einwilligung:</strong> Erteilte Einwilligungen können Sie jederzeit widerrufen</li>
                 </ul>
                 <p>
-                  Zur Ausübung Ihrer Rechte kontaktieren Sie uns unter: datenschutz@feely.app
+                  Zur Ausübung Ihrer Rechte kontaktieren Sie uns unter: hello@feelyapp.de
                 </p>
               </section>
 
@@ -211,8 +211,9 @@ export default function Datenschutz() {
                   Bei Fragen zum Datenschutz kontaktieren Sie uns:
                 </p>
                 <p>
-                  E-Mail: datenschutz@feely.app<br />
-                  Telefon: +49 123 456 789
+                  Julian Seidel<br />
+                  E-Mail: hello@feelyapp.de<br />
+                  Telefon: +49 176 68263213
                 </p>
                 <p>
                   Sie haben außerdem das Recht, sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren.

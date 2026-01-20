@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import { Menu, X, Leaf } from 'lucide-react'
+import Image from 'next/image'
+import { Menu, X } from 'lucide-react'
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
@@ -38,10 +39,14 @@ export default function Navigation() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group">
           <div className="relative">
-            <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-emerald-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <Leaf className="w-6 h-6 text-white" />
-            </div>
-            <div className="absolute inset-0 bg-green-500 rounded-xl blur-lg opacity-30 group-hover:opacity-50 transition-opacity" />
+            <Image
+              src="/images/logo.png"
+              alt="FEELY Logo"
+              width={40}
+              height={40}
+              className="group-hover:scale-110 transition-transform duration-300"
+            />
+            <div className="absolute inset-0 bg-green-500 rounded-xl blur-lg opacity-20 group-hover:opacity-40 transition-opacity" />
           </div>
           <span className="text-2xl font-bold gradient-text">FEELY</span>
         </Link>

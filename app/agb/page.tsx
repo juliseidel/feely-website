@@ -54,10 +54,12 @@ export default function AGB() {
                   Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für die Nutzung der FEELY-App und der Website feely.app (nachfolgend "Plattform"), betrieben von:
                 </p>
                 <p>
-                  FEELY GmbH<br />
-                  Musterstraße 123<br />
-                  12345 Musterstadt<br />
-                  Deutschland
+                  Julian Seidel<br />
+                  Kirchweg 3<br />
+                  73485 Unterschneidheim<br />
+                  Deutschland<br /><br />
+                  E-Mail: hello@feelyapp.de<br />
+                  Telefon: +49 176 68263213
                 </p>
                 <p>
                   Die AGB gelten für alle Nutzer der Plattform, sowohl Konsumenten (Endnutzer) als auch Anbieter (Supermärkte, Hofläden).
@@ -252,9 +254,9 @@ export default function AGB() {
                   Bei Fragen zu diesen AGB kontaktieren Sie uns:
                 </p>
                 <p>
-                  FEELY GmbH<br />
-                  E-Mail: legal@feely.app<br />
-                  Telefon: +49 123 456 789
+                  Julian Seidel<br />
+                  E-Mail: hello@feelyapp.de<br />
+                  Telefon: +49 176 68263213
                 </p>
               </section>
             </div>
