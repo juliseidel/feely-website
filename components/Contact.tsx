@@ -80,19 +80,19 @@ export default function Contact() {
                 {
                   icon: Mail,
                   label: 'E-Mail',
-                  value: 'hello@feely.app',
-                  href: 'mailto:hello@feely.app',
+                  value: 'hello@feelyapp.de',
+                  href: 'mailto:hello@feelyapp.de',
                 },
                 {
                   icon: Phone,
                   label: 'Telefon',
-                  value: '+49 123 456 789',
-                  href: 'tel:+49123456789',
+                  value: '+49 17668263213',
+                  href: 'tel:+4917668263213',
                 },
                 {
                   icon: MapPin,
                   label: 'Standort',
-                  value: 'Deutschland',
+                  value: 'Unterschneidheim, Deutschland',
                   href: null,
                 },
               ].map((item) => (
@@ -118,13 +118,18 @@ export default function Contact() {
             <div className="pt-8 border-t border-white/10">
               <h4 className="text-lg font-semibold text-white mb-4">Schnellzugriff</h4>
               <div className="flex flex-wrap gap-3">
-                {['Für Supermärkte', 'Für Hofläden', 'Für Investoren', 'Presse'].map((link) => (
+                {[
+                  { name: 'Für Supermärkte', href: '/partner/supermaerkte' },
+                  { name: 'Für Hofläden', href: '/partner/hoflaeden' },
+                  { name: 'Für Investoren', href: '/investoren' },
+                  { name: 'Für Anbieter', href: '/anbieter' },
+                ].map((link) => (
                   <a
-                    key={link}
-                    href="#"
+                    key={link.name}
+                    href={link.href}
                     className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-gray-300 hover:bg-white/10 hover:text-white transition-all text-sm"
                   >
-                    {link}
+                    {link.name}
                   </a>
                 ))}
               </div>

@@ -21,7 +21,7 @@ export default function Navigation() {
   const navItems = [
     { name: 'Features', href: '#features' },
     { name: 'Für Nutzer', href: '#nutzer' },
-    { name: 'Für Anbieter', href: '#anbieter' },
+    { name: 'Für Anbieter', href: '/anbieter' },
     { name: 'Investoren', href: '/investoren' },
     { name: 'Kontakt', href: '#kontakt' },
   ]

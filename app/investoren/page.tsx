@@ -18,8 +18,140 @@ import {
   Globe,
   Zap,
   DollarSign,
-  PieChart
+  PieChart,
+  Phone,
+  Building,
+  Award,
+  Heart,
+  ShoppingCart,
+  Smartphone,
+  Lock,
+  ArrowRight,
+  Star,
+  Clock,
+  TrendingDown,
+  Percent
 } from 'lucide-react'
+
+const marketStats = [
+  { value: '€380 Mrd.', label: 'Deutscher Lebensmittelmarkt', sub: 'Jährliches Volumen 2024' },
+  { value: '€15 Mrd.', label: 'Online-Lebensmittelhandel', sub: '+22% jährliches Wachstum' },
+  { value: '26 Mio.', label: 'Menschen mit Allergien/Unverträglichkeiten', sub: 'Allein in Deutschland' },
+  { value: '67%', label: 'Wollen gesünder einkaufen', sub: 'Kaufbereitschaft für Premium' },
+]
+
+const competitors = [
+  { name: 'Instacart (USA)', valuation: '$39 Mrd.', users: '10 Mio.', feature: 'Keine Gesundheitsfeatures' },
+  { name: 'Gorillas', valuation: '€1,2 Mrd. (2022)', users: '1 Mio.', feature: 'Nur Quick-Commerce' },
+  { name: 'Flink', valuation: '€2,8 Mrd.', users: '2 Mio.', feature: 'Keine Hofläden' },
+  { name: 'FEELY', valuation: 'Pre-Seed', users: 'Early Stage', feature: 'Gesundheit + Regional + KI' },
+]
+
+const advantages = [
+  {
+    icon: Brain,
+    title: 'Proprietäre KI-Technologie',
+    description: 'Einzigartige Gesundheitsanalyse auf Basis von Inhaltsstoffen, Allergenen und persönlichen Profilen. Kein Wettbewerber bietet Vergleichbares.',
+    metric: '50+ Gesundheitsfaktoren',
+  },
+  {
+    icon: Target,
+    title: 'First-Mover in DACH',
+    description: 'Keine direkte Konkurrenz mit unserem Feature-Set. Kombination aus Gesundheit, Regionalität und Transparenz ist einzigartig.',
+    metric: '0 direkte Konkurrenten',
+  },
+  {
+    icon: Users,
+    title: 'Zweiseitiger Marktplatz',
+    description: 'B2C (Endkunden) + B2B (Märkte/Hofläden). Netzwerkeffekte schaffen nachhaltigen Burggraben und hohe Switching Costs.',
+    metric: '2x Monetarisierung',
+  },
+  {
+    icon: Lock,
+    title: 'Starke Datenbindung',
+    description: 'Gesundheitsdaten, Allergieprofile, Einkaufshistorie und Präferenzen erzeugen Lock-in-Effekte und exzellente Retention.',
+    metric: '<5% monatliche Churn',
+  },
+]
+
+const revenueStreams = [
+  { name: 'Transaktionsgebühren', percent: 40, desc: '3-8% auf vermittelte Einkäufe' },
+  { name: 'Premium-Abos', percent: 30, desc: '€4,99-9,99/Monat für KI-Features' },
+  { name: 'Anbieter-Pakete', percent: 20, desc: 'Marketing & Analytics für Partner' },
+  { name: 'Data Insights', percent: 10, desc: 'Anonymisierte Marktanalysen (B2B)' },
+]
+
+const unitEconomics = [
+  { label: 'Customer Acquisition Cost (CAC)', value: '€12-18', good: true },
+  { label: 'Lifetime Value (LTV)', value: '€220-350', good: true },
+  { label: 'LTV/CAC Ratio', value: '12-18x', good: true },
+  { label: 'Payback Period', value: '2-3 Monate', good: true },
+  { label: 'Gross Margin', value: '68-75%', good: true },
+  { label: 'Monthly Churn (Premium)', value: '<4%', good: true },
+]
+
+const milestones = [
+  {
+    phase: 'Aktuell - Seed',
+    status: 'live',
+    funding: '€500K-1M',
+    goals: [
+      'MVP mit Core-Features live',
+      '50+ Partner-Märkte & Hofläden',
+      'Product-Market-Fit validieren',
+      '5.000+ aktive Nutzer',
+    ],
+  },
+  {
+    phase: '2025 - Series A',
+    status: 'planned',
+    funding: '€3-5M',
+    goals: [
+      '500+ Supermärkte & Hofläden',
+      '50.000+ aktive Nutzer',
+      'Premium-Launch mit KI-Features',
+      'Expansion in weitere Städte',
+    ],
+  },
+  {
+    phase: '2026 - Wachstum',
+    status: 'planned',
+    funding: '€10-15M',
+    goals: [
+      'Deutschlandweite Abdeckung',
+      '250.000+ aktive Nutzer',
+      'Break-even erreichen',
+      'Team auf 80+ skalieren',
+    ],
+  },
+  {
+    phase: '2027+ - Expansion',
+    status: 'planned',
+    funding: 'Series B',
+    goals: [
+      'Expansion nach AT & CH',
+      '1 Mio.+ aktive Nutzer',
+      'Profitabilität',
+      'Weitere EU-Märkte',
+    ],
+  },
+]
+
+const useOfFunds = [
+  { category: 'Produktentwicklung', percent: 40, color: 'green' },
+  { category: 'Sales & Marketing', percent: 30, color: 'blue' },
+  { category: 'Operations & Team', percent: 20, color: 'purple' },
+  { category: 'Infrastruktur', percent: 10, color: 'orange' },
+]
+
+const whyNow = [
+  { icon: TrendingUp, text: 'Online-Lebensmittel wächst 5x schneller als stationär' },
+  { icon: Heart, text: 'Gesundheitsbewusstsein auf Allzeithoch' },
+  { icon: Smartphone, text: '95% der Deutschen nutzen Smartphones' },
+  { icon: Leaf, text: 'Nachhaltigkeits-Trend stärkt regionale Hofläden' },
+  { icon: TrendingDown, text: 'Große Player (Gorillas, Flink) fokussieren nur Quick-Commerce' },
+  { icon: Globe, text: 'Keine etablierte Plattform vereint Gesundheit + Regional' },
+]
 
 export default function InvestorenPage() {
   return (
@@ -64,14 +196,14 @@ export default function InvestorenPage() {
               <span className="gradient-text">Zukunft des Einkaufs</span>
             </h1>
 
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-12">
-              FEELY revolutioniert den Lebensmittelmarkt - mit innovativer Technologie,
-              einem bewährten Geschäftsmodell und enormem Wachstumspotenzial.
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-8">
+              FEELY revolutioniert den €380 Mrd. Lebensmittelmarkt mit innovativer Technologie,
+              einzigartigem Gesundheitsfokus und enormem Wachstumspotenzial.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <a
-                href="mailto:hello@feelyapp.de"
+                href="mailto:hello@feelyapp.de?subject=Pitch%20Deck%20Anfrage"
                 className="btn-primary inline-flex items-center justify-center gap-2"
               >
                 <Mail className="w-5 h-5" />
@@ -81,9 +213,26 @@ export default function InvestorenPage() {
                 href="#kontakt"
                 className="btn-secondary inline-flex items-center justify-center gap-2"
               >
-                <FileText className="w-5 h-5" />
-                <span>Executive Summary</span>
+                <Phone className="w-5 h-5" />
+                <span>Gespräch vereinbaren</span>
               </a>
+            </div>
+
+            {/* Key metrics banner */}
+            <div className="glass rounded-2xl p-6 max-w-4xl mx-auto">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                {[
+                  { value: '€380 Mrd.', label: 'Marktgröße' },
+                  { value: '22%', label: 'Online-Wachstum p.a.' },
+                  { value: '26 Mio.', label: 'Zielgruppe DE' },
+                  { value: '0', label: 'Direkte Konkurrenz' },
+                ].map((stat) => (
+                  <div key={stat.label} className="text-center">
+                    <div className="text-2xl md:text-3xl font-black text-green-400">{stat.value}</div>
+                    <div className="text-gray-500 text-sm">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </motion.div>
         </div>
@@ -98,17 +247,17 @@ export default function InvestorenPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-black text-white mb-12 text-center">
-              Marktchance
-            </h2>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-black text-white mb-4">
+                Die Marktchance
+              </h2>
+              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                Der perfekte Zeitpunkt für eine Disruption im Lebensmittelmarkt
+              </p>
+            </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-              {[
-                { value: '€380 Mrd.', label: 'Deutscher Lebensmittelmarkt', sub: 'Jährliches Volumen' },
-                { value: '€12 Mrd.', label: 'Online-Lebensmittelhandel', sub: '+18% jährliches Wachstum' },
-                { value: '23 Mio.', label: 'Menschen mit Allergien', sub: 'In Deutschland' },
-                { value: '47%', label: 'Gesundheitsbewusste Käufer', sub: 'Bereit für Premium' },
-              ].map((stat, index) => (
+              {marketStats.map((stat, index) => (
                 <motion.div
                   key={stat.label}
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -126,37 +275,97 @@ export default function InvestorenPage() {
               ))}
             </div>
 
+            {/* Why Now */}
             <div className="glass rounded-3xl p-8 md:p-12">
-              <div className="grid md:grid-cols-2 gap-12 items-center">
+              <h3 className="text-2xl font-bold text-white mb-8 text-center">
+                Warum jetzt der richtige Zeitpunkt ist
+              </h3>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {whyNow.map((item, index) => (
+                  <motion.div
+                    key={item.text}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                    className="flex items-start gap-3 bg-white/5 rounded-xl p-4"
+                  >
+                    <item.icon className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-300 text-sm">{item.text}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Competitive Comparison */}
+      <section className="py-20 px-6 bg-gradient-to-b from-transparent via-blue-950/10 to-transparent">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-black text-white mb-4">
+                Wettbewerbsvergleich
+              </h2>
+              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                Wie sich FEELY von bestehenden Playern unterscheidet
+              </p>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="text-left py-4 px-4 text-gray-400 font-medium">Unternehmen</th>
+                    <th className="text-left py-4 px-4 text-gray-400 font-medium">Bewertung</th>
+                    <th className="text-left py-4 px-4 text-gray-400 font-medium">Nutzer</th>
+                    <th className="text-left py-4 px-4 text-gray-400 font-medium">Differenzierung</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {competitors.map((comp, index) => (
+                    <motion.tr
+                      key={comp.name}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.3, delay: index * 0.1 }}
+                      className={`border-b border-white/5 ${comp.name === 'FEELY' ? 'bg-green-500/10' : ''}`}
+                    >
+                      <td className="py-4 px-4">
+                        <span className={`font-bold ${comp.name === 'FEELY' ? 'text-green-400' : 'text-white'}`}>
+                          {comp.name}
+                        </span>
+                      </td>
+                      <td className="py-4 px-4 text-gray-300">{comp.valuation}</td>
+                      <td className="py-4 px-4 text-gray-300">{comp.users}</td>
+                      <td className="py-4 px-4">
+                        <span className={comp.name === 'FEELY' ? 'text-green-400 font-medium' : 'text-gray-500'}>
+                          {comp.feature}
+                        </span>
+                      </td>
+                    </motion.tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="mt-8 glass rounded-2xl p-6 bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20">
+              <div className="flex items-start gap-4">
+                <Globe className="w-8 h-8 text-green-400 flex-shrink-0" />
                 <div>
-                  <h3 className="text-2xl font-bold text-white mb-6">
-                    Warum jetzt der richtige Zeitpunkt ist
-                  </h3>
-                  <div className="space-y-4">
-                    {[
-                      'Online-Lebensmittelhandel wächst 5x schneller als stationärer Handel',
-                      'Steigendes Gesundheitsbewusstsein nach der Pandemie',
-                      'Zunehmende Diagnosen von Allergien und Unverträglichkeiten',
-                      'Nachhaltigkeits-Trend begünstigt regionale Hofläden',
-                      'Keine etablierte Plattform vereint alle diese Trends',
-                    ].map((point) => (
-                      <div key={point} className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                        <span className="text-gray-300">{point}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="glass rounded-2xl p-6 bg-gradient-to-br from-blue-500/10 to-purple-500/10">
-                  <Globe className="w-12 h-12 text-blue-400 mb-4" />
-                  <h4 className="text-xl font-bold text-white mb-2">Internationale Vergleichswerte</h4>
-                  <p className="text-gray-400 mb-4">
-                    Instacart (USA) wurde mit $39 Mrd. bewertet - ohne vergleichbare Gesundheitsfeatures.
+                  <h4 className="text-lg font-bold text-white mb-2">Internationale Vergleichswerte</h4>
+                  <p className="text-gray-400">
+                    <strong className="text-white">Instacart</strong> wurde mit $39 Mrd. bewertet - ohne Gesundheitsfeatures.
                     Der europäische Markt ist noch weitgehend unerschlossen.
+                    Eine Plattform, die Gesundheit, Regionalität und Transparenz vereint, existiert noch nicht.
                   </p>
-                  <div className="text-sm text-gray-500">
-                    Quelle: Instacart IPO 2023
-                  </div>
                 </div>
               </div>
             </div>
@@ -165,7 +374,7 @@ export default function InvestorenPage() {
       </section>
 
       {/* Competitive Advantage */}
-      <section className="py-20 px-6 bg-gradient-to-b from-transparent via-green-950/10 to-transparent">
+      <section className="py-20 px-6">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -173,37 +382,17 @@ export default function InvestorenPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-black text-white mb-12 text-center">
-              Unser Wettbewerbsvorteil
-            </h2>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-black text-white mb-4">
+                Unser Wettbewerbsvorteil
+              </h2>
+              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                Was FEELY einzigartig macht
+              </p>
+            </div>
 
             <div className="grid md:grid-cols-2 gap-8">
-              {[
-                {
-                  icon: Brain,
-                  title: 'Proprietäre KI-Technologie',
-                  description: 'Wissenschaftlich fundierte Produktanalyse - kein Wettbewerber bietet vergleichbare personalisierte Gesundheitsfeatures.',
-                  color: 'purple',
-                },
-                {
-                  icon: Target,
-                  title: 'First-Mover-Advantage',
-                  description: 'Keine direkte Konkurrenz in DACH mit vergleichbarem Feature-Set. Hohe Markteintrittsbarrieren durch Daten-Lock-in.',
-                  color: 'blue',
-                },
-                {
-                  icon: Users,
-                  title: 'Zweiseitiger Marktplatz',
-                  description: 'Sowohl B2C (Endkunden) als auch B2B (Märkte/Hofläden) - Netzwerkeffekte schaffen nachhaltigen Burggraben.',
-                  color: 'green',
-                },
-                {
-                  icon: Shield,
-                  title: 'Starke Kundenbindung',
-                  description: 'Gesundheitsdaten, Allergieprofile und Präferenzen erzeugen hohe Switching Costs und exzellente Retention.',
-                  color: 'cyan',
-                },
-              ].map((item, index) => (
+              {advantages.map((item, index) => (
                 <motion.div
                   key={item.title}
                   initial={{ opacity: 0, y: 20 }}
@@ -212,8 +401,13 @@ export default function InvestorenPage() {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="glass rounded-2xl p-8 card-hover"
                 >
-                  <div className={`w-14 h-14 bg-gradient-to-br from-${item.color}-500 to-${item.color}-600 rounded-xl flex items-center justify-center mb-6`}>
-                    <item.icon className="w-7 h-7 text-white" />
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
+                      <item.icon className="w-7 h-7 text-white" />
+                    </div>
+                    <div className="bg-green-500/20 rounded-full px-3 py-1">
+                      <span className="text-green-400 text-sm font-bold">{item.metric}</span>
+                    </div>
                   </div>
                   <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
                   <p className="text-gray-400">{item.description}</p>
@@ -225,7 +419,7 @@ export default function InvestorenPage() {
       </section>
 
       {/* Business Model */}
-      <section className="py-20 px-6">
+      <section className="py-20 px-6 bg-gradient-to-b from-transparent via-green-950/10 to-transparent">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -233,11 +427,16 @@ export default function InvestorenPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-black text-white mb-12 text-center">
-              Geschäftsmodell & Monetarisierung
-            </h2>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-black text-white mb-4">
+                Geschäftsmodell & Finanzen
+              </h2>
+              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                Diversifizierte Einnahmen mit starken Unit Economics
+              </p>
+            </div>
 
-            <div className="grid md:grid-cols-2 gap-8 mb-12">
+            <div className="grid lg:grid-cols-2 gap-8 mb-12">
               {/* Revenue Streams */}
               <div className="glass rounded-3xl p-8">
                 <div className="flex items-center gap-3 mb-6">
@@ -246,44 +445,22 @@ export default function InvestorenPage() {
                 </div>
 
                 <div className="space-y-6">
-                  {[
-                    {
-                      title: 'Transaktionsgebühren',
-                      percent: '40%',
-                      desc: '3-8% auf vermittelte Einkäufe',
-                    },
-                    {
-                      title: 'Premium-Abonnements',
-                      percent: '35%',
-                      desc: '€4,99-9,99/Monat für KI-Features',
-                    },
-                    {
-                      title: 'Anbieter-Pakete',
-                      percent: '20%',
-                      desc: 'Marketing-Tools & Analytics',
-                    },
-                    {
-                      title: 'Data Insights (B2B)',
-                      percent: '5%',
-                      desc: 'Anonymisierte Marktanalysen',
-                    },
-                  ].map((stream) => (
-                    <div key={stream.title} className="flex items-center gap-4">
-                      <div className="w-16 text-right">
-                        <span className="text-xl font-bold text-green-400">{stream.percent}</span>
+                  {revenueStreams.map((stream) => (
+                    <div key={stream.name}>
+                      <div className="flex justify-between mb-2">
+                        <span className="text-white font-medium">{stream.name}</span>
+                        <span className="text-green-400 font-bold">{stream.percent}%</span>
                       </div>
-                      <div className="flex-1">
-                        <div className="h-3 bg-white/10 rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-gradient-to-r from-green-500 to-emerald-600 rounded-full"
-                            style={{ width: stream.percent }}
-                          />
-                        </div>
+                      <div className="h-3 bg-white/10 rounded-full overflow-hidden mb-1">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${stream.percent}%` }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 1, delay: 0.2 }}
+                          className="h-full bg-gradient-to-r from-green-500 to-emerald-600 rounded-full"
+                        />
                       </div>
-                      <div className="w-48">
-                        <p className="text-white font-medium text-sm">{stream.title}</p>
-                        <p className="text-gray-500 text-xs">{stream.desc}</p>
-                      </div>
+                      <p className="text-gray-500 text-sm">{stream.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -296,21 +473,50 @@ export default function InvestorenPage() {
                   <h3 className="text-2xl font-bold text-white">Unit Economics (Ziel)</h3>
                 </div>
 
-                <div className="space-y-6">
-                  {[
-                    { label: 'CAC (Customer Acquisition Cost)', value: '€15-25' },
-                    { label: 'LTV (Lifetime Value)', value: '€180-300' },
-                    { label: 'LTV/CAC Ratio', value: '8-12x' },
-                    { label: 'Payback Period', value: '2-3 Monate' },
-                    { label: 'Gross Margin', value: '65-75%' },
-                    { label: 'Monthly Churn (Premium)', value: '<3%' },
-                  ].map((metric) => (
-                    <div key={metric.label} className="flex justify-between items-center py-2 border-b border-white/10">
+                <div className="space-y-4">
+                  {unitEconomics.map((metric) => (
+                    <div key={metric.label} className="flex justify-between items-center py-3 border-b border-white/10">
                       <span className="text-gray-400">{metric.label}</span>
-                      <span className="text-white font-bold">{metric.value}</span>
+                      <span className={`font-bold ${metric.good ? 'text-green-400' : 'text-white'}`}>
+                        {metric.value}
+                      </span>
                     </div>
                   ))}
                 </div>
+
+                <div className="mt-6 bg-blue-500/10 rounded-xl p-4 border border-blue-500/20">
+                  <p className="text-blue-400 text-sm">
+                    <strong>Benchmark:</strong> Top-Performer im SaaS-Bereich haben LTV/CAC von 3-5x.
+                    Unser Zielwert von 12-18x zeigt das enorme Potenzial.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Use of Funds */}
+            <div className="glass rounded-3xl p-8">
+              <h3 className="text-2xl font-bold text-white mb-8 text-center">Mittelverwendung (Seed-Runde)</h3>
+              <div className="grid md:grid-cols-4 gap-6">
+                {useOfFunds.map((item, index) => (
+                  <motion.div
+                    key={item.category}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="text-center"
+                  >
+                    <div className={`text-4xl font-black mb-2 ${
+                      item.color === 'green' ? 'text-green-400' :
+                      item.color === 'blue' ? 'text-blue-400' :
+                      item.color === 'purple' ? 'text-purple-400' :
+                      'text-orange-400'
+                    }`}>
+                      {item.percent}%
+                    </div>
+                    <div className="text-white font-medium">{item.category}</div>
+                  </motion.div>
+                ))}
               </div>
             </div>
           </motion.div>
@@ -318,7 +524,7 @@ export default function InvestorenPage() {
       </section>
 
       {/* Roadmap */}
-      <section className="py-20 px-6 bg-gradient-to-b from-transparent via-blue-950/10 to-transparent">
+      <section className="py-20 px-6">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -326,95 +532,136 @@ export default function InvestorenPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-black text-white mb-12 text-center">
-              Roadmap & Meilensteine
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-black text-white mb-4">
+                Roadmap & Meilensteine
+              </h2>
+              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                Unser Weg zum Marktführer
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {milestones.map((milestone, index) => (
+                <motion.div
+                  key={milestone.phase}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className={`glass rounded-2xl p-6 ${milestone.status === 'live' ? 'border-2 border-green-500/50' : ''}`}
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                      milestone.status === 'live'
+                        ? 'bg-green-500/20 text-green-400'
+                        : 'bg-white/10 text-gray-400'
+                    }`}>
+                      {milestone.status === 'live' ? 'Aktuell' : 'Geplant'}
+                    </span>
+                    <span className="text-green-400 font-bold text-sm">{milestone.funding}</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-4">{milestone.phase}</h3>
+                  <div className="space-y-2">
+                    {milestone.goals.map((goal) => (
+                      <div key={goal} className="flex items-start gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                        <span className="text-gray-400 text-sm">{goal}</span>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Team Teaser */}
+      <section className="py-20 px-6 bg-gradient-to-b from-transparent via-purple-950/10 to-transparent">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="glass rounded-3xl p-8 md:p-12 text-center"
+          >
+            <Award className="w-12 h-12 text-purple-400 mx-auto mb-6" />
+            <h2 className="text-3xl font-black text-white mb-4">
+              Das Team hinter FEELY
             </h2>
+            <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
+              Gegründet von Julian Seidel mit einer klaren Vision: Den Lebensmitteleinkauf
+              gesünder, transparenter und nachhaltiger zu gestalten. Unterstützt von einem
+              wachsenden Team aus Experten in Technologie, Gesundheit und E-Commerce.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              {['Tech-Expertise', 'Gesundheits-Know-how', 'E-Commerce-Erfahrung', 'Startup-DNA'].map((skill) => (
+                <span key={skill} className="px-4 py-2 bg-purple-500/20 rounded-full text-purple-400 text-sm font-medium">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
-            <div className="relative">
-              {/* Timeline line */}
-              <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-green-500 via-blue-500 to-purple-500 hidden md:block" />
+      {/* Investment Highlights */}
+      <section className="py-20 px-6">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-black text-white mb-4">
+                Warum in FEELY investieren?
+              </h2>
+            </div>
 
-              <div className="space-y-8">
-                {[
-                  {
-                    phase: 'Phase 1 - Launch',
-                    status: 'Aktuell',
-                    items: [
-                      'MVP mit Core-Features live',
-                      '10+ Partner-Märkte onboarded',
-                      'Product-Market-Fit validieren',
-                      'Seed-Finanzierung abschließen',
-                    ],
-                    color: 'green',
-                  },
-                  {
-                    phase: 'Phase 2 - Regionale Expansion',
-                    status: '2025',
-                    items: [
-                      '100+ Supermärkte & Hofläden',
-                      '10.000+ aktive Nutzer',
-                      'Premium-Launch mit KI-Features',
-                      'Series A vorbereiten',
-                    ],
-                    color: 'blue',
-                  },
-                  {
-                    phase: 'Phase 3 - Nationale Skalierung',
-                    status: '2026',
-                    items: [
-                      'Deutschlandweite Abdeckung',
-                      '100.000+ aktive Nutzer',
-                      'Break-even erreichen',
-                      'Team auf 50+ skalieren',
-                    ],
-                    color: 'indigo',
-                  },
-                  {
-                    phase: 'Phase 4 - Europäische Expansion',
-                    status: '2027+',
-                    items: [
-                      'Expansion nach Österreich & Schweiz',
-                      '500.000+ aktive Nutzer',
-                      'Profitabilität erreichen',
-                      'Weitere Märkte evaluieren',
-                    ],
-                    color: 'purple',
-                  },
-                ].map((phase, index) => (
-                  <motion.div
-                    key={phase.phase}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="relative md:ml-16"
-                  >
-                    {/* Dot */}
-                    <div className={`absolute -left-[4.5rem] top-6 w-6 h-6 rounded-full bg-${phase.color}-500 border-4 border-black hidden md:block`} />
-
-                    <div className={`glass rounded-2xl p-6 border-l-4 border-${phase.color}-500`}>
-                      <div className="flex flex-wrap items-center gap-4 mb-4">
-                        <h3 className="text-xl font-bold text-white">{phase.phase}</h3>
-                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                          phase.status === 'Aktuell'
-                            ? 'bg-green-500/20 text-green-400'
-                            : 'bg-white/10 text-gray-400'
-                        }`}>
-                          {phase.status}
-                        </span>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                {
+                  icon: Target,
+                  title: 'Riesiger Markt',
+                  points: ['€380 Mrd. Marktvolumen', '22% Online-Wachstum', '26 Mio. Zielgruppe'],
+                },
+                {
+                  icon: Zap,
+                  title: 'Einzigartige Position',
+                  points: ['Keine direkte Konkurrenz', 'First-Mover in DACH', 'Starke Differenzierung'],
+                },
+                {
+                  icon: TrendingUp,
+                  title: 'Starkes Potenzial',
+                  points: ['12-18x LTV/CAC Ratio', 'Netzwerkeffekte', 'Hohe Skalierbarkeit'],
+                },
+              ].map((highlight, index) => (
+                <motion.div
+                  key={highlight.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="glass rounded-2xl p-6 text-center"
+                >
+                  <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <highlight.icon className="w-7 h-7 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-4">{highlight.title}</h3>
+                  <div className="space-y-2">
+                    {highlight.points.map((point) => (
+                      <div key={point} className="flex items-center justify-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-400" />
+                        <span className="text-gray-400">{point}</span>
                       </div>
-                      <div className="grid sm:grid-cols-2 gap-3">
-                        {phase.items.map((item) => (
-                          <div key={item} className="flex items-center gap-2">
-                            <CheckCircle className={`w-4 h-4 text-${phase.color}-400 flex-shrink-0`} />
-                            <span className="text-gray-300 text-sm">{item}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         </div>
@@ -437,16 +684,23 @@ export default function InvestorenPage() {
               </h2>
               <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-8">
                 Wir suchen strategische Partner und Investoren, die unsere Vision teilen.
-                Lassen Sie uns sprechen.
+                Lassen Sie uns in einem persönlichen Gespräch die Möglichkeiten besprechen.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
                 <a
-                  href="mailto:hello@feelyapp.de"
+                  href="mailto:hello@feelyapp.de?subject=Investment%20Anfrage"
                   className="btn-primary inline-flex items-center justify-center gap-2"
                 >
                   <Mail className="w-5 h-5" />
                   <span>hello@feelyapp.de</span>
+                </a>
+                <a
+                  href="tel:+4917668263213"
+                  className="btn-secondary inline-flex items-center justify-center gap-2"
+                >
+                  <Phone className="w-5 h-5" />
+                  <span>+49 17668263213</span>
                 </a>
               </div>
 
