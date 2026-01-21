@@ -27,7 +27,9 @@ export default function RootLayout({
   return (
     <html lang="de">
       <head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/images/logo.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/images/logo.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#22c55e" />
       </head>
