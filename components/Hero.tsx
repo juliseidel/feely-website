@@ -7,10 +7,16 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 const screenshots = [
-  { src: '/images/screenshot-home.png', alt: 'FEELY Home Screen' },
-  { src: '/images/screenshot-products.png', alt: 'Produktübersicht mit Gesundheitsinfos' },
-  { src: '/images/screenshot-allergies.png', alt: 'Allergen-Warnung' },
-  { src: '/images/screenshot-onboarding.png', alt: 'FEELY Onboarding' },
+  { src: '/images/screenshot-1.png', alt: 'FEELY App Screenshot 1' },
+  { src: '/images/screenshot-2.png', alt: 'FEELY App Screenshot 2' },
+  { src: '/images/screenshot-3.png', alt: 'FEELY App Screenshot 3' },
+  { src: '/images/screenshot-4.png', alt: 'FEELY App Screenshot 4' },
+  { src: '/images/screenshot-5.png', alt: 'FEELY App Screenshot 5' },
+  { src: '/images/screenshot-6.png', alt: 'FEELY App Screenshot 6' },
+  { src: '/images/screenshot-7.png', alt: 'FEELY App Screenshot 7' },
+  { src: '/images/screenshot-8.png', alt: 'FEELY App Screenshot 8' },
+  { src: '/images/screenshot-9.png', alt: 'FEELY App Screenshot 9' },
+  { src: '/images/screenshot-10.png', alt: 'FEELY App Screenshot 10' },
 ]
 
 export default function Hero() {
