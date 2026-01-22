@@ -22,8 +22,9 @@ const footerLinks = {
     { name: 'Impressum', href: '/impressum' },
   ],
   support: [
+    { name: 'Hilfe & FAQ', href: '/support' },
     { name: 'E-Mail', href: 'mailto:hello@feelyapp.de' },
-    { name: 'FAQ', href: '#' },
+    { name: 'Kontolöschung', href: '/support#konto-loeschen' },
   ],
 }
 
