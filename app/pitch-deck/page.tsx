@@ -349,9 +349,15 @@ const slides = [
     id: 24,
     type: 'advertising',
     title: 'Werbung & Promoted Products',
+    image: '/images/werbung-promoted.png',
     highlight: 'Instacart macht >$1 Mrd. mit Werbung.',
     reason: 'HIGH-INTENT AUDIENCE: Wenn jemand die FEELY App öffnet, will er KAUFEN.',
-    formats: ['Sponsored Products', 'Banner Ads', 'Push Notifications', 'Brand Stores'],
+    placements: [
+      { title: 'Sponsored Products', desc: 'Natürlich zwischen Produkten platziert' },
+      { title: 'Brand Stores', desc: 'Eigene Markenseite auf der Startseite (z.B. Nespresso)' },
+      { title: 'News & Aktionen', desc: 'Supermärkte zeigen eigene Angebote & Events' },
+      { title: 'Personalisierte Banner', desc: 'Targeting nach Gesundheitsprofil' },
+    ],
     unique: 'UNIQUE: Targeting nach Gesundheitsprofil – das kann NIEMAND sonst bieten.',
   },
   {
@@ -1928,48 +1934,84 @@ function TransactionFeesSlide({ slide }: { slide: any }) {
 function AdvertisingSlide({ slide }: { slide: any }) {
   return (
     <div className="min-h-[70vh] flex flex-col justify-center">
+      {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-center mb-12"
+        className="text-center mb-8"
       >
         <span className="text-green-400 font-bold text-lg mb-2 block">Revenue Stream #3</span>
-        <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
+        <h2 className="text-4xl md:text-5xl font-black text-white mb-3">
           {slide.title}
         </h2>
-        <p className="text-2xl font-bold text-blue-400">{slide.highlight}</p>
+        <p className="text-xl font-bold text-blue-400">{slide.highlight}</p>
       </motion.div>
 
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid lg:grid-cols-2 gap-6 items-center">
+        {/* Left: Image */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
+          initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="glass rounded-2xl p-6"
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="relative"
         >
-          <h3 className="text-xl font-bold text-white mb-4">Warum es funktioniert:</h3>
-          <p className="text-gray-400 mb-6">{slide.reason}</p>
-          <h4 className="text-white font-bold mb-3">Ad-Formate:</h4>
-          <div className="space-y-2">
-            {slide.formats.map((format: string, i: number) => (
-              <div key={i} className="flex items-center gap-3">
-                <CheckCircle className="w-5 h-5 text-green-400" />
-                <span className="text-gray-300">{format}</span>
-              </div>
-            ))}
+          <div className="relative rounded-2xl overflow-hidden">
+            <Image
+              src={slide.image}
+              alt="Werbung & Promoted Products"
+              width={600}
+              height={500}
+              className="w-full h-auto"
+            />
           </div>
         </motion.div>
 
+        {/* Right: Content */}
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
+          initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="glass rounded-2xl p-6 bg-purple-500/10 border border-purple-500/20"
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="space-y-4"
         >
-          <Star className="w-10 h-10 text-purple-400 mb-4" />
-          <h3 className="text-xl font-bold text-purple-400 mb-4">UNIQUE bei FEELY:</h3>
-          <p className="text-gray-300">{slide.unique}</p>
+          {/* Placements */}
+          <div className="grid grid-cols-2 gap-3">
+            {slide.placements.map((placement: any, i: number) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
+                className="glass rounded-xl p-4 border border-white/10 hover:border-green-500/30 transition-all"
+              >
+                <h4 className="text-white font-bold text-sm mb-1">{placement.title}</h4>
+                <p className="text-gray-400 text-xs">{placement.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Why it works */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.7 }}
+            className="glass rounded-xl p-4 border-l-4 border-blue-500 bg-blue-500/5"
+          >
+            <p className="text-gray-300 text-sm">{slide.reason}</p>
+          </motion.div>
+
+          {/* Unique */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.8 }}
+            className="glass rounded-xl p-4 bg-purple-500/10 border border-purple-500/20"
+          >
+            <div className="flex items-start gap-3">
+              <Star className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
+              <p className="text-purple-300 text-sm font-medium">{slide.unique}</p>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
     </div>
