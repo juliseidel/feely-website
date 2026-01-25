@@ -14,18 +14,65 @@ import {
   Loader2
 } from 'lucide-react'
 
+const subjectOptions = [
+  { value: 'general', label: 'Allgemeine Anfrage', email: 'hello@feelyapp.de' },
+  { value: 'provider', label: 'Als Anbieter registrieren', email: 'partner@feelyapp.de' },
+  { value: 'investor', label: 'Investoren-Anfrage', email: 'partner@feelyapp.de' },
+  { value: 'press', label: 'Presse & Medien', email: 'partner@feelyapp.de' },
+  { value: 'support', label: 'Support', email: 'hello@feelyapp.de' },
+]
+
 export default function Contact() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
   const [formState, setFormState] = useState<'idle' | 'submitting' | 'success'>('idle')
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: 'general',
+    message: '',
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setFormState('submitting')
-    // Simulate form submission
+
+    // Get the right email address based on subject
+    const subjectConfig = subjectOptions.find(s => s.value === formData.subject)
+    const targetEmail = subjectConfig?.email || 'hello@feelyapp.de'
+    const subjectLabel = subjectConfig?.label || 'Allgemeine Anfrage'
+
+    // Build email body
+    const emailBody = `
+Neue Kontaktanfrage von der FEELY Website
+
+Name: ${formData.name}
+E-Mail: ${formData.email}
+Betreff: ${subjectLabel}
+
+Nachricht:
+${formData.message}
+
+---
+Gesendet über feelyapp.info
+    `.trim()
+
+    // Create mailto link
+    const mailtoLink = `mailto:${targetEmail}?subject=${encodeURIComponent(subjectLabel + ' von ' + formData.name)}&body=${encodeURIComponent(emailBody)}`
+
+    // Small delay for UX
     setTimeout(() => {
+      // Open email client
+      window.location.href = mailtoLink
       setFormState('success')
-    }, 1500)
+    }, 500)
   }
 
   return (
@@ -79,9 +126,15 @@ export default function Contact() {
               {[
                 {
                   icon: Mail,
-                  label: 'E-Mail',
+                  label: 'Allgemeine Anfragen',
                   value: 'hello@feelyapp.de',
                   href: 'mailto:hello@feelyapp.de',
+                },
+                {
+                  icon: Building,
+                  label: 'Partner & Investoren',
+                  value: 'partner@feelyapp.de',
+                  href: 'mailto:partner@feelyapp.de',
                 },
                 {
                   icon: Phone,
@@ -121,7 +174,7 @@ export default function Contact() {
                 {[
                   { name: 'Für Supermärkte', href: '/partner/supermaerkte' },
                   { name: 'Für Hofläden', href: '/partner/hoflaeden' },
-                  { name: 'Für Investoren', href: '/investoren' },
+                  { name: 'Für Partner', href: '/investoren' },
                   { name: 'Für Anbieter', href: '/anbieter' },
                 ].map((link) => (
                   <a
@@ -153,11 +206,21 @@ export default function Contact() {
                     <CheckCircle className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-2xl font-bold text-white mb-3">
-                    Nachricht gesendet!
+                    E-Mail Client geöffnet!
                   </h3>
-                  <p className="text-gray-400">
-                    Vielen Dank für deine Nachricht. Wir melden uns schnellstmöglich bei dir.
+                  <p className="text-gray-400 mb-6">
+                    Bitte sende die E-Mail ab, um deine Nachricht zu übermitteln.
+                    Wir melden uns schnellstmöglich bei dir.
                   </p>
+                  <button
+                    onClick={() => {
+                      setFormState('idle')
+                      setFormData({ name: '', email: '', subject: 'general', message: '' })
+                    }}
+                    className="text-green-400 hover:text-green-300 transition-colors"
+                  >
+                    Neue Nachricht senden
+                  </button>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -168,6 +231,9 @@ export default function Contact() {
                       </label>
                       <input
                         type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
                         required
                         className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-green-500 transition-colors"
                         placeholder="Dein Name"
@@ -179,6 +245,9 @@ export default function Contact() {
                       </label>
                       <input
                         type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
                         required
                         className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-green-500 transition-colors"
                         placeholder="deine@email.de"
@@ -190,12 +259,17 @@ export default function Contact() {
                     <label className="block text-gray-300 text-sm font-medium mb-2">
                       Betreff
                     </label>
-                    <select className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-green-500 transition-colors appearance-none cursor-pointer">
-                      <option value="general" className="bg-gray-900">Allgemeine Anfrage</option>
-                      <option value="provider" className="bg-gray-900">Als Anbieter registrieren</option>
-                      <option value="investor" className="bg-gray-900">Investoren-Anfrage</option>
-                      <option value="press" className="bg-gray-900">Presse & Medien</option>
-                      <option value="support" className="bg-gray-900">Support</option>
+                    <select
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-green-500 transition-colors appearance-none cursor-pointer"
+                    >
+                      {subjectOptions.map(option => (
+                        <option key={option.value} value={option.value} className="bg-gray-900">
+                          {option.label}
+                        </option>
+                      ))}
                     </select>
                   </div>
 
@@ -204,6 +278,9 @@ export default function Contact() {
                       Nachricht
                     </label>
                     <textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
                       required
                       rows={5}
                       className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-green-500 transition-colors resize-none"

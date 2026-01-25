@@ -243,7 +243,7 @@ export default function ZugangPage() {
               href="/partner-zugang"
               className="text-green-400 hover:text-green-300 transition-colors"
             >
-              Kontaktiere uns unter hello@feely.app
+              Kontaktiere uns unter partner@feelyapp.de
             </Link>
           </motion.div>
         </motion.div>

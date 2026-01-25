@@ -63,8 +63,35 @@ export default function PartnerZugangPage() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    // Get role and source labels
+    const roleLabel = roleOptions.find(r => r.value === formData.role)?.label || formData.role
+    const sourceLabel = sourceOptions.find(s => s.value === formData.source)?.label || formData.source
+
+    // Build email body
+    const emailBody = `
+Neue Pitch Deck Anfrage
+
+Name: ${formData.name}
+E-Mail: ${formData.email}
+Unternehmen: ${formData.company || 'Nicht angegeben'}
+Rolle: ${roleLabel}
+Quelle: ${sourceLabel}
+
+Nachricht:
+${formData.message || 'Keine Nachricht'}
+
+---
+Gesendet über feelyapp.info/partner-zugang
+    `.trim()
+
+    // Create mailto link
+    const mailtoLink = `mailto:partner@feelyapp.de?subject=${encodeURIComponent('Pitch Deck Anfrage von ' + formData.name)}&body=${encodeURIComponent(emailBody)}`
+
+    // Small delay for UX
+    await new Promise(resolve => setTimeout(resolve, 500))
+
+    // Open email client
+    window.location.href = mailtoLink
 
     setIsSubmitting(false)
     setIsSubmitted(true)

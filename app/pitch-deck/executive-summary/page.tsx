@@ -277,7 +277,7 @@ export default function ExecutiveSummaryPage() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a
-                    href="mailto:hello@feely.app?subject=Investment%20Anfrage"
+                    href="mailto:partner@feelyapp.de?subject=Investment%20Anfrage"
                     className="btn-primary inline-flex items-center justify-center gap-2"
                   >
                     <Mail className="w-5 h-5" />

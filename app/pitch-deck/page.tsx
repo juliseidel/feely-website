@@ -536,8 +536,8 @@ const slides = [
     ],
     question: 'Wollen Sie dabei sein?',
     actions: [
-      { label: 'Gespräch vereinbaren', href: 'mailto:hello@feely.app?subject=Gespr%C3%A4ch%20Anfrage', primary: true },
-      { label: 'E-Mail schreiben', href: 'mailto:hello@feely.app', primary: false },
+      { label: 'Gespräch vereinbaren', href: 'mailto:partner@feelyapp.de?subject=Gespr%C3%A4ch%20Anfrage', primary: true },
+      { label: 'E-Mail schreiben', href: 'mailto:partner@feelyapp.de', primary: false },
     ],
     quote: '"Die Zukunft des Einkaufens wird personalisiert sein. Die Frage ist nicht OB, sondern WER sie baut. Wir haben angefangen. Bauen Sie mit?"',
     author: '– Juli, Gründer FEELY',
@@ -553,7 +553,7 @@ const slides = [
       { name: 'Vergleichsanalyse', href: '/pitch-deck/vergleichsanalyse', desc: 'FEELY vs. Wettbewerber' },
     ],
     contact: {
-      email: 'hello@feely.app',
+      email: 'partner@feelyapp.de',
       website: 'feelyapp.info',
     },
     disclaimer: '© 2026 FEELY – Confidential – Nur für qualifizierte Empfänger',

@@ -210,7 +210,7 @@ export default function PitchDeckLayout({
               <Link href="/impressum" className="text-gray-500 hover:text-green-400 transition-colors">
                 Impressum
               </Link>
-              <a href="mailto:hello@feely.app" className="text-gray-500 hover:text-green-400 transition-colors">
+              <a href="mailto:partner@feelyapp.de" className="text-gray-500 hover:text-green-400 transition-colors">
                 Kontakt
               </a>
             </div>
