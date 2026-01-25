@@ -205,13 +205,16 @@ const slides = [
     id: 14,
     type: 'feature-budget',
     title: 'Budget & Tracking',
+    subtitle: 'Alles im Blick – Ausgaben und Ernährung',
     budget: {
       title: 'Budget-Kontrolle',
-      features: ['Echtzeit-Übersicht aller Ausgaben', 'Monatliche Budgets setzen', 'Vergleich mit Vormonaten'],
+      image: '/images/budget-tracking.png',
+      features: ['Echtzeit-Übersicht aller Ausgaben', 'Wöchentliche & monatliche Insights', 'Kategorien & Verlauf'],
     },
     nutrition: {
       title: 'Ernährungstracker',
-      features: ['Was du isst, automatisch erfasst', 'Nährstoffverteilung', 'Vitamin & Mineralien', 'Ziel-Tracking'],
+      image: '/images/nutrition-tracking.png',
+      features: ['KI-Foto-Analyse deiner Mahlzeiten', 'Kalorien & Makros automatisch', 'Tägliche Übersicht'],
     },
   },
   {
@@ -1347,52 +1350,88 @@ function FeatureScannerSlide({ slide }: { slide: any }) {
 function FeatureBudgetSlide({ slide }: { slide: any }) {
   return (
     <div className="min-h-[70vh] flex flex-col justify-center">
+      {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-center mb-12"
+        className="text-center mb-8"
       >
         <span className="text-purple-400 font-bold text-lg mb-2 block">Feature Deep Dive</span>
-        <h2 className="text-4xl md:text-5xl font-black text-white">
+        <h2 className="text-4xl md:text-5xl font-black text-white mb-3">
           {slide.title}
         </h2>
+        <p className="text-xl text-gray-400">{slide.subtitle}</p>
       </motion.div>
 
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Budget Card */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="glass rounded-2xl p-6"
+          className="glass rounded-2xl overflow-hidden border border-white/10"
         >
-          <Wallet className="w-10 h-10 text-green-400 mb-4" />
-          <h3 className="text-xl font-bold text-white mb-4">{slide.budget.title}</h3>
-          <div className="space-y-3">
-            {slide.budget.features.map((feature: string, i: number) => (
-              <div key={i} className="flex items-center gap-3">
-                <CheckCircle className="w-5 h-5 text-green-400" />
-                <span className="text-gray-300">{feature}</span>
+          {/* Image */}
+          <div className="relative h-48 md:h-56 overflow-hidden bg-gradient-to-br from-green-900/20 to-emerald-900/20">
+            <Image
+              src={slide.budget.image}
+              alt={slide.budget.title}
+              fill
+              className="object-cover object-top"
+            />
+          </div>
+          {/* Content */}
+          <div className="p-5">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center">
+                <Wallet className="w-5 h-5 text-green-400" />
               </div>
-            ))}
+              <h3 className="text-xl font-bold text-white">{slide.budget.title}</h3>
+            </div>
+            <div className="space-y-2">
+              {slide.budget.features.map((feature: string, i: number) => (
+                <div key={i} className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">{feature}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </motion.div>
 
+        {/* Nutrition Card */}
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="glass rounded-2xl p-6"
+          className="glass rounded-2xl overflow-hidden border border-white/10"
         >
-          <BarChart3 className="w-10 h-10 text-blue-400 mb-4" />
-          <h3 className="text-xl font-bold text-white mb-4">{slide.nutrition.title}</h3>
-          <div className="space-y-3">
-            {slide.nutrition.features.map((feature: string, i: number) => (
-              <div key={i} className="flex items-center gap-3">
-                <CheckCircle className="w-5 h-5 text-blue-400" />
-                <span className="text-gray-300">{feature}</span>
+          {/* Image */}
+          <div className="relative h-48 md:h-56 overflow-hidden bg-gradient-to-br from-blue-900/20 to-cyan-900/20">
+            <Image
+              src={slide.nutrition.image}
+              alt={slide.nutrition.title}
+              fill
+              className="object-cover object-top"
+            />
+          </div>
+          {/* Content */}
+          <div className="p-5">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center">
+                <BarChart3 className="w-5 h-5 text-blue-400" />
               </div>
-            ))}
+              <h3 className="text-xl font-bold text-white">{slide.nutrition.title}</h3>
+            </div>
+            <div className="space-y-2">
+              {slide.nutrition.features.map((feature: string, i: number) => (
+                <div key={i} className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-blue-400 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">{feature}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>
