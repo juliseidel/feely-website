@@ -195,10 +195,11 @@ const slides = [
     id: 13,
     type: 'feature-scanner',
     title: 'Barcode Scanner',
+    image: '/images/barcode-scanner.png',
     scenario: 'Du stehst im Supermarkt. In der Hand ein Produkt, das du nicht kennst.',
     old: 'Früher: Zutatenliste lesen, googeln, unsicher sein, trotzdem kaufen, hoffen.',
     new: 'MIT FEELY: App öffnen, Barcode scannen, in <1 Sekunde: Komplette Analyse.',
-    features: ['Offline-Modus', 'Preisvergleich', 'Direkt in Warenkorb', 'Unbekannte Produkte melden'],
+    features: ['Sofortige Warnungen', 'Zutaten erklärt', 'Direkt in Warenkorb', 'Unbekannte Produkte melden'],
   },
   {
     id: 14,
@@ -1277,7 +1278,7 @@ function FeatureScannerSlide({ slide }: { slide: any }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-center mb-12"
+        className="text-center mb-8"
       >
         <span className="text-purple-400 font-bold text-lg mb-2 block">Feature Deep Dive</span>
         <h2 className="text-4xl md:text-5xl font-black text-white">
@@ -1285,35 +1286,57 @@ function FeatureScannerSlide({ slide }: { slide: any }) {
         </h2>
       </motion.div>
 
-      <div className="grid md:grid-cols-2 gap-8 items-center">
+      <div className="grid lg:grid-cols-2 gap-8 items-center">
+        {/* Left: Image */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
+          initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="relative"
         >
-          <p className="text-gray-400 mb-6">{slide.scenario}</p>
-          <div className="glass rounded-xl p-4 border-l-4 border-red-500 mb-4">
-            <p className="text-red-400 text-sm">{slide.old}</p>
-          </div>
-          <div className="glass rounded-xl p-4 border-l-4 border-green-500">
-            <p className="text-green-400 text-sm">{slide.new}</p>
+          <div className="relative rounded-3xl overflow-hidden">
+            <Image
+              src={slide.image}
+              alt="Barcode Scanner"
+              width={600}
+              height={500}
+              className="w-full h-auto"
+            />
           </div>
         </motion.div>
 
+        {/* Right: Content */}
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
+          initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="glass rounded-2xl p-6"
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="space-y-6"
         >
-          <Scan className="w-16 h-16 text-green-400 mx-auto mb-6" />
-          <div className="space-y-3">
-            {slide.features.map((feature: string, i: number) => (
-              <div key={i} className="flex items-center gap-3">
-                <CheckCircle className="w-5 h-5 text-green-400" />
-                <span className="text-gray-300">{feature}</span>
-              </div>
-            ))}
+          <p className="text-gray-400 text-lg">{slide.scenario}</p>
+
+          <div className="glass rounded-xl p-5 border-l-4 border-red-500 bg-red-500/5">
+            <p className="text-red-400">{slide.old}</p>
+          </div>
+
+          <div className="glass rounded-xl p-5 border-l-4 border-green-500 bg-green-500/5">
+            <p className="text-green-400 font-medium">{slide.new}</p>
+          </div>
+
+          <div className="glass rounded-xl p-5 border border-white/10">
+            <div className="grid grid-cols-2 gap-4">
+              {slide.features.map((feature: string, i: number) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.5 + i * 0.1 }}
+                  className="flex items-center gap-2"
+                >
+                  <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">{feature}</span>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>
