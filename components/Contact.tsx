@@ -22,10 +22,17 @@ const subjectOptions = [
   { value: 'support', label: 'Support', email: 'hello@feelyapp.de' },
 ]
 
+// Formsubmit.co endpoints for automatic email delivery
+const FORMSUBMIT_ENDPOINTS = {
+  partner: 'https://formsubmit.co/ajax/partner@feelyapp.de',
+  hello: 'https://formsubmit.co/ajax/hello@feelyapp.de',
+}
+
 export default function Contact() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
-  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success'>('idle')
+  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -40,39 +47,47 @@ export default function Contact() {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setFormState('submitting')
+    setErrorMessage('')
 
     // Get the right email address based on subject
     const subjectConfig = subjectOptions.find(s => s.value === formData.subject)
     const targetEmail = subjectConfig?.email || 'hello@feelyapp.de'
     const subjectLabel = subjectConfig?.label || 'Allgemeine Anfrage'
 
-    // Build email body
-    const emailBody = `
-Neue Kontaktanfrage von der FEELY Website
+    // Determine which endpoint to use
+    const endpoint = targetEmail.includes('partner')
+      ? FORMSUBMIT_ENDPOINTS.partner
+      : FORMSUBMIT_ENDPOINTS.hello
 
-Name: ${formData.name}
-E-Mail: ${formData.email}
-Betreff: ${subjectLabel}
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          _subject: `${subjectLabel} von ${formData.name}`,
+          name: formData.name,
+          email: formData.email,
+          betreff: subjectLabel,
+          nachricht: formData.message,
+          _template: 'table'
+        })
+      })
 
-Nachricht:
-${formData.message}
-
----
-Gesendet über feelyapp.info
-    `.trim()
-
-    // Create mailto link
-    const mailtoLink = `mailto:${targetEmail}?subject=${encodeURIComponent(subjectLabel + ' von ' + formData.name)}&body=${encodeURIComponent(emailBody)}`
-
-    // Small delay for UX
-    setTimeout(() => {
-      // Open email client
-      window.location.href = mailtoLink
-      setFormState('success')
-    }, 500)
+      if (response.ok) {
+        setFormState('success')
+      } else {
+        throw new Error('Fehler beim Senden')
+      }
+    } catch (err) {
+      setFormState('error')
+      setErrorMessage('Es gab einen Fehler beim Senden. Bitte versuche es erneut oder kontaktiere uns direkt.')
+    }
   }
 
   return (
@@ -206,20 +221,46 @@ Gesendet über feelyapp.info
                     <CheckCircle className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-2xl font-bold text-white mb-3">
-                    E-Mail Client geöffnet!
+                    Nachricht gesendet!
                   </h3>
                   <p className="text-gray-400 mb-6">
-                    Bitte sende die E-Mail ab, um deine Nachricht zu übermitteln.
+                    Vielen Dank für deine Nachricht!
                     Wir melden uns schnellstmöglich bei dir.
                   </p>
                   <button
                     onClick={() => {
                       setFormState('idle')
+                      setErrorMessage('')
                       setFormData({ name: '', email: '', subject: 'general', message: '' })
                     }}
                     className="text-green-400 hover:text-green-300 transition-colors"
                   >
                     Neue Nachricht senden
+                  </button>
+                </motion.div>
+              ) : formState === 'error' ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="text-center py-12"
+                >
+                  <div className="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <Mail className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-3">
+                    Fehler beim Senden
+                  </h3>
+                  <p className="text-gray-400 mb-6">
+                    {errorMessage}
+                  </p>
+                  <button
+                    onClick={() => {
+                      setFormState('idle')
+                      setErrorMessage('')
+                    }}
+                    className="text-green-400 hover:text-green-300 transition-colors"
+                  >
+                    Erneut versuchen
                   </button>
                 </motion.div>
               ) : (

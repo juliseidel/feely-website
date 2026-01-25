@@ -17,7 +17,8 @@ import {
   Globe,
   TrendingUp,
   Users,
-  Rocket
+  Rocket,
+  AlertCircle
 } from 'lucide-react'
 
 const roleOptions = [
@@ -51,6 +52,7 @@ export default function PartnerZugangPage() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [error, setError] = useState('')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({
@@ -62,39 +64,42 @@ export default function PartnerZugangPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setError('')
 
     // Get role and source labels
     const roleLabel = roleOptions.find(r => r.value === formData.role)?.label || formData.role
     const sourceLabel = sourceOptions.find(s => s.value === formData.source)?.label || formData.source
 
-    // Build email body
-    const emailBody = `
-Neue Pitch Deck Anfrage
+    try {
+      // Send to Formsubmit.co (free email service, no backend needed)
+      const response = await fetch('https://formsubmit.co/ajax/partner@feelyapp.de', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          _subject: `Pitch Deck Anfrage von ${formData.name}`,
+          name: formData.name,
+          email: formData.email,
+          company: formData.company || 'Nicht angegeben',
+          role: roleLabel,
+          source: sourceLabel,
+          message: formData.message || 'Keine Nachricht',
+          _template: 'table'
+        })
+      })
 
-Name: ${formData.name}
-E-Mail: ${formData.email}
-Unternehmen: ${formData.company || 'Nicht angegeben'}
-Rolle: ${roleLabel}
-Quelle: ${sourceLabel}
-
-Nachricht:
-${formData.message || 'Keine Nachricht'}
-
----
-Gesendet über feelyapp.info/partner-zugang
-    `.trim()
-
-    // Create mailto link
-    const mailtoLink = `mailto:partner@feelyapp.de?subject=${encodeURIComponent('Pitch Deck Anfrage von ' + formData.name)}&body=${encodeURIComponent(emailBody)}`
-
-    // Small delay for UX
-    await new Promise(resolve => setTimeout(resolve, 500))
-
-    // Open email client
-    window.location.href = mailtoLink
-
-    setIsSubmitting(false)
-    setIsSubmitted(true)
+      if (response.ok) {
+        setIsSubmitted(true)
+      } else {
+        throw new Error('Fehler beim Senden')
+      }
+    } catch (err) {
+      setError('Es gab einen Fehler beim Senden. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt unter partner@feelyapp.de')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (isSubmitted) {
@@ -224,6 +229,14 @@ Gesendet über feelyapp.info/partner-zugang
             className="glass rounded-3xl p-8 md:p-12"
           >
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Error Message */}
+              {error && (
+                <div className="flex items-center gap-3 bg-red-500/10 border border-red-500/20 rounded-xl p-4">
+                  <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0" />
+                  <p className="text-red-400 text-sm">{error}</p>
+                </div>
+              )}
+
               {/* Name */}
               <div>
                 <label htmlFor="name" className="block text-white font-medium mb-2">
