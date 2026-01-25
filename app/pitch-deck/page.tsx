@@ -164,17 +164,32 @@ const slides = [
   {
     id: 12,
     type: 'feature-deep-dive',
-    title: 'Personalisierte Gesundheitsanalyse',
-    before: {
-      title: 'OHNE FEELY',
-      content: '"Haferflocken, Honig, Nüsse, Rosinen..." – Enthält das Gluten? Welche Nüsse genau? Passt das zu meiner Diät?',
+    title: 'KI-Gesundheitsanalyse',
+    subtitle: 'Personalisiert auf deine Ziele & Gesundheit',
+    image: '/images/ai-analyse.png',
+    keyFeatures: [
+      {
+        icon: 'Target',
+        title: 'Ziel-Analyse',
+        desc: 'Muskelaufbau, Abnehmen, Energie – wie passt das Produkt zu deinen Zielen?',
+      },
+      {
+        icon: 'Heart',
+        title: 'Gesundheits-Check',
+        desc: 'Akne, Diabetes, Bluthochdruck – individuelle Bewertung für deine Situation',
+      },
+      {
+        icon: 'AlertTriangle',
+        title: 'Allergien & Unverträglichkeiten',
+        desc: 'Gluten, Laktose, Nüsse – sofortige Warnungen bei kritischen Inhaltsstoffen',
+      },
+    ],
+    scoreExample: {
+      score: 23,
+      label: 'Nicht geeignet',
+      reason: 'Hoher Zuckergehalt kontraproduktiv für Muskelaufbau. Kann Akne verschlechtern.',
     },
-    after: {
-      title: 'MIT FEELY',
-      warnings: ['Enthält: Haselnüsse, Mandeln', 'Enthält: Hafer (Gluten)'],
-      score: 'Gesundheitsscore: 4/10 für dein Profil',
-    },
-    premium: 'Premium-Analyse: Detaillierte Auswirkungen auf deine Ziele, alternative Produktvorschläge, wissenschaftliche Grundlagen.',
+    premium: 'Premium: Wissenschaftliche Erklärungen, alternative Produktvorschläge, detaillierte Nährstoffanalyse.',
   },
   {
     id: 13,
@@ -1111,59 +1126,146 @@ function ForProvidersSlide({ slide }: { slide: any }) {
 }
 
 function FeatureDeepDiveSlide({ slide }: { slide: any }) {
+  const iconMap: { [key: string]: any } = { Target, Heart, AlertTriangle, Brain }
+
   return (
     <div className="min-h-[70vh] flex flex-col justify-center">
+      {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-center mb-12"
+        className="text-center mb-8"
       >
         <span className="text-purple-400 font-bold text-lg mb-2 block">Feature Deep Dive</span>
-        <h2 className="text-4xl md:text-5xl font-black text-white">
+        <h2 className="text-4xl md:text-5xl font-black text-white mb-3">
           {slide.title}
         </h2>
+        <p className="text-xl text-gray-400">{slide.subtitle}</p>
       </motion.div>
 
-      <div className="grid md:grid-cols-2 gap-8 mb-8">
+      <div className="grid lg:grid-cols-2 gap-8 items-center">
+        {/* Left: Image */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
+          initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="glass rounded-2xl p-6 border border-red-500/20"
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="relative"
         >
-          <h3 className="text-red-400 font-bold mb-4">{slide.before.title}</h3>
-          <p className="text-gray-400">{slide.before.content}</p>
+          <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-purple-900/30 to-green-900/30 border border-white/10">
+            <Image
+              src={slide.image}
+              alt="KI-Gesundheitsanalyse"
+              width={600}
+              height={500}
+              className="w-full h-auto"
+            />
+            {/* Glow effect */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          </div>
+
+          {/* Score Badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            className="absolute -bottom-4 -right-4 md:bottom-4 md:right-4"
+          >
+            <div className="glass rounded-2xl p-4 border border-red-500/30 bg-black/80">
+              <div className="flex items-center gap-3">
+                <div className="relative w-16 h-16">
+                  <svg className="w-16 h-16 transform -rotate-90">
+                    <circle
+                      cx="32"
+                      cy="32"
+                      r="28"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                      fill="none"
+                      className="text-gray-700"
+                    />
+                    <circle
+                      cx="32"
+                      cy="32"
+                      r="28"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                      fill="none"
+                      strokeDasharray={`${(slide.scoreExample.score / 100) * 176} 176`}
+                      className="text-red-500"
+                    />
+                  </svg>
+                  <span className="absolute inset-0 flex items-center justify-center text-xl font-black text-red-400">
+                    {slide.scoreExample.score}
+                  </span>
+                </div>
+                <div>
+                  <p className="text-red-400 font-bold text-sm">{slide.scoreExample.label}</p>
+                  <p className="text-gray-500 text-xs">von 100</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </motion.div>
 
+        {/* Right: Features */}
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
+          initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="glass rounded-2xl p-6 border border-green-500/20"
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="space-y-4"
         >
-          <h3 className="text-green-400 font-bold mb-4">{slide.after.title}</h3>
-          <div className="space-y-2 mb-4">
-            {slide.after.warnings.map((warning: string, i: number) => (
-              <div key={i} className="flex items-center gap-2 text-yellow-400">
-                <AlertTriangle className="w-4 h-4" />
-                <span className="text-sm">{warning}</span>
-              </div>
-            ))}
-          </div>
-          <p className="text-green-400 font-medium">{slide.after.score}</p>
+          {slide.keyFeatures.map((feature: any, i: number) => {
+            const Icon = iconMap[feature.icon] || Target
+            return (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
+                className="glass rounded-xl p-5 border border-white/10 hover:border-green-500/30 transition-all duration-300"
+              >
+                <div className="flex items-start gap-4">
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                    i === 0 ? 'bg-green-500/20 text-green-400' :
+                    i === 1 ? 'bg-red-500/20 text-red-400' :
+                    'bg-yellow-500/20 text-yellow-400'
+                  }`}>
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-white font-bold mb-1">{feature.title}</h4>
+                    <p className="text-gray-400 text-sm">{feature.desc}</p>
+                  </div>
+                </div>
+              </motion.div>
+            )
+          })}
+
+          {/* Score Explanation */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.7 }}
+            className="glass rounded-xl p-4 border-l-4 border-red-500 bg-red-500/5"
+          >
+            <p className="text-gray-300 text-sm italic">
+              "{slide.scoreExample.reason}"
+            </p>
+          </motion.div>
+
+          {/* Premium Note */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.8 }}
+            className="flex items-center gap-2 text-purple-400 text-sm"
+          >
+            <Star className="w-4 h-4" />
+            <span>{slide.premium}</span>
+          </motion.div>
         </motion.div>
       </div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.5 }}
-        className="glass rounded-2xl p-6 bg-purple-500/10 border border-purple-500/20"
-      >
-        <h4 className="text-purple-400 font-bold mb-2">Premium Analyse</h4>
-        <p className="text-gray-400">{slide.premium}</p>
-      </motion.div>
     </div>
   )
 }
