@@ -16,8 +16,8 @@ import {
 
 const CODE_LENGTH = 8
 
-// Demo access code - in production this would be validated against a backend
-const VALID_CODES = ['FEELY2026', 'INVESTOR', 'PITCHDEK']
+// Zugangscode für den Pitch Deck Bereich
+const VALID_CODES = ['F10EE8LY']
 
 export default function ZugangPage() {
   const router = useRouter()
