@@ -448,7 +448,18 @@ const slides = [
         title: 'Consumer App',
         subtitle: 'Für jeden Einkäufer',
         description: 'Die App die Lebensmitteleinkauf revolutioniert – einfacher, schneller und gesünder.',
-        video: '/images/app-demo-video.mp4',
+        screenshots: [
+          '/images/screenshot-1.png',
+          '/images/screenshot-2.png',
+          '/images/screenshot-3.png',
+          '/images/screenshot-4.png',
+          '/images/screenshot-5.png',
+          '/images/screenshot-6.png',
+          '/images/screenshot-7.png',
+          '/images/screenshot-8.png',
+          '/images/screenshot-9.png',
+          '/images/screenshot-10.png',
+        ],
         features: [
           'KI-Gesundheitsanalyse in Echtzeit',
           'Alle Supermärkte & Hofläden',
@@ -2402,7 +2413,18 @@ function TractionSlide({ slide }: { slide: any }) {
 }
 
 function EcosystemSlide({ slide }: { slide: any }) {
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false)
+  const [currentScreenshot, setCurrentScreenshot] = useState(0)
+  const consumerApp = slide.pillars[0]
+  const businessPortals = slide.pillars.slice(1)
+
+  // Auto-advance screenshots
+  useEffect(() => {
+    if (!consumerApp.screenshots) return
+    const timer = setInterval(() => {
+      setCurrentScreenshot((prev) => (prev + 1) % consumerApp.screenshots.length)
+    }, 2500)
+    return () => clearInterval(timer)
+  }, [consumerApp.screenshots])
 
   return (
     <div className="py-4">
@@ -2411,7 +2433,7 @@ function EcosystemSlide({ slide }: { slide: any }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-center mb-8"
+        className="text-center mb-6"
       >
         <span className="text-green-400 font-bold text-lg mb-2 block">Status</span>
         <h2 className="text-3xl md:text-5xl font-black text-white mb-3">
@@ -2421,80 +2443,145 @@ function EcosystemSlide({ slide }: { slide: any }) {
         <p className="text-gray-500 max-w-3xl mx-auto text-sm">{slide.intro}</p>
       </motion.div>
 
-      {/* Three Pillars */}
-      <div className="grid lg:grid-cols-3 gap-5 mb-8">
-        {slide.pillars.map((pillar: any, index: number) => (
-          <motion.div
-            key={pillar.title}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.15 }}
-            className="glass rounded-2xl overflow-hidden border border-white/10"
-          >
-            {/* Media */}
-            {pillar.video ? (
-              <div className="relative h-[280px] bg-gradient-to-b from-gray-900 to-black flex items-center justify-center">
-                {!isVideoPlaying ? (
-                  <div
-                    className="relative h-full aspect-[9/16] cursor-pointer group"
-                    onClick={() => setIsVideoPlaying(true)}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg" />
-                    <video
-                      src={pillar.video}
-                      className="h-full w-full object-contain rounded-lg"
-                      muted
-                      playsInline
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-14 h-14 bg-green-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
-                        <Play className="w-7 h-7 text-white ml-1" />
-                      </div>
-                    </div>
-                    <span className="absolute bottom-3 left-1/2 -translate-x-1/2 text-white text-xs font-medium bg-black/50 px-3 py-1 rounded-full">App Demo</span>
-                  </div>
-                ) : (
-                  <video
-                    src={pillar.video}
-                    autoPlay
-                    controls
-                    className="h-full aspect-[9/16] object-contain rounded-lg"
-                  />
-                )}
-              </div>
-            ) : (
-              <div className="relative aspect-video">
-                <Image
-                  src={pillar.image}
-                  alt={pillar.title}
-                  fill
-                  className="object-cover object-top"
-                />
-              </div>
-            )}
-
-            {/* Content */}
-            <div className="p-5">
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="text-lg font-bold text-white">{pillar.title}</h3>
-                <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs font-medium rounded-full">
-                  {pillar.status}
-                </span>
-              </div>
-              <p className="text-green-400 text-sm mb-2">{pillar.subtitle}</p>
-              <p className="text-gray-400 text-sm mb-4">{pillar.description}</p>
-
-              <div className="space-y-2">
-                {pillar.features.map((feature: string, i: number) => (
-                  <div key={i} className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
-                    <span className="text-gray-300">{feature}</span>
-                  </div>
-                ))}
-              </div>
+      {/* Main Layout: App in center, Dashboards on sides */}
+      <div className="grid lg:grid-cols-12 gap-4 mb-6">
+        {/* Left Dashboard - Hofläden */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="lg:col-span-4 glass rounded-2xl overflow-hidden border border-white/10"
+        >
+          <div className="relative aspect-[4/3]">
+            <Image
+              src={businessPortals[0].image}
+              alt={businessPortals[0].title}
+              fill
+              className="object-cover object-top"
+            />
+          </div>
+          <div className="p-4">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-base font-bold text-white">{businessPortals[0].title}</h3>
+              <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs font-medium rounded-full">
+                {businessPortals[0].status}
+              </span>
             </div>
-          </motion.div>
-        ))}
+            <p className="text-green-400 text-xs mb-2">{businessPortals[0].subtitle}</p>
+            <p className="text-gray-400 text-xs mb-3">{businessPortals[0].description}</p>
+            <div className="space-y-1">
+              {businessPortals[0].features.slice(0, 3).map((feature: string, i: number) => (
+                <div key={i} className="flex items-center gap-2 text-xs">
+                  <CheckCircle className="w-3 h-3 text-green-500 flex-shrink-0" />
+                  <span className="text-gray-300">{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Center - Consumer App with Screenshot Slideshow */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="lg:col-span-4 glass rounded-2xl overflow-hidden border border-green-500/30 bg-gradient-to-b from-green-500/5 to-transparent"
+        >
+          {/* Screenshot Slideshow */}
+          <div className="relative h-[320px] bg-gradient-to-b from-gray-900 to-black flex items-center justify-center overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentScreenshot}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.4 }}
+                className="relative h-full w-auto"
+              >
+                <Image
+                  src={consumerApp.screenshots[currentScreenshot]}
+                  alt={`App Screenshot ${currentScreenshot + 1}`}
+                  width={180}
+                  height={320}
+                  className="h-full w-auto object-contain mx-auto"
+                />
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Slide Indicators */}
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1">
+              {consumerApp.screenshots.map((_: any, i: number) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentScreenshot(i)}
+                  className={`w-2 h-2 rounded-full transition-all ${
+                    i === currentScreenshot ? 'bg-green-400 w-4' : 'bg-white/30'
+                  }`}
+                />
+              ))}
+            </div>
+
+            {/* Screenshot Counter */}
+            <span className="absolute top-3 right-3 text-white text-xs font-medium bg-black/50 px-2 py-1 rounded-full">
+              {currentScreenshot + 1} / {consumerApp.screenshots.length}
+            </span>
+          </div>
+
+          {/* Content */}
+          <div className="p-4">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-lg font-bold text-white">{consumerApp.title}</h3>
+              <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs font-medium rounded-full">
+                {consumerApp.status}
+              </span>
+            </div>
+            <p className="text-green-400 text-sm mb-2">{consumerApp.subtitle}</p>
+            <p className="text-gray-400 text-xs mb-3">{consumerApp.description}</p>
+            <div className="grid grid-cols-2 gap-2">
+              {consumerApp.features.map((feature: string, i: number) => (
+                <div key={i} className="flex items-center gap-2 text-xs">
+                  <CheckCircle className="w-3 h-3 text-green-500 flex-shrink-0" />
+                  <span className="text-gray-300">{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Right Dashboard - Supermärkte */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="lg:col-span-4 glass rounded-2xl overflow-hidden border border-white/10"
+        >
+          <div className="relative aspect-[4/3]">
+            <Image
+              src={businessPortals[1].image}
+              alt={businessPortals[1].title}
+              fill
+              className="object-cover object-top"
+            />
+          </div>
+          <div className="p-4">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-base font-bold text-white">{businessPortals[1].title}</h3>
+              <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs font-medium rounded-full">
+                {businessPortals[1].status}
+              </span>
+            </div>
+            <p className="text-green-400 text-xs mb-2">{businessPortals[1].subtitle}</p>
+            <p className="text-gray-400 text-xs mb-3">{businessPortals[1].description}</p>
+            <div className="space-y-1">
+              {businessPortals[1].features.slice(0, 3).map((feature: string, i: number) => (
+                <div key={i} className="flex items-center gap-2 text-xs">
+                  <CheckCircle className="w-3 h-3 text-green-500 flex-shrink-0" />
+                  <span className="text-gray-300">{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </div>
 
       {/* Conclusion */}
@@ -2502,15 +2589,15 @@ function EcosystemSlide({ slide }: { slide: any }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.5 }}
-        className="glass rounded-2xl p-6 border border-green-500/20"
+        className="glass rounded-2xl p-5 border border-green-500/20"
       >
-        <h4 className="text-green-400 font-bold text-lg mb-4 text-center">{slide.conclusion.title}</h4>
+        <h4 className="text-green-400 font-bold text-base mb-3 text-center">{slide.conclusion.title}</h4>
 
-        <div className="grid grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-3 gap-4 mb-3">
           {slide.conclusion.stats.map((stat: any, index: number) => (
             <div key={index} className="text-center">
-              <div className="text-3xl font-black text-white">{stat.value}</div>
-              <div className="text-green-400 font-medium text-sm">{stat.label}</div>
+              <div className="text-2xl font-black text-white">{stat.value}</div>
+              <div className="text-green-400 font-medium text-xs">{stat.label}</div>
               <div className="text-gray-500 text-xs">{stat.sub}</div>
             </div>
           ))}
