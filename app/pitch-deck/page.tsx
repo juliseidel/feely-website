@@ -554,6 +554,7 @@ const slides = [
     type: 'founder',
     title: 'Der Gründer',
     subtitle: 'Warum ich das baue',
+    image: '/images/founder-juli.png',
     story: 'Mein Name ist Juli. Ich bin kein Programmierer. Kein BWLer. Ich bin Student. Und ich habe diese gesamte App alleine gebaut. Weil ich das Problem jeden Tag selbst erlebe.',
     background: [
       'Essstörungen durchgemacht – heute achte ich genau auf meine Ernährung',
@@ -2618,49 +2619,67 @@ function TeamSearchSlide({ slide }: { slide: any }) {
 
 function FounderSlide({ slide }: { slide: any }) {
   return (
-    <div className="min-h-[70vh] flex flex-col justify-center">
+    <div className="py-4">
+      {/* Header with Photo */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         className="text-center mb-8"
       >
-        <h2 className="text-4xl md:text-5xl font-black text-white mb-2">
+        {/* Photo */}
+        {slide.image && (
+          <div className="mb-6">
+            <div className="relative w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-green-500/30 shadow-xl shadow-green-500/20">
+              <Image
+                src={slide.image}
+                alt="Juli - Gründer"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <p className="text-green-400 font-medium mt-3">Juli Seidel</p>
+            <p className="text-gray-500 text-sm">Gründer & Entwickler</p>
+          </div>
+        )}
+        <h2 className="text-3xl md:text-4xl font-black text-white mb-2">
           {slide.title}
         </h2>
-        <p className="text-xl text-gray-400">{slide.subtitle}</p>
+        <p className="text-lg text-gray-400">{slide.subtitle}</p>
       </motion.div>
 
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Story & Background */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="glass rounded-2xl p-6"
+          className="glass rounded-2xl p-5"
         >
-          <p className="text-gray-300 mb-6 italic">"{slide.story}"</p>
-          <h4 className="text-white font-bold mb-3">Meine Geschichte:</h4>
-          <div className="space-y-2 text-sm">
+          <p className="text-gray-300 mb-5 italic text-sm leading-relaxed">"{slide.story}"</p>
+          <h4 className="text-white font-bold mb-3 text-sm">Meine Geschichte:</h4>
+          <div className="space-y-2">
             {slide.background.map((item: string, i: number) => (
               <div key={i} className="flex items-start gap-2">
                 <Heart className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
-                <span className="text-gray-400">{item}</span>
+                <span className="text-gray-400 text-xs">{item}</span>
               </div>
             ))}
           </div>
         </motion.div>
 
+        {/* Strengths */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <h4 className="text-white font-bold mb-4">Was ich mitbringe:</h4>
-          <div className="space-y-4">
+          <h4 className="text-white font-bold mb-3 text-sm">Was ich mitbringe:</h4>
+          <div className="space-y-3">
             {slide.strengths.map((strength: any, i: number) => (
               <div key={i} className="glass rounded-xl p-4">
-                <h5 className="text-green-400 font-bold mb-1">{strength.title}</h5>
-                <p className="text-gray-400 text-sm">{strength.desc}</p>
+                <h5 className="text-green-400 font-bold mb-1 text-sm">{strength.title}</h5>
+                <p className="text-gray-400 text-xs">{strength.desc}</p>
               </div>
             ))}
           </div>
