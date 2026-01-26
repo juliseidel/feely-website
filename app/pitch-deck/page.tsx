@@ -258,15 +258,82 @@ const slides = [
   },
   {
     id: 18,
-    type: 'market-target',
-    title: 'Menschen die FEELY brauchen',
-    groups: [
-      { value: '23+ Mio.', label: 'Allergiker', source: 'RKI' },
-      { value: '15-20%', label: 'Unverträglichkeiten', source: 'DGE' },
-      { value: '7+ Mio.', label: 'Diabetiker', source: 'Deutsche Diabetes Hilfe' },
-      { value: '~50%', label: 'Wollen gesünder essen', source: 'Diverse Umfragen' },
+    type: 'health-crisis',
+    title: 'Warum Deutschland FEELY braucht',
+    subtitle: 'Eine Gesundheitskrise, die das System überfordert',
+    sections: [
+      {
+        title: 'Übergewicht & Adipositas',
+        color: 'red',
+        icon: 'AlertTriangle',
+        stats: [
+          { value: '53%', label: 'der Erwachsenen übergewichtig', source: 'Statista 2024' },
+          { value: '19,7%', label: 'adipös (BMI >30) – fast verdoppelt seit 2003', source: 'DGE 2025' },
+          { value: '>100 Mrd. $', label: 'volkswirtschaftliche Kosten/Jahr (2,8% des BIP)', source: 'World Obesity Atlas' },
+        ],
+      },
+      {
+        title: 'Ernährungsbedingte Krankheiten',
+        color: 'orange',
+        icon: 'Heart',
+        stats: [
+          { value: '17 Mrd. €', label: 'direkte Behandlungskosten/Jahr', source: 'Uni Halle-Wittenberg' },
+          { value: '95 Mrd. €', label: 'Gesamtkosten ernährungsabhängiger Krankheiten', source: 'BMELV' },
+          { value: '8,6 Mrd. €', label: 'allein durch Zuckerkonsum', source: 'Uni Halle-Wittenberg' },
+        ],
+      },
+      {
+        title: 'Diabetes-Epidemie',
+        color: 'purple',
+        icon: 'TrendingUp',
+        stats: [
+          { value: '11 Mio.', label: 'Menschen mit Diabetes in Deutschland', source: 'diabetesDE' },
+          { value: '450.000', label: 'Neuerkrankungen pro Jahr', source: 'DDG' },
+          { value: '21 Mrd. €', label: 'Behandlungskosten/Jahr', source: 'BVMed' },
+          { value: '12,3 Mio.', label: 'prognostiziert bis 2040 (+77%)', source: 'DDZ/RKI' },
+        ],
+      },
+      {
+        title: 'Herz-Kreislauf-Erkrankungen',
+        color: 'red',
+        icon: 'Heart',
+        stats: [
+          { value: '348.312', label: 'Todesfälle 2023', source: 'Destatis' },
+          { value: '~40%', label: 'aller Sterbefälle in Deutschland', source: 'RKI' },
+          { value: '#1', label: 'Häufigste Todesursache', source: 'Destatis' },
+          { value: '7,7 Mrd. €', label: 'direkte Behandlungskosten/Jahr', source: 'Uni Halle' },
+        ],
+      },
+      {
+        title: 'Bluthochdruck',
+        color: 'blue',
+        icon: 'Users',
+        stats: [
+          { value: '35 Mio.', label: 'Betroffene (44% der Bevölkerung)', source: 'Hochdruckliga' },
+          { value: '10 Mio.', label: 'wissen nichts von ihrer Erkrankung', source: 'Hochdruckliga' },
+          { value: '>80%', label: 'der über 80-Jährigen betroffen', source: 'TK' },
+        ],
+      },
+      {
+        title: 'Allergien & Unverträglichkeiten',
+        color: 'green',
+        icon: 'AlertTriangle',
+        stats: [
+          { value: '23+ Mio.', label: 'Allergiker in Deutschland', source: 'RKI' },
+          { value: '15-20%', label: 'leiden unter Nahrungsmittelunverträglichkeiten', source: 'DGE' },
+          { value: '3,6 Mrd. €', label: 'Kosten durch Karies (Zuckerkonsum)', source: 'Uni Halle' },
+        ],
+      },
     ],
-    highlight: 'Gesundheit wird zum Lifestyle. Generation Z priorisiert gesunde Ernährung.',
+    conclusion: {
+      title: 'Das Fazit',
+      points: [
+        'Das Gesundheitssystem ist überlastet – Prävention ist die einzige Lösung',
+        'Ernährung ist die Wurzel der meisten Volkskrankheiten',
+        'FEELY macht gesunde Ernährung einfach und zugänglich für jeden',
+      ],
+      highlight: 'Jeder Euro in Prävention spart 4-7 Euro in Behandlungskosten.',
+    },
   },
   {
     id: 19,
@@ -786,6 +853,8 @@ function renderSlide(slide: typeof slides[0]) {
       return <MarketInfrastructureSlide slide={slide} />
     case 'market-target':
       return <MarketTargetSlide slide={slide} />
+    case 'health-crisis':
+      return <HealthCrisisSlide slide={slide} />
     case 'instacart-proof':
       return <InstacartProofSlide slide={slide} />
     case 'competition':
@@ -1633,6 +1702,114 @@ function MarketTargetSlide({ slide }: { slide: any }) {
       >
         <div className="glass rounded-2xl p-6 inline-block">
           <p className="text-gray-300">{slide.highlight}</p>
+        </div>
+      </motion.div>
+    </div>
+  )
+}
+
+function HealthCrisisSlide({ slide }: { slide: any }) {
+  const colorMap: Record<string, string> = {
+    red: 'from-red-500 to-red-600',
+    orange: 'from-orange-500 to-orange-600',
+    purple: 'from-purple-500 to-purple-600',
+    blue: 'from-blue-500 to-blue-600',
+    green: 'from-green-500 to-green-600',
+  }
+
+  const textColorMap: Record<string, string> = {
+    red: 'text-red-400',
+    orange: 'text-orange-400',
+    purple: 'text-purple-400',
+    blue: 'text-blue-400',
+    green: 'text-green-400',
+  }
+
+  const bgColorMap: Record<string, string> = {
+    red: 'bg-red-500/10 border-red-500/20',
+    orange: 'bg-orange-500/10 border-orange-500/20',
+    purple: 'bg-purple-500/10 border-purple-500/20',
+    blue: 'bg-blue-500/10 border-blue-500/20',
+    green: 'bg-green-500/10 border-green-500/20',
+  }
+
+  return (
+    <div className="py-8">
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-10"
+      >
+        <span className="text-red-400 font-bold text-lg mb-2 block">Die Realität</span>
+        <h2 className="text-3xl md:text-5xl font-black text-white mb-3">
+          {slide.title}
+        </h2>
+        <p className="text-gray-400 text-lg max-w-3xl mx-auto">
+          {slide.subtitle}
+        </p>
+      </motion.div>
+
+      {/* Stats Grid */}
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
+        {slide.sections.map((section: any, sectionIndex: number) => (
+          <motion.div
+            key={section.title}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: sectionIndex * 0.1 }}
+            className={`rounded-2xl p-5 border ${bgColorMap[section.color]}`}
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${colorMap[section.color]} flex items-center justify-center`}>
+                {section.icon === 'AlertTriangle' && <AlertTriangle className="w-4 h-4 text-white" />}
+                {section.icon === 'Heart' && <Heart className="w-4 h-4 text-white" />}
+                {section.icon === 'TrendingUp' && <TrendingUp className="w-4 h-4 text-white" />}
+                {section.icon === 'Users' && <Users className="w-4 h-4 text-white" />}
+              </div>
+              <h3 className={`font-bold ${textColorMap[section.color]}`}>{section.title}</h3>
+            </div>
+            <div className="space-y-3">
+              {section.stats.map((stat: any, statIndex: number) => (
+                <div key={statIndex} className="flex items-start gap-3">
+                  <span className={`text-xl md:text-2xl font-black ${textColorMap[section.color]} whitespace-nowrap`}>
+                    {stat.value}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-gray-300 text-sm leading-tight">{stat.label}</p>
+                    <p className="text-gray-500 text-xs">{stat.source}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Conclusion */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.7 }}
+        className="glass rounded-2xl p-6 border border-green-500/20"
+      >
+        <h4 className="text-green-400 font-bold text-lg mb-4 flex items-center gap-2">
+          <Zap className="w-5 h-5" />
+          {slide.conclusion.title}
+        </h4>
+        <ul className="space-y-2 mb-4">
+          {slide.conclusion.points.map((point: string, index: number) => (
+            <li key={index} className="flex items-start gap-3 text-gray-300">
+              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+              <span>{point}</span>
+            </li>
+          ))}
+        </ul>
+        <div className="bg-green-500/10 rounded-xl p-4 border border-green-500/20">
+          <p className="text-green-400 font-semibold text-center">
+            {slide.conclusion.highlight}
+          </p>
         </div>
       </motion.div>
     </div>
