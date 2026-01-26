@@ -230,7 +230,7 @@ export default function VergleichsanalysePage() {
                     </td>
                     {/* REWE/EDEKA */}
                     <td className="text-center py-3 px-2">
-                      {[0, 4].includes(index) ? (
+                      {index === 4 ? (
                         <CheckCircle className="w-5 h-5 text-green-400 mx-auto" />
                       ) : (
                         <X className="w-5 h-5 text-red-400 mx-auto" />
