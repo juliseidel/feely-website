@@ -3,107 +3,87 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import {
-  TrendingUp,
-  Globe,
-  Users,
-  Building,
-  ShoppingCart,
-  ArrowRight,
-  ExternalLink,
   BarChart3,
-  Percent
+  Download,
+  TrendingUp,
+  Target,
+  Zap,
+  Users,
+  Building2,
+  ShoppingCart,
+  Activity,
+  Globe,
+  ArrowRight,
+  PieChart,
+  Lightbulb,
+  Heart
 } from 'lucide-react'
 
-const marketData = [
+const analysisparts = [
   {
-    category: 'Lebensmitteleinzelhandel Deutschland',
-    stats: [
-      { metric: 'Marktvolumen 2024', value: '€209,7 Mrd.', source: 'EHI Retail Institute' },
-      { metric: 'Prognose 2025', value: '€218,7 Mrd.', source: 'Statista' },
-      { metric: 'Prognose 2030', value: '€267 Mrd.', source: 'Statista' },
-      { metric: 'Jährliches Wachstum', value: '~3-4%', source: 'Statista' },
+    id: 'tam-sam-som',
+    icon: Target,
+    iconColor: 'text-green-400',
+    bgGradient: 'from-green-500/10 to-emerald-500/10',
+    borderColor: 'border-green-500/20',
+    headline: 'Der €209 Milliarden Markt',
+    teaser: 'Der deutsche Lebensmittelmarkt ist einer der größten weltweit. Aber wie viel davon ist für FEELY erreichbar? Diese Analyse quantifiziert den Total Addressable Market (TAM), den Serviceable Addressable Market (SAM) und den Serviceable Obtainable Market (SOM) – mit konkreten Zahlen für die ersten 5 Jahre.',
+    keyFacts: [
+      { label: 'TAM', value: '€209,7 Mrd.', sub: 'Lebensmittelumsatz Deutschland' },
+      { label: 'SAM', value: '€31,5 Mrd.', sub: 'adressierbarer Markt' },
+      { label: 'SOM Jahr 5', value: '€94 Mio.', sub: 'realistisches Ziel' },
     ],
+    pdfUrl: '/feely-marktanalyse-tam-sam-som.pdf',
+    pdfName: 'TAM-SAM-SOM Analyse'
   },
   {
-    category: 'Online-Lebensmittelhandel',
-    stats: [
-      { metric: 'Marktvolumen 2024', value: '€8,6 Mrd.', source: 'Statista' },
-      { metric: 'Prognose 2029', value: '€17 Mrd.', source: 'Statista' },
-      { metric: 'Wachstum 5 Jahre', value: '+97%', source: 'Berechnet' },
-      { metric: 'Jährliches Wachstum', value: '+11% p.a.', source: 'Mintel' },
-      { metric: 'Online-Anteil 2024', value: '~4%', source: 'McKinsey' },
-      { metric: 'Online-Anteil Prognose', value: '10%+', source: 'McKinsey' },
+    id: 'segmentierung',
+    icon: PieChart,
+    iconColor: 'text-blue-400',
+    bgGradient: 'from-blue-500/10 to-cyan-500/10',
+    borderColor: 'border-blue-500/20',
+    headline: '36.565 Filialen. 27 Kategorien. Eine Plattform.',
+    teaser: 'Wer sind die Player im deutschen Lebensmittelmarkt? Diese Analyse segmentiert den Markt nach Betriebsformen, Regionen und Kategorien. Von Edeka bis zum Hofladen, von Bayern bis Schleswig-Holstein – ein vollständiges Bild der Marktstruktur.',
+    keyFacts: [
+      { label: 'LEH-Filialen', value: '36.565', sub: 'in Deutschland' },
+      { label: 'Top 5 Händler', value: '75%', sub: 'Marktanteil' },
+      { label: 'Direktvermarkter', value: '30.000+', sub: 'Hofläden & mehr' },
     ],
+    pdfUrl: '/feely-marktanalyse-segmentierung.pdf',
+    pdfName: 'Marktsegmentierung'
   },
   {
-    category: 'Internationale Vergleiche',
-    stats: [
-      { metric: 'UK Online-Anteil', value: '12%', source: 'IGD' },
-      { metric: 'Südkorea Online-Anteil', value: '25%', source: 'Statista' },
-      { metric: 'China Online-Anteil', value: '20%+', source: 'McKinsey' },
-      { metric: 'USA Online-Anteil', value: '~10%', source: 'eMarketer' },
+    id: 'trends',
+    icon: Zap,
+    iconColor: 'text-purple-400',
+    bgGradient: 'from-purple-500/10 to-pink-500/10',
+    borderColor: 'border-purple-500/20',
+    headline: '6 Megatrends. 1 perfektes Timing.',
+    teaser: 'KI-Revolution, Personalisierung, Digital Health, Online-Lebensmittelhandel – sechs Megatrends konvergieren und schaffen ein einzigartiges Zeitfenster. Diese Analyse zeigt, warum FEELY exakt an der Schnittstelle aller relevanten Entwicklungen positioniert ist.',
+    keyFacts: [
+      { label: 'Retailer-Meinung', value: '83%', sub: 'KI ist erfolgsentscheidend' },
+      { label: 'Personalisierte Ernährung', value: '+17,2%', sub: 'CAGR bis 2034' },
+      { label: 'Online-Lebensmittel', value: '€18 Mrd.', sub: 'bis 2030' },
     ],
-  },
-]
-
-const infrastructureData = [
-  { value: '36.565', label: 'Lebensmittelgeschäfte', sub: 'in Deutschland (EHI 2024)' },
-  { value: '~10.900', label: 'Supermärkte', sub: 'bis 2.500 qm' },
-  { value: '~1.270', label: 'Große Supermärkte', sub: '2.500-5.000 qm' },
-  { value: '~16.000', label: 'Discounter', sub: 'Aldi, Lidl, Penny, etc.' },
-  { value: '20.000-25.000', label: 'Hofläden', sub: 'Bauernverband' },
-  { value: '17 Mio.', label: 'Hofladen-Käufer', sub: 'IfD Allensbach 2024' },
-]
-
-const targetGroups = [
-  {
-    group: 'Allergiker',
-    size: '23+ Mio.',
-    source: 'RKI / Bundestag',
-    description: 'Deutsche mit diagnostizierter allergischer Erkrankung',
+    pdfUrl: '/feely-marktanalyse-trends.pdf',
+    pdfName: 'Markttrends'
   },
   {
-    group: 'Allergische Erkrankungen (12 Monate)',
-    size: '30,9%',
-    source: 'RKI 2019/2020',
-    description: 'Erwachsene mit allergischer Erkrankung in den letzten 12 Monaten',
+    id: 'zielgruppen',
+    icon: Users,
+    iconColor: 'text-orange-400',
+    bgGradient: 'from-orange-500/10 to-red-500/10',
+    borderColor: 'border-orange-500/20',
+    headline: '70 Millionen potenzielle Nutzer. Ein Ökosystem.',
+    teaser: 'FEELY ist mehr als eine App – es ist ein komplettes Ökosystem. B2C für jeden Verbraucher, B2B als Plattform und Software für Märkte, B2B2C mit Krankenkassen und Gesundheitspartnern. Diese Analyse zeigt alle Stakeholder und warum die Zielgruppe im Grunde jeder ist, der Lebensmittel kauft.',
+    keyFacts: [
+      { label: 'B2C', value: '70 Mio.', sub: 'potenzielle Nutzer' },
+      { label: 'B2B', value: '96.000+', sub: 'Märkte & Händler' },
+      { label: 'B2B2C', value: '96 Kassen', sub: '& 55.000 Ärzte' },
+    ],
+    pdfUrl: '/feely-marktanalyse-zielgruppen.pdf',
+    pdfName: 'Zielgruppen & Ökosystem'
   },
-  {
-    group: 'Lebensmittelunverträglichkeiten',
-    size: '15-20%',
-    source: 'DGE',
-    description: '12-17 Millionen Menschen',
-  },
-  {
-    group: 'Diabetiker',
-    size: '7+ Mio.',
-    source: 'Deutsche Diabetes Hilfe',
-    description: 'Typ 1 und Typ 2 Diabetes',
-  },
-  {
-    group: 'Gesundheitsbewusste',
-    size: '~50%',
-    source: 'Diverse Umfragen',
-    description: 'Wollen sich gesünder ernähren',
-  },
-  {
-    group: 'Gen Z Fokus auf Gesundheit',
-    size: '45%',
-    source: 'McKinsey 2025',
-    description: 'Höchste Absicht, sich auf gesunde Ernährung zu konzentrieren',
-  },
-]
-
-const instacartData = [
-  { metric: 'Gross Transaction Value (GTV)', value: '$33,5 Mrd.', note: '2024' },
-  { metric: 'Revenue', value: '$3,38 Mrd.', note: '+11% YoY' },
-  { metric: 'Profit', value: '$457 Mio.', note: 'nach -$1,6 Mrd. Verlust 2023' },
-  { metric: 'Bestellungen', value: '294 Mio.', note: '2024' },
-  { metric: 'Aktive Nutzer', value: '14,4 Mio.', note: 'Monthly Active' },
-  { metric: 'Retail-Partner', value: '1.800+', note: 'Ketten' },
-  { metric: 'Angeschlossene Stores', value: '100.000', note: 'Filialen' },
-  { metric: 'Höchstbewertung', value: '$39 Mrd.', note: '2021' },
-  { metric: 'Aktuelle Bewertung', value: '$8,9 Mrd.', note: 'nach Marktkorrektur' },
 ]
 
 export default function MarktanalysePage() {
@@ -117,182 +97,152 @@ export default function MarktanalysePage() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-2 mb-6">
-            <BarChart3 className="w-4 h-4 text-blue-400" />
-            <span className="text-blue-400 font-medium text-sm">Detaillierte Analyse</span>
+          <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/20 rounded-full px-4 py-2 mb-6">
+            <BarChart3 className="w-4 h-4 text-green-400" />
+            <span className="text-green-400 font-medium text-sm">Vollständige Marktanalyse</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-black text-white mb-4">
             Marktanalyse
           </h1>
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            Alle Zahlen und Fakten zum deutschen Lebensmittelmarkt mit Quellenangaben
+          <p className="text-gray-400 max-w-3xl mx-auto text-lg">
+            Der deutsche Lebensmittelmarkt im Detail – mit TAM/SAM/SOM, Segmentierung, Trends und Zielgruppenanalyse. Alle Zahlen mit Quellenangaben als PDF zum Download.
           </p>
         </motion.div>
 
-        {/* Market Data Sections */}
-        <div className="space-y-12">
-          {marketData.map((section, sectionIndex) => (
+        {/* Quick Navigation */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="flex flex-wrap justify-center gap-3 mb-12"
+        >
+          {analysisparts.map((part) => (
+            <a
+              key={part.id}
+              href={`#${part.id}`}
+              className={`flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:border-white/30 transition-all text-sm text-gray-300 hover:text-white`}
+            >
+              <part.icon className={`w-4 h-4 ${part.iconColor}`} />
+              {part.id === 'tam-sam-som' ? 'TAM/SAM/SOM' : part.id === 'segmentierung' ? 'Segmentierung' : part.id === 'trends' ? 'Trends' : 'Zielgruppen'}
+            </a>
+          ))}
+        </motion.div>
+
+        {/* Analysis Parts */}
+        <div className="space-y-8">
+          {analysisparts.map((part, index) => (
             <motion.section
-              key={section.category}
+              key={part.id}
+              id={part.id}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: sectionIndex * 0.1 }}
-              className="glass rounded-3xl p-8"
+              transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
+              className={`glass rounded-3xl p-8 bg-gradient-to-br ${part.bgGradient} border ${part.borderColor}`}
             >
-              <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
-                {sectionIndex === 0 && <ShoppingCart className="w-7 h-7 text-green-400" />}
-                {sectionIndex === 1 && <TrendingUp className="w-7 h-7 text-blue-400" />}
-                {sectionIndex === 2 && <Globe className="w-7 h-7 text-purple-400" />}
-                {section.category}
-              </h2>
+              {/* Header with Icon */}
+              <div className="flex items-start justify-between mb-6">
+                <div className="flex items-center gap-4">
+                  <div className={`p-3 rounded-2xl bg-white/10`}>
+                    <part.icon className={`w-8 h-8 ${part.iconColor}`} />
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-400 mb-1">Teil {index + 1} von 4</div>
+                    <h2 className="text-2xl md:text-3xl font-black text-white">
+                      {part.headline}
+                    </h2>
+                  </div>
+                </div>
+              </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {section.stats.map((stat) => (
-                  <div key={stat.metric} className="bg-white/5 rounded-xl p-4">
-                    <div className="text-2xl font-black gradient-text mb-1">{stat.value}</div>
-                    <div className="text-white font-medium text-sm">{stat.metric}</div>
-                    <div className="text-gray-500 text-xs mt-1">Quelle: {stat.source}</div>
+              {/* Teaser Text */}
+              <p className="text-gray-300 text-lg leading-relaxed mb-8 max-w-4xl">
+                {part.teaser}
+              </p>
+
+              {/* Key Facts */}
+              <div className="grid md:grid-cols-3 gap-4 mb-8">
+                {part.keyFacts.map((fact, factIndex) => (
+                  <div
+                    key={factIndex}
+                    className="bg-black/30 backdrop-blur-sm rounded-2xl p-5 border border-white/10"
+                  >
+                    <div className="text-sm text-gray-400 mb-1">{fact.label}</div>
+                    <div className={`text-3xl font-black ${part.iconColor} mb-1`}>
+                      {fact.value}
+                    </div>
+                    <div className="text-gray-400 text-sm">{fact.sub}</div>
                   </div>
                 ))}
               </div>
+
+              {/* Download Button */}
+              <a
+                href={part.pdfUrl}
+                download
+                className={`inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 transition-all group`}
+              >
+                <Download className={`w-5 h-5 ${part.iconColor} group-hover:scale-110 transition-transform`} />
+                <div className="text-left">
+                  <div className="text-white font-semibold">{part.pdfName} herunterladen</div>
+                  <div className="text-gray-400 text-sm">Vollständige PDF-Analyse</div>
+                </div>
+              </a>
             </motion.section>
           ))}
-
-          {/* Infrastructure */}
-          <motion.section
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="glass rounded-3xl p-8"
-          >
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
-              <Building className="w-7 h-7 text-yellow-400" />
-              Infrastruktur in Deutschland
-            </h2>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {infrastructureData.map((item) => (
-                <div key={item.label} className="bg-white/5 rounded-xl p-4">
-                  <div className="text-2xl font-black text-yellow-400 mb-1">{item.value}</div>
-                  <div className="text-white font-medium text-sm">{item.label}</div>
-                  <div className="text-gray-500 text-xs mt-1">{item.sub}</div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-6 bg-green-500/10 rounded-xl p-4 border border-green-500/20">
-              <p className="text-green-400">
-                <strong>Fazit:</strong> Die Infrastruktur existiert. Die Geschäfte sind da. Die Kunden sind da.
-                Was fehlt ist die VERBINDUNG – eine Plattform die alles zusammenbringt.
-              </p>
-            </div>
-          </motion.section>
-
-          {/* Target Groups */}
-          <motion.section
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="glass rounded-3xl p-8"
-          >
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
-              <Users className="w-7 h-7 text-red-400" />
-              Zielgruppen mit besonderem Bedarf
-            </h2>
-
-            <div className="grid md:grid-cols-2 gap-4">
-              {targetGroups.map((item) => (
-                <div key={item.group} className="bg-white/5 rounded-xl p-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <div className="text-white font-bold">{item.group}</div>
-                    <div className="text-2xl font-black text-red-400">{item.size}</div>
-                  </div>
-                  <div className="text-gray-400 text-sm mb-1">{item.description}</div>
-                  <div className="text-gray-500 text-xs">Quelle: {item.source}</div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-6 bg-blue-500/10 rounded-xl p-4 border border-blue-500/20">
-              <p className="text-blue-400">
-                <strong>Wichtig:</strong> Gesundheit wird zum Lifestyle. Generation Z hat die größte Absicht (45%),
-                sich auf gesunde Ernährung zu konzentrieren. (Quelle: McKinsey State of Grocery 2025)
-              </p>
-            </div>
-          </motion.section>
-
-          {/* Instacart Reference */}
-          <motion.section
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="glass rounded-3xl p-8"
-          >
-            <h2 className="text-2xl font-black text-white mb-6 flex items-center gap-3">
-              <Percent className="w-7 h-7 text-green-400" />
-              Instacart Referenz – Der Beweis aus den USA
-            </h2>
-
-            <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
-              {instacartData.map((item) => (
-                <div key={item.metric} className="bg-white/5 rounded-xl p-4">
-                  <div className="text-xl font-black text-white mb-1">{item.value}</div>
-                  <div className="text-gray-400 text-sm">{item.metric}</div>
-                  <div className="text-gray-500 text-xs mt-1">{item.note}</div>
-                </div>
-              ))}
-            </div>
-
-            <div className="bg-green-500/10 rounded-xl p-6 border border-green-500/20">
-              <h3 className="text-green-400 font-bold mb-3">FEELY vs. Instacart</h3>
-              <p className="text-gray-300 mb-4">
-                Instacart hat bewiesen, dass das Modell funktioniert. Aber Instacart hat KEINE:
-              </p>
-              <ul className="text-gray-300 space-y-1 text-sm">
-                <li>• Personalisierte Gesundheitsanalyse</li>
-                <li>• Allergen-Warnungen</li>
-                <li>• KI-gestützte Ernährungsberatung</li>
-                <li>• Fokus auf ländliche Regionen</li>
-                <li>• Hofläden-Integration</li>
-              </ul>
-              <p className="text-green-400 font-bold mt-4">
-                FEELY = Instacart + Gesundheitsintelligenz = Größerer adressierbarer Markt
-              </p>
-            </div>
-          </motion.section>
-
-          {/* Conclusion */}
-          <motion.section
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="glass rounded-3xl p-8 bg-gradient-to-br from-green-500/10 to-blue-500/10 border border-green-500/20"
-          >
-            <h2 className="text-2xl font-black text-white mb-6">
-              Zusammenfassung der Marktchance
-            </h2>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="text-center">
-                <div className="text-4xl font-black gradient-text mb-2">€210+ Mrd.</div>
-                <div className="text-gray-400">Gesamtmarkt</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-black gradient-text mb-2">+97%</div>
-                <div className="text-gray-400">Online-Wachstum bis 2029</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-black gradient-text mb-2">26+ Mio.</div>
-                <div className="text-gray-400">Zielgruppe mit akutem Bedarf</div>
-              </div>
-            </div>
-
-            <p className="text-gray-300 text-center mt-8">
-              Der Zeitpunkt ist JETZT. Der Markt wächst. Die Konkurrenz existiert nicht.
-              FEELY baut die Infrastruktur für die nächste Dekade des Lebensmittelhandels.
-            </p>
-          </motion.section>
         </div>
+
+        {/* Summary Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.7 }}
+          className="mt-12 glass rounded-3xl p-8 bg-gradient-to-br from-green-500/10 via-blue-500/10 to-purple-500/10 border border-green-500/20"
+        >
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-black text-white mb-4">
+              Das Gesamtbild
+            </h2>
+            <p className="text-gray-400 max-w-2xl mx-auto">
+              FEELY adressiert einen riesigen Markt mit perfektem Timing und klarer Zielgruppe
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-4 gap-6">
+            <div className="text-center p-4">
+              <div className="text-4xl font-black gradient-text mb-2">€209,7 Mrd.</div>
+              <div className="text-gray-400 text-sm">Gesamtmarkt Deutschland</div>
+            </div>
+            <div className="text-center p-4">
+              <div className="text-4xl font-black gradient-text mb-2">36.565</div>
+              <div className="text-gray-400 text-sm">Potenzielle Partner-Filialen</div>
+            </div>
+            <div className="text-center p-4">
+              <div className="text-4xl font-black gradient-text mb-2">6</div>
+              <div className="text-gray-400 text-sm">Konvergierende Megatrends</div>
+            </div>
+            <div className="text-center p-4">
+              <div className="text-4xl font-black gradient-text mb-2">70 Mio.</div>
+              <div className="text-gray-400 text-sm">Potenzielle B2C-Nutzer</div>
+            </div>
+          </div>
+
+          {/* All PDFs Download */}
+          <div className="mt-8 pt-8 border-t border-white/10">
+            <div className="flex flex-wrap justify-center gap-4">
+              {analysisparts.map((part) => (
+                <a
+                  key={part.id}
+                  href={part.pdfUrl}
+                  download
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all text-sm"
+                >
+                  <Download className={`w-4 h-4 ${part.iconColor}`} />
+                  <span className="text-gray-300">{part.pdfName}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </motion.section>
 
         {/* Navigation */}
         <div className="flex flex-col sm:flex-row gap-4 justify-between items-center pt-8 mt-12 border-t border-white/10">
