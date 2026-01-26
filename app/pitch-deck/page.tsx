@@ -2480,55 +2480,59 @@ function EcosystemSlide({ slide }: { slide: any }) {
           </div>
         </motion.div>
 
-        {/* Center - Consumer App with Screenshot Slideshow */}
+        {/* Center - Consumer App with Phone Mockup */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="lg:col-span-4 glass rounded-2xl overflow-hidden border border-green-500/30 bg-gradient-to-b from-green-500/5 to-transparent"
+          className="lg:col-span-4 flex flex-col"
         >
-          {/* Screenshot Slideshow */}
-          <div className="relative h-[320px] bg-gradient-to-b from-gray-900 to-black flex items-center justify-center overflow-hidden">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentScreenshot}
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={{ duration: 0.4 }}
-                className="relative h-full w-auto"
-              >
-                <Image
-                  src={consumerApp.screenshots[currentScreenshot]}
-                  alt={`App Screenshot ${currentScreenshot + 1}`}
-                  width={180}
-                  height={320}
-                  className="h-full w-auto object-contain mx-auto"
-                />
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Slide Indicators */}
-            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1">
-              {consumerApp.screenshots.map((_: any, i: number) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrentScreenshot(i)}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    i === currentScreenshot ? 'bg-green-400 w-4' : 'bg-white/30'
-                  }`}
-                />
-              ))}
+          {/* Phone Mockup */}
+          <div className="flex-1 flex items-center justify-center py-4">
+            <div className="relative w-44">
+              {/* Phone frame */}
+              <div className="relative bg-gradient-to-b from-gray-800 to-gray-900 rounded-[2rem] p-2 shadow-2xl" style={{ boxShadow: '0 0 40px rgba(34, 197, 94, 0.2)' }}>
+                <div className="bg-black rounded-[1.7rem] overflow-hidden aspect-[9/19.5]">
+                  {/* Screenshot slideshow */}
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentScreenshot}
+                      initial={{ opacity: 0, x: 30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -30 }}
+                      transition={{ duration: 0.4 }}
+                      className="relative w-full h-full"
+                    >
+                      <Image
+                        src={consumerApp.screenshots[currentScreenshot]}
+                        alt={`App Screenshot ${currentScreenshot + 1}`}
+                        fill
+                        className="object-cover object-top"
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+                {/* Notch */}
+                <div className="absolute top-4 left-1/2 -translate-x-1/2 w-16 h-4 bg-black rounded-full" />
+              </div>
             </div>
+          </div>
 
-            {/* Screenshot Counter */}
-            <span className="absolute top-3 right-3 text-white text-xs font-medium bg-black/50 px-2 py-1 rounded-full">
-              {currentScreenshot + 1} / {consumerApp.screenshots.length}
-            </span>
+          {/* Slide Indicators */}
+          <div className="flex justify-center gap-1 mb-3">
+            {consumerApp.screenshots.map((_: any, i: number) => (
+              <button
+                key={i}
+                onClick={() => setCurrentScreenshot(i)}
+                className={`w-1.5 h-1.5 rounded-full transition-all ${
+                  i === currentScreenshot ? 'bg-green-400 w-3' : 'bg-white/30'
+                }`}
+              />
+            ))}
           </div>
 
           {/* Content */}
-          <div className="p-4">
+          <div className="glass rounded-2xl p-4 border border-green-500/30 bg-gradient-to-b from-green-500/5 to-transparent">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-lg font-bold text-white">{consumerApp.title}</h3>
               <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs font-medium rounded-full">
