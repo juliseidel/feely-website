@@ -488,7 +488,7 @@ const slides = [
       title: 'Alles ist gebaut. Alles funktioniert.',
       stats: [
         { value: '3', label: 'Plattformen', sub: 'App + 2 Portale' },
-        { value: '4.149+', label: 'Produkte', sub: 'in der Datenbank' },
+        { value: 'Eigene', label: 'KI-Systeme', sub: 'Datenbanken, Agenten, Algorithmen' },
         { value: '100%', label: 'Funktional', sub: 'Produktionsreif' },
       ],
       highlight: 'Kein Prototyp. Kein MVP. Ein fertiges Ökosystem.',
@@ -2432,24 +2432,32 @@ function EcosystemSlide({ slide }: { slide: any }) {
           >
             {/* Media */}
             {pillar.video ? (
-              <div className="relative aspect-video bg-black">
+              <div className="relative h-[280px] bg-gradient-to-b from-gray-900 to-black flex items-center justify-center">
                 {!isVideoPlaying ? (
                   <div
-                    className="absolute inset-0 flex items-center justify-center cursor-pointer group"
+                    className="relative h-full aspect-[9/16] cursor-pointer group"
                     onClick={() => setIsVideoPlaying(true)}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                    <div className="relative z-10 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <Play className="w-8 h-8 text-white ml-1" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg" />
+                    <video
+                      src={pillar.video}
+                      className="h-full w-full object-contain rounded-lg"
+                      muted
+                      playsInline
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-14 h-14 bg-green-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+                        <Play className="w-7 h-7 text-white ml-1" />
+                      </div>
                     </div>
-                    <span className="absolute bottom-4 left-4 text-white text-sm font-medium z-10">App Demo ansehen</span>
+                    <span className="absolute bottom-3 left-1/2 -translate-x-1/2 text-white text-xs font-medium bg-black/50 px-3 py-1 rounded-full">App Demo</span>
                   </div>
                 ) : (
                   <video
                     src={pillar.video}
                     autoPlay
                     controls
-                    className="w-full h-full object-cover"
+                    className="h-full aspect-[9/16] object-contain rounded-lg"
                   />
                 )}
               </div>
