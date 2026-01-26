@@ -22,7 +22,7 @@ export default function Navigation() {
     { name: 'Features', href: '#features' },
     { name: 'FEELY erleben', href: '/entdecken' },
     { name: 'Für Anbieter', href: '/anbieter' },
-    { name: 'Investoren', href: '/investoren' },
+    { name: 'Für Partner', href: '/investoren' },
     { name: 'Kontakt', href: '#kontakt' },
   ]
 
