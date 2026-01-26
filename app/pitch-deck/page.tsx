@@ -439,29 +439,6 @@ const slides = [
   },
   {
     id: 26,
-    type: 'unit-economics',
-    title: 'Unit Economics',
-    revenue: {
-      title: 'Revenue pro Nutzer/Monat',
-      free: '~€7,70',
-      premium: '~€11,70',
-    },
-    costs: {
-      title: 'Kosten pro Nutzer/Monat',
-      total: '~€0,70',
-    },
-    margin: {
-      free: '€7,00',
-      premium: '€11,00',
-    },
-    cac: {
-      target: '<€15',
-      payback: '<2 Monate',
-    },
-    conclusion: 'Positive Unit Economics ab Tag 1.',
-  },
-  {
-    id: 27,
     type: 'traction',
     title: 'Traction & Status',
     completed: [
@@ -480,7 +457,7 @@ const slides = [
     highlight: 'Das Fundament steht. Der härteste Teil ist geschafft.',
   },
   {
-    id: 28,
+    id: 27,
     type: 'roadmap',
     title: 'Roadmap',
     phases: [
@@ -511,7 +488,7 @@ const slides = [
     ],
   },
   {
-    id: 29,
+    id: 28,
     type: 'team-search',
     title: 'Das Team',
     subtitle: 'Mitgründer gesucht',
@@ -535,7 +512,7 @@ const slides = [
     ],
   },
   {
-    id: 30,
+    id: 29,
     type: 'founder',
     title: 'Der Gründer',
     subtitle: 'Warum ich das baue',
@@ -555,7 +532,7 @@ const slides = [
     ],
   },
   {
-    id: 31,
+    id: 30,
     type: 'investment',
     title: 'Investment Opportunity',
     amount: '€250.000 – €500.000',
@@ -574,7 +551,7 @@ const slides = [
     ],
   },
   {
-    id: 32,
+    id: 31,
     type: 'why-now',
     title: 'Warum jetzt?',
     reasons: [
@@ -587,7 +564,7 @@ const slides = [
     conclusion: 'Das Fenster ist jetzt offen. Es wird nicht ewig offen bleiben.',
   },
   {
-    id: 33,
+    id: 32,
     type: 'risks',
     title: 'Risiken & Mitigierung',
     risks: [
@@ -615,7 +592,7 @@ const slides = [
     conclusion: 'Jedes Startup hat Risiken. Der Unterschied: Wir kennen unsere und haben Pläne.',
   },
   {
-    id: 34,
+    id: 33,
     type: 'cta',
     title: 'Bereit die Zukunft mitzugestalten?',
     summary: [
@@ -635,7 +612,7 @@ const slides = [
     author: '– Juli, Gründer FEELY',
   },
   {
-    id: 35,
+    id: 34,
     type: 'appendix',
     title: 'Weitere Informationen',
     resources: [

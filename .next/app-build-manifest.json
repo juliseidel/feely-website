@@ -15,22 +15,6 @@
       "static/css/5b0e5318594ec17f.css",
       "static/chunks/app/layout-46b1baf5fa7e98d2.js"
     ],
-    "/agb/page": [
-      "static/chunks/webpack-b69a3e4a5e1102ee.js",
-      "static/chunks/fd9d1056-803f3afc98c64581.js",
-      "static/chunks/69-684234321b8ea2ca.js",
-      "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
-      "static/chunks/app/agb/page-83f210c1e780887d.js"
-    ],
-    "/impressum/page": [
-      "static/chunks/webpack-b69a3e4a5e1102ee.js",
-      "static/chunks/fd9d1056-803f3afc98c64581.js",
-      "static/chunks/69-684234321b8ea2ca.js",
-      "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
-      "static/chunks/app/impressum/page-6bf527e8aaf9f170.js"
-    ],
     "/anbieter/page": [
       "static/chunks/webpack-b69a3e4a5e1102ee.js",
       "static/chunks/fd9d1056-803f3afc98c64581.js",
@@ -39,13 +23,30 @@
       "static/chunks/925-def9b01150068b08.js",
       "static/chunks/app/anbieter/page-bfc78dbf25dd7fc3.js"
     ],
-    "/partner/hoflaeden/page": [
+    "/agb/page": [
       "static/chunks/webpack-b69a3e4a5e1102ee.js",
       "static/chunks/fd9d1056-803f3afc98c64581.js",
       "static/chunks/69-684234321b8ea2ca.js",
       "static/chunks/main-app-db03ed491dedbe62.js",
       "static/chunks/925-def9b01150068b08.js",
-      "static/chunks/app/partner/hoflaeden/page-f8ab423f44c871ed.js"
+      "static/chunks/app/agb/page-83f210c1e780887d.js"
+    ],
+    "/datenschutz/page": [
+      "static/chunks/webpack-b69a3e4a5e1102ee.js",
+      "static/chunks/fd9d1056-803f3afc98c64581.js",
+      "static/chunks/69-684234321b8ea2ca.js",
+      "static/chunks/main-app-db03ed491dedbe62.js",
+      "static/chunks/925-def9b01150068b08.js",
+      "static/chunks/app/datenschutz/page-406e3ed6d7f82020.js"
+    ],
+    "/entdecken/page": [
+      "static/chunks/webpack-b69a3e4a5e1102ee.js",
+      "static/chunks/fd9d1056-803f3afc98c64581.js",
+      "static/chunks/69-684234321b8ea2ca.js",
+      "static/chunks/main-app-db03ed491dedbe62.js",
+      "static/chunks/925-def9b01150068b08.js",
+      "static/chunks/417-cb8f9c110d76cb61.js",
+      "static/chunks/app/entdecken/page-53ba9b3180f2201c.js"
     ],
     "/page": [
       "static/chunks/webpack-b69a3e4a5e1102ee.js",
@@ -57,30 +58,13 @@
       "static/chunks/605-8d6e5a866f513b70.js",
       "static/chunks/app/page-3b20b1fedde50d18.js"
     ],
-    "/datenschutz/page": [
+    "/impressum/page": [
       "static/chunks/webpack-b69a3e4a5e1102ee.js",
       "static/chunks/fd9d1056-803f3afc98c64581.js",
       "static/chunks/69-684234321b8ea2ca.js",
       "static/chunks/main-app-db03ed491dedbe62.js",
       "static/chunks/925-def9b01150068b08.js",
-      "static/chunks/app/datenschutz/page-406e3ed6d7f82020.js"
-    ],
-    "/investoren/page": [
-      "static/chunks/webpack-b69a3e4a5e1102ee.js",
-      "static/chunks/fd9d1056-803f3afc98c64581.js",
-      "static/chunks/69-684234321b8ea2ca.js",
-      "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
-      "static/chunks/app/investoren/page-6a11410f68c2ffaa.js"
-    ],
-    "/entdecken/page": [
-      "static/chunks/webpack-b69a3e4a5e1102ee.js",
-      "static/chunks/fd9d1056-803f3afc98c64581.js",
-      "static/chunks/69-684234321b8ea2ca.js",
-      "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
-      "static/chunks/417-cb8f9c110d76cb61.js",
-      "static/chunks/app/entdecken/page-53ba9b3180f2201c.js"
+      "static/chunks/app/impressum/page-6bf527e8aaf9f170.js"
     ],
     "/partner/supermaerkte/page": [
       "static/chunks/webpack-b69a3e4a5e1102ee.js",
@@ -90,6 +74,14 @@
       "static/chunks/925-def9b01150068b08.js",
       "static/chunks/app/partner/supermaerkte/page-5e7f7bf05205337b.js"
     ],
+    "/partner/hoflaeden/page": [
+      "static/chunks/webpack-b69a3e4a5e1102ee.js",
+      "static/chunks/fd9d1056-803f3afc98c64581.js",
+      "static/chunks/69-684234321b8ea2ca.js",
+      "static/chunks/main-app-db03ed491dedbe62.js",
+      "static/chunks/925-def9b01150068b08.js",
+      "static/chunks/app/partner/hoflaeden/page-f8ab423f44c871ed.js"
+    ],
     "/partner-zugang/page": [
       "static/chunks/webpack-b69a3e4a5e1102ee.js",
       "static/chunks/fd9d1056-803f3afc98c64581.js",
@@ -97,6 +89,14 @@
       "static/chunks/main-app-db03ed491dedbe62.js",
       "static/chunks/925-def9b01150068b08.js",
       "static/chunks/app/partner-zugang/page-10080bb6d31076e8.js"
+    ],
+    "/investoren/page": [
+      "static/chunks/webpack-b69a3e4a5e1102ee.js",
+      "static/chunks/fd9d1056-803f3afc98c64581.js",
+      "static/chunks/69-684234321b8ea2ca.js",
+      "static/chunks/main-app-db03ed491dedbe62.js",
+      "static/chunks/925-def9b01150068b08.js",
+      "static/chunks/app/investoren/page-6a11410f68c2ffaa.js"
     ],
     "/zugang/page": [
       "static/chunks/webpack-b69a3e4a5e1102ee.js",
@@ -141,14 +141,6 @@
       "static/chunks/625-9f9d2ba04d0dc2c3.js",
       "static/chunks/app/pitch-deck/einwand-katalog/page-7cbb1bb37b325b6c.js"
     ],
-    "/pitch-deck/vergleichsanalyse/page": [
-      "static/chunks/webpack-b69a3e4a5e1102ee.js",
-      "static/chunks/fd9d1056-803f3afc98c64581.js",
-      "static/chunks/69-684234321b8ea2ca.js",
-      "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
-      "static/chunks/app/pitch-deck/vergleichsanalyse/page-1d288ac5c572cab3.js"
-    ],
     "/pitch-deck/page": [
       "static/chunks/webpack-b69a3e4a5e1102ee.js",
       "static/chunks/fd9d1056-803f3afc98c64581.js",
@@ -157,7 +149,7 @@
       "static/chunks/925-def9b01150068b08.js",
       "static/chunks/703-23c37065e0ba0066.js",
       "static/chunks/580-0aa0edb1a86d4916.js",
-      "static/chunks/app/pitch-deck/page-2d712ca944227f4a.js"
+      "static/chunks/app/pitch-deck/page-256722bb47dcf949.js"
     ],
     "/pitch-deck/executive-summary/page": [
       "static/chunks/webpack-b69a3e4a5e1102ee.js",
@@ -167,6 +159,14 @@
       "static/chunks/925-def9b01150068b08.js",
       "static/chunks/703-23c37065e0ba0066.js",
       "static/chunks/app/pitch-deck/executive-summary/page-9171f7787550abe5.js"
+    ],
+    "/pitch-deck/vergleichsanalyse/page": [
+      "static/chunks/webpack-b69a3e4a5e1102ee.js",
+      "static/chunks/fd9d1056-803f3afc98c64581.js",
+      "static/chunks/69-684234321b8ea2ca.js",
+      "static/chunks/main-app-db03ed491dedbe62.js",
+      "static/chunks/925-def9b01150068b08.js",
+      "static/chunks/app/pitch-deck/vergleichsanalyse/page-1d288ac5c572cab3.js"
     ]
   }
 }
