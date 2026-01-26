@@ -439,22 +439,60 @@ const slides = [
   },
   {
     id: 26,
-    type: 'traction',
-    title: 'Traction & Status',
-    completed: [
-      'Komplette App (iOS & Android) - Produktionsreif',
-      'Onboarding-System (24 Screens, 7 Phasen)',
-      'Gesundheitsanalyse-Engine (120+ Allergien, 80+ Krankheiten)',
-      'Produktdatenbank (3.100+ reale Produkte)',
-      'Barcode Scanner (<1 Sekunde)',
-      'Website & Landing Pages live',
+    type: 'ecosystem',
+    title: 'Das FEELY Ökosystem',
+    subtitle: 'Mehr als eine App – eine komplette Plattform',
+    intro: 'FEELY ist nicht nur eine App für Konsumenten. Es ist ein komplettes Ökosystem, das Verbraucher, Supermärkte und Hofläden auf einer Plattform vereint.',
+    pillars: [
+      {
+        title: 'Consumer App',
+        subtitle: 'Für jeden Einkäufer',
+        description: 'Die App die Lebensmitteleinkauf revolutioniert – einfacher, schneller und gesünder.',
+        video: '/images/app-demo-video.mp4',
+        features: [
+          'KI-Gesundheitsanalyse in Echtzeit',
+          'Alle Supermärkte & Hofläden',
+          'Personalisierte Empfehlungen',
+          'Barcode Scanner (<1 Sek.)',
+        ],
+        status: 'Produktionsreif',
+      },
+      {
+        title: 'Business Portal – Hofläden',
+        subtitle: 'Für kleine Anbieter',
+        description: 'Hofläden bekommen ihre eigene digitale Präsenz – ohne Entwicklungskosten.',
+        image: '/images/dashboard-hofladen.png',
+        features: [
+          'Produkte & Bestand verwalten',
+          'News & Push-Nachrichten',
+          'Bestellungen empfangen',
+          'Kunden erreichen',
+        ],
+        status: 'Produktionsreif',
+      },
+      {
+        title: 'Business Portal – Supermärkte',
+        subtitle: 'Für große Märkte',
+        description: 'Supermärkte steuern ihr komplettes FEELY-Geschäft über ein professionelles Dashboard.',
+        image: '/images/dashboard-supermarkt.png',
+        features: [
+          'Sortiment & Angebote',
+          'Werbung & Promotions',
+          'Analytics & Umsatz',
+          'Bestellmanagement',
+        ],
+        status: 'Produktionsreif',
+      },
     ],
-    inProgress: [
-      'App Store Approval',
-      'Erste Partner-Gespräche',
-      'Team-Aufbau',
-    ],
-    highlight: 'Das Fundament steht. Der härteste Teil ist geschafft.',
+    conclusion: {
+      title: 'Alles ist gebaut. Alles funktioniert.',
+      stats: [
+        { value: '3', label: 'Plattformen', sub: 'App + 2 Portale' },
+        { value: '4.149+', label: 'Produkte', sub: 'in der Datenbank' },
+        { value: '100%', label: 'Funktional', sub: 'Produktionsreif' },
+      ],
+      highlight: 'Kein Prototyp. Kein MVP. Ein fertiges Ökosystem.',
+    },
   },
   {
     id: 27,
@@ -850,6 +888,8 @@ function renderSlide(slide: typeof slides[0]) {
       return <UnitEconomicsSlide slide={slide} />
     case 'traction':
       return <TractionSlide slide={slide} />
+    case 'ecosystem':
+      return <EcosystemSlide slide={slide} />
     case 'roadmap':
       return <RoadmapSlide slide={slide} />
     case 'team-search':
@@ -2354,6 +2394,123 @@ function TractionSlide({ slide }: { slide: any }) {
       >
         <div className="glass rounded-2xl p-6 inline-block bg-green-500/10 border border-green-500/20">
           <p className="text-green-400 font-bold text-lg">{slide.highlight}</p>
+        </div>
+      </motion.div>
+    </div>
+  )
+}
+
+function EcosystemSlide({ slide }: { slide: any }) {
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false)
+
+  return (
+    <div className="py-4">
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-8"
+      >
+        <span className="text-green-400 font-bold text-lg mb-2 block">Status</span>
+        <h2 className="text-3xl md:text-5xl font-black text-white mb-3">
+          {slide.title}
+        </h2>
+        <p className="text-xl text-gray-400 mb-2">{slide.subtitle}</p>
+        <p className="text-gray-500 max-w-3xl mx-auto text-sm">{slide.intro}</p>
+      </motion.div>
+
+      {/* Three Pillars */}
+      <div className="grid lg:grid-cols-3 gap-5 mb-8">
+        {slide.pillars.map((pillar: any, index: number) => (
+          <motion.div
+            key={pillar.title}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.15 }}
+            className="glass rounded-2xl overflow-hidden border border-white/10"
+          >
+            {/* Media */}
+            {pillar.video ? (
+              <div className="relative aspect-video bg-black">
+                {!isVideoPlaying ? (
+                  <div
+                    className="absolute inset-0 flex items-center justify-center cursor-pointer group"
+                    onClick={() => setIsVideoPlaying(true)}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                    <div className="relative z-10 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <Play className="w-8 h-8 text-white ml-1" />
+                    </div>
+                    <span className="absolute bottom-4 left-4 text-white text-sm font-medium z-10">App Demo ansehen</span>
+                  </div>
+                ) : (
+                  <video
+                    src={pillar.video}
+                    autoPlay
+                    controls
+                    className="w-full h-full object-cover"
+                  />
+                )}
+              </div>
+            ) : (
+              <div className="relative aspect-video">
+                <Image
+                  src={pillar.image}
+                  alt={pillar.title}
+                  fill
+                  className="object-cover object-top"
+                />
+              </div>
+            )}
+
+            {/* Content */}
+            <div className="p-5">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-lg font-bold text-white">{pillar.title}</h3>
+                <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs font-medium rounded-full">
+                  {pillar.status}
+                </span>
+              </div>
+              <p className="text-green-400 text-sm mb-2">{pillar.subtitle}</p>
+              <p className="text-gray-400 text-sm mb-4">{pillar.description}</p>
+
+              <div className="space-y-2">
+                {pillar.features.map((feature: string, i: number) => (
+                  <div key={i} className="flex items-center gap-2 text-sm">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
+                    <span className="text-gray-300">{feature}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Conclusion */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.5 }}
+        className="glass rounded-2xl p-6 border border-green-500/20"
+      >
+        <h4 className="text-green-400 font-bold text-lg mb-4 text-center">{slide.conclusion.title}</h4>
+
+        <div className="grid grid-cols-3 gap-4 mb-4">
+          {slide.conclusion.stats.map((stat: any, index: number) => (
+            <div key={index} className="text-center">
+              <div className="text-3xl font-black text-white">{stat.value}</div>
+              <div className="text-green-400 font-medium text-sm">{stat.label}</div>
+              <div className="text-gray-500 text-xs">{stat.sub}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="bg-green-500/10 rounded-xl p-4 border border-green-500/20">
+          <p className="text-green-400 font-semibold text-center text-lg">
+            {slide.conclusion.highlight}
+          </p>
         </div>
       </motion.div>
     </div>
