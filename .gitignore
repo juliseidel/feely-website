@@ -1,1 +1,4 @@
 node_modules
+slide-screenshots/
+capture-slides.js
+create-pdf.py
