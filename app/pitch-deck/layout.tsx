@@ -19,7 +19,7 @@ import {
 } from 'lucide-react'
 
 const navItems = [
-  { name: 'Pitch Deck', href: '/pitch-deck', icon: Presentation },
+  { name: 'Übersicht', href: '/pitch-deck', icon: Presentation },
   { name: 'Executive Summary', href: '/pitch-deck/executive-summary', icon: FileText },
   { name: 'Marktanalyse', href: '/pitch-deck/marktanalyse', icon: BarChart3 },
   { name: 'Einwand-Katalog', href: '/pitch-deck/einwand-katalog', icon: MessageSquareWarning },
