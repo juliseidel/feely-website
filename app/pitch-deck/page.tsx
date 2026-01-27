@@ -710,91 +710,87 @@ export default function PitchDeckPage() {
     setIsGeneratingPDF(true)
     setPdfProgress(0)
 
+    // DOM elements for cleanup in finally block
+    let overlay: HTMLDivElement | null = null
+    let container: HTMLDivElement | null = null
+
     try {
-      // Dynamically import jsPDF and html2canvas
-      const { jsPDF } = await import('jspdf')
-      const html2canvas = (await import('html2canvas')).default
+      // Dynamic imports
+      const jsPDFModule = await import('jspdf')
+      const jsPDFClass = jsPDFModule.jsPDF || jsPDFModule.default
+      const html2canvasModule = await import('html2canvas')
+      const html2canvas = html2canvasModule.default || html2canvasModule
 
       // Create PDF in landscape 16:9
-      const pdf = new jsPDF({
+      const pdf = new jsPDFClass({
         orientation: 'landscape',
         unit: 'px',
         format: [1280, 720],
         hotfixes: ['px_scaling'],
       })
 
-      // Create a visible rendering container (covered by overlay)
-      const renderContainer = document.createElement('div')
-      renderContainer.style.position = 'fixed'
-      renderContainer.style.top = '0'
-      renderContainer.style.left = '0'
-      renderContainer.style.width = '1280px'
-      renderContainer.style.height = '720px'
-      renderContainer.style.zIndex = '9998'
-      renderContainer.style.overflow = 'hidden'
-      renderContainer.style.opacity = '0.01' // nearly invisible but still rendered
-      renderContainer.style.pointerEvents = 'none'
-      document.body.appendChild(renderContainer)
+      // Full-screen overlay so user sees loading screen, not the rendering
+      overlay = document.createElement('div')
+      overlay.style.cssText = 'position:fixed;inset:0;background:#000;z-index:100000;display:flex;align-items:center;justify-content:center;flex-direction:column;'
+      overlay.innerHTML = `
+        <div style="width:64px;height:64px;border:3px solid rgba(34,197,94,0.2);border-top-color:#22c55e;border-radius:50%;animation:pdfspin 0.8s linear infinite;margin-bottom:24px;"></div>
+        <div style="color:#22c55e;font-size:22px;font-weight:bold;font-family:system-ui,sans-serif;">PDF wird erstellt...</div>
+        <div id="pdf-overlay-progress" style="color:#9ca3af;font-size:15px;margin-top:10px;font-family:system-ui,sans-serif;">Slide 0 / ${slides.length}</div>
+        <style>@keyframes pdfspin{to{transform:rotate(360deg)}}</style>
+      `
+      document.body.appendChild(overlay)
 
-      // Render each slide one by one
+      // Render container — fully visible behind the overlay
+      container = document.createElement('div')
+      container.style.cssText = 'position:fixed;left:0;top:0;width:1280px;height:720px;z-index:99999;overflow:hidden;'
+      document.body.appendChild(container)
+
+      // Small delay for DOM to settle
+      await new Promise(r => setTimeout(r, 100))
+
       for (let i = 0; i < slides.length; i++) {
         const slide = slides[i]
-        setPdfProgress(Math.round(((i + 1) / slides.length) * 100))
+        const progress = Math.round(((i + 1) / slides.length) * 100)
+        setPdfProgress(progress)
 
-        // Create slide element
-        const slideEl = document.createElement('div')
-        slideEl.style.width = '1280px'
-        slideEl.style.height = '720px'
-        slideEl.style.background = '#000000'
-        slideEl.style.padding = '48px 64px'
-        slideEl.style.boxSizing = 'border-box'
-        slideEl.style.display = 'flex'
-        slideEl.style.flexDirection = 'column'
-        slideEl.style.justifyContent = 'center'
-        slideEl.style.position = 'relative'
-        slideEl.style.overflow = 'hidden'
-        slideEl.style.fontFamily = 'system-ui, -apple-system, sans-serif'
+        // Update overlay text
+        const progressEl = document.getElementById('pdf-overlay-progress')
+        if (progressEl) progressEl.textContent = `Slide ${i + 1} / ${slides.length}`
 
-        // Progress bar
-        const header = document.createElement('div')
-        header.style.cssText = `position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, #22c55e ${((i + 1) / slides.length) * 100}%, rgba(255,255,255,0.1) ${((i + 1) / slides.length) * 100}%);`
-        slideEl.appendChild(header)
+        // Render slide into container
+        container.innerHTML = `
+          <div style="width:1280px;height:720px;background:#000;padding:48px 64px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#fff;">
+            <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(to right,#22c55e ${((i+1)/slides.length)*100}%,rgba(255,255,255,0.1) ${((i+1)/slides.length)*100}%);"></div>
+            <div style="position:absolute;top:16px;right:24px;font-size:14px;color:#6b7280;"><span style="color:#22c55e;font-weight:bold;">${i+1}</span> / ${slides.length}</div>
+            <div style="position:absolute;top:16px;left:24px;font-size:16px;font-weight:bold;color:#22c55e;">FEELY — Pitch Deck</div>
+            <div style="margin-top:32px;flex:1;display:flex;flex-direction:column;justify-content:center;">
+              ${renderSlideToHTML(slide, i)}
+            </div>
+            <div style="position:absolute;bottom:12px;left:24px;right:24px;display:flex;justify-content:space-between;font-size:11px;color:#4b5563;">
+              <span>Confidential — Nur für autorisierte Empfänger</span><span>partner@feelyapp.de</span>
+            </div>
+          </div>
+        `
 
-        // Slide number
-        const slideNum = document.createElement('div')
-        slideNum.style.cssText = 'position: absolute; top: 16px; right: 24px; font-size: 14px; color: #6b7280;'
-        slideNum.innerHTML = `<span style="color: #22c55e; font-weight: bold;">${i + 1}</span> / ${slides.length}`
-        slideEl.appendChild(slideNum)
+        // Wait for render and images
+        await new Promise(r => setTimeout(r, 250))
 
-        // FEELY logo
-        const logo = document.createElement('div')
-        logo.style.cssText = 'position: absolute; top: 16px; left: 24px; font-size: 16px; font-weight: bold; color: #22c55e;'
-        logo.textContent = 'FEELY — Pitch Deck'
-        slideEl.appendChild(logo)
-
-        // Content
-        const content = document.createElement('div')
-        content.style.cssText = 'margin-top: 32px; flex: 1; display: flex; flex-direction: column; justify-content: center;'
-        content.innerHTML = renderSlideToHTML(slide, i)
-        slideEl.appendChild(content)
-
-        // Footer
-        const footer = document.createElement('div')
-        footer.style.cssText = 'position: absolute; bottom: 12px; left: 24px; right: 24px; display: flex; justify-content: space-between; font-size: 11px; color: #4b5563;'
-        footer.innerHTML = '<span>Confidential — Nur für autorisierte Empfänger</span><span>partner@feelyapp.de</span>'
-        slideEl.appendChild(footer)
-
-        // Clear and add to visible container
-        renderContainer.innerHTML = ''
-        renderContainer.appendChild(slideEl)
-
-        // Wait for DOM to render
-        await new Promise(resolve => setTimeout(resolve, 100))
+        // Wait for any images to load
+        const images = container.querySelectorAll('img')
+        if (images.length > 0) {
+          await Promise.all(
+            Array.from(images).map(img =>
+              img.complete ? Promise.resolve() : new Promise(r => { img.onload = r; img.onerror = r; })
+            )
+          )
+        }
 
         // Capture with html2canvas
+        const slideEl = container.firstElementChild as HTMLElement
         const canvas = await html2canvas(slideEl, {
           scale: 2,
           useCORS: true,
+          allowTaint: true,
           backgroundColor: '#000000',
           width: 1280,
           height: 720,
@@ -810,14 +806,20 @@ export default function PitchDeckPage() {
       }
 
       // Cleanup
-      document.body.removeChild(renderContainer)
+      if (container) document.body.removeChild(container)
+      if (overlay) document.body.removeChild(overlay)
+      container = null
+      overlay = null
 
-      // Save
+      // Download
       pdf.save('FEELY-Pitch-Deck-2026.pdf')
     } catch (error) {
       console.error('PDF generation error:', error)
-      alert('PDF-Erstellung fehlgeschlagen. Bitte versuchen Sie es erneut.')
+      alert('PDF-Erstellung fehlgeschlagen: ' + (error instanceof Error ? error.message : 'Unbekannter Fehler'))
     } finally {
+      // Ensure cleanup happens even on error
+      if (container && container.parentNode) document.body.removeChild(container)
+      if (overlay && overlay.parentNode) document.body.removeChild(overlay)
       setIsGeneratingPDF(false)
       setPdfProgress(0)
     }
