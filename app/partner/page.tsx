@@ -34,16 +34,16 @@ import {
 } from 'lucide-react'
 
 const marketStats = [
-  { value: '€380 Mrd.', label: 'Deutscher Lebensmittelmarkt', sub: 'Jährliches Volumen 2024' },
-  { value: '€15 Mrd.', label: 'Online-Lebensmittelhandel', sub: '+22% jährliches Wachstum' },
-  { value: '26 Mio.', label: 'Menschen mit Allergien/Unverträglichkeiten', sub: 'Allein in Deutschland' },
+  { value: '€209,7 Mrd.', label: 'Deutscher Lebensmittelmarkt', sub: 'Jährliches Volumen 2024 (EHI)' },
+  { value: '€8,6 Mrd.', label: 'Online-Lebensmittelhandel', sub: '+11% p.a. Wachstum (Mintel)' },
+  { value: '23+ Mio.', label: 'Menschen mit Allergien/Unverträglichkeiten', sub: 'Allein in Deutschland' },
   { value: '67%', label: 'Wollen gesünder einkaufen', sub: 'Kaufbereitschaft für Premium' },
 ]
 
 const competitors = [
-  { name: 'Instacart (USA)', valuation: '$39 Mrd.', users: '10 Mio.', feature: 'Keine Gesundheitsfeatures' },
-  { name: 'Gorillas', valuation: '€1,2 Mrd. (2022)', users: '1 Mio.', feature: 'Nur Quick-Commerce' },
-  { name: 'Flink', valuation: '€2,8 Mrd.', users: '2 Mio.', feature: 'Keine Hofläden' },
+  { name: 'Instacart (USA)', valuation: '$33,5 Mrd. Volumen', users: '14,4 Mio.', feature: 'Keine Gesundheitsfeatures' },
+  { name: 'REWE/EDEKA Online', valuation: 'Eigenvertrieb', users: 'Einzelhändler', feature: 'Kein Multi-Retailer' },
+  { name: 'Flink/Gorillas', valuation: 'Quick-Commerce', users: 'Stadtgebiet', feature: 'Keine Hofläden, kein Gesundheitsfokus' },
   { name: 'FEELY', valuation: 'Pre-Seed', users: 'Early Stage', feature: 'Gesundheit + Regional + KI' },
 ]
 
@@ -75,62 +75,62 @@ const advantages = [
 ]
 
 const revenueStreams = [
-  { name: 'Transaktionsgebühren', percent: 40, desc: '3-8% auf vermittelte Einkäufe' },
-  { name: 'Premium-Abos', percent: 30, desc: '€4,99-9,99/Monat für KI-Features' },
-  { name: 'Anbieter-Pakete', percent: 20, desc: 'Marketing & Analytics für Partner' },
-  { name: 'Data Insights', percent: 10, desc: 'Anonymisierte Marktanalysen (B2B)' },
+  { name: 'Transaktionsgebühren', percent: 40, desc: '3-5% Abholung / 10-15% Lieferung' },
+  { name: 'Premium-Abos', percent: 25, desc: '€3,99/Monat oder €39,99/Jahr' },
+  { name: 'Werbung & Partner', percent: 25, desc: 'Sponsored Products & Marketing-Pakete' },
+  { name: 'B2B & Data Insights', percent: 10, desc: 'Anonymisierte Marktanalysen' },
 ]
 
 const unitEconomics = [
-  { label: 'Customer Acquisition Cost (CAC)', value: '€12-18', good: true },
-  { label: 'Lifetime Value (LTV)', value: '€220-350', good: true },
-  { label: 'LTV/CAC Ratio', value: '12-18x', good: true },
-  { label: 'Payback Period', value: '2-3 Monate', good: true },
-  { label: 'Gross Margin', value: '68-75%', good: true },
+  { label: 'Customer Acquisition Cost (CAC)', value: '€15-25', good: true },
+  { label: 'Lifetime Value (LTV)', value: '€180-300', good: true },
+  { label: 'LTV/CAC Ratio', value: '7-12x', good: true },
+  { label: 'Payback Period', value: '3-4 Monate', good: true },
+  { label: 'Gross Margin', value: '70-80%', good: true },
   { label: 'Monthly Churn (Premium)', value: '<4%', good: true },
 ]
 
 const milestones = [
   {
-    phase: 'Aktuell - Seed',
+    phase: 'Jahr 1 - Seed',
     status: 'live',
-    funding: '€500K-1M',
+    funding: '€250-500K',
     goals: [
       'MVP mit Core-Features live',
-      '50+ Partner-Märkte & Hofläden',
+      '20-50 Partner-Märkte & Hofläden',
       'Product-Market-Fit validieren',
-      '5.000+ aktive Nutzer',
+      '1.000-5.000 aktive Nutzer',
     ],
   },
   {
-    phase: '2025 - Series A',
+    phase: 'Jahr 2 - Series A',
     status: 'planned',
-    funding: '€3-5M',
+    funding: '€2-5M',
     goals: [
-      '500+ Supermärkte & Hofläden',
+      '100-500 Supermärkte & Hofläden',
       '50.000+ aktive Nutzer',
       'Premium-Launch mit KI-Features',
-      'Expansion in weitere Städte',
+      '5-10% Premium-Conversion',
     ],
   },
   {
-    phase: '2026 - Wachstum',
+    phase: 'Jahr 3 - Wachstum',
     status: 'planned',
-    funding: '€10-15M',
+    funding: 'Profitabilität',
     goals: [
       'Deutschlandweite Abdeckung',
-      '250.000+ aktive Nutzer',
+      '500.000+ aktive Nutzer',
       'Break-even erreichen',
-      'Team auf 80+ skalieren',
+      'Team auf 30-50 skalieren',
     ],
   },
   {
-    phase: '2027+ - Expansion',
+    phase: 'Jahr 4+ - Expansion',
     status: 'planned',
     funding: 'Series B',
     goals: [
       'Expansion nach AT & CH',
-      '1 Mio.+ aktive Nutzer',
+      '2 Mio.+ aktive Nutzer',
       'Profitabilität',
       'Weitere EU-Märkte',
     ],
@@ -138,14 +138,14 @@ const milestones = [
 ]
 
 const useOfFunds = [
-  { category: 'Produktentwicklung', percent: 40, color: 'green' },
-  { category: 'Sales & Marketing', percent: 30, color: 'blue' },
-  { category: 'Operations & Team', percent: 20, color: 'purple' },
-  { category: 'Infrastruktur', percent: 10, color: 'orange' },
+  { category: 'Team', percent: 50, color: 'green' },
+  { category: 'Technologie', percent: 25, color: 'blue' },
+  { category: 'Marketing', percent: 20, color: 'purple' },
+  { category: 'Operations', percent: 5, color: 'orange' },
 ]
 
 const whyNow = [
-  { icon: TrendingUp, text: 'Online-Lebensmittel wächst 5x schneller als stationär' },
+  { icon: TrendingUp, text: 'Online-Lebensmittel wächst mit +11% p.a. (Mintel)' },
   { icon: Heart, text: 'Gesundheitsbewusstsein auf Allzeithoch' },
   { icon: Smartphone, text: '95% der Deutschen nutzen Smartphones' },
   { icon: Leaf, text: 'Nachhaltigkeits-Trend stärkt regionale Hofläden' },
@@ -153,7 +153,7 @@ const whyNow = [
   { icon: Globe, text: 'Keine etablierte Plattform vereint Gesundheit + Regional' },
 ]
 
-export default function InvestorenPage() {
+export default function PartnerPage() {
   return (
     <main className="min-h-screen bg-black">
       {/* Header */}
@@ -197,7 +197,7 @@ export default function InvestorenPage() {
             </h1>
 
             <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-8">
-              FEELY revolutioniert den €380 Mrd. Lebensmittelmarkt mit innovativer Technologie,
+              FEELY revolutioniert den €209,7 Mrd. Lebensmittelmarkt mit innovativer Technologie,
               einzigartigem Gesundheitsfokus und enormem Wachstumspotenzial.
             </p>
 
@@ -222,9 +222,9 @@ export default function InvestorenPage() {
             <div className="glass rounded-2xl p-6 max-w-4xl mx-auto">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 {[
-                  { value: '€380 Mrd.', label: 'Marktgröße' },
-                  { value: '22%', label: 'Online-Wachstum p.a.' },
-                  { value: '26 Mio.', label: 'Zielgruppe DE' },
+                  { value: '€209,7 Mrd.', label: 'Marktgröße' },
+                  { value: '+11%', label: 'Online-Wachstum p.a.' },
+                  { value: '23+ Mio.', label: 'Zielgruppe DE' },
                   { value: '0', label: 'Direkte Konkurrenz' },
                 ].map((stat) => (
                   <div key={stat.label} className="text-center">
@@ -362,7 +362,8 @@ export default function InvestorenPage() {
                 <div>
                   <h4 className="text-lg font-bold text-white mb-2">Internationale Vergleichswerte</h4>
                   <p className="text-gray-400">
-                    <strong className="text-white">Instacart</strong> wurde mit $39 Mrd. bewertet - ohne Gesundheitsfeatures.
+                    <strong className="text-white">Instacart</strong> erzielte 2024 ein Transaktionsvolumen von $33,5 Mrd.
+                    und $3,38 Mrd. Umsatz - ohne Gesundheitsfeatures.
                     Der europäische Markt ist noch weitgehend unerschlossen.
                     Eine Plattform, die Gesundheit, Regionalität und Transparenz vereint, existiert noch nicht.
                   </p>
@@ -487,7 +488,7 @@ export default function InvestorenPage() {
                 <div className="mt-6 bg-blue-500/10 rounded-xl p-4 border border-blue-500/20">
                   <p className="text-blue-400 text-sm">
                     <strong>Benchmark:</strong> Top-Performer im SaaS-Bereich haben LTV/CAC von 3-5x.
-                    Unser Zielwert von 12-18x zeigt das enorme Potenzial.
+                    Unser Zielwert von 7-12x zeigt das enorme Potenzial.
                   </p>
                 </div>
               </div>
@@ -627,7 +628,7 @@ export default function InvestorenPage() {
                 {
                   icon: Target,
                   title: 'Riesiger Markt',
-                  points: ['€380 Mrd. Marktvolumen', '22% Online-Wachstum', '26 Mio. Zielgruppe'],
+                  points: ['€209,7 Mrd. Marktvolumen', '+11% Online-Wachstum p.a.', '23+ Mio. Zielgruppe'],
                 },
                 {
                   icon: Zap,
@@ -637,7 +638,7 @@ export default function InvestorenPage() {
                 {
                   icon: TrendingUp,
                   title: 'Starkes Potenzial',
-                  points: ['12-18x LTV/CAC Ratio', 'Netzwerkeffekte', 'Hohe Skalierbarkeit'],
+                  points: ['7-12x LTV/CAC Ratio', 'Netzwerkeffekte', 'Hohe Skalierbarkeit'],
                 },
               ].map((highlight, index) => (
                 <motion.div

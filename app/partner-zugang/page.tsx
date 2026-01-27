@@ -124,7 +124,7 @@ export default function PartnerZugangPage() {
           </p>
           <div className="space-y-4">
             <Link
-              href="/investoren"
+              href="/partner"
               className="btn-primary inline-flex items-center justify-center gap-2 w-full"
             >
               Zurück zur Übersicht
@@ -153,7 +153,7 @@ export default function PartnerZugangPage() {
             <span className="text-2xl font-bold gradient-text">FEELY</span>
           </Link>
           <Link
-            href="/investoren"
+            href="/partner"
             className="flex items-center gap-2 text-gray-400 hover:text-green-400 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />

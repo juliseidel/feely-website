@@ -67,7 +67,7 @@ export default function PitchDeckLayout({
     localStorage.removeItem('feely_pitch_access')
     localStorage.removeItem('feely_pitch_code')
     localStorage.removeItem('feely_pitch_timestamp')
-    router.push('/investoren')
+    router.push('/partner')
   }
 
   if (isLoading) {

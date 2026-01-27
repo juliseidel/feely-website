@@ -120,7 +120,7 @@ export default function ZugangPage() {
             <span className="text-2xl font-bold gradient-text">FEELY</span>
           </Link>
           <Link
-            href="/investoren"
+            href="/partner"
             className="flex items-center gap-2 text-gray-400 hover:text-green-400 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />

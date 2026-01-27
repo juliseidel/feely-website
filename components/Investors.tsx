@@ -20,14 +20,14 @@ import Link from 'next/link'
 
 const marketStats = [
   {
-    value: '€380 Mrd.',
+    value: '€209,7 Mrd.',
     label: 'Deutscher Lebensmittelmarkt',
-    growth: '+2.3% jährlich',
+    growth: 'Volumen 2024 (EHI)',
   },
   {
-    value: '€12 Mrd.',
+    value: '€8,6 Mrd.',
     label: 'Online-Lebensmittelhandel DE',
-    growth: '+18% jährlich',
+    growth: '+11% p.a. (Mintel)',
   },
   {
     value: '47%',
@@ -35,7 +35,7 @@ const marketStats = [
     growth: 'steigend',
   },
   {
-    value: '23 Mio.',
+    value: '23+ Mio.',
     label: 'Menschen mit Allergien/Unverträglichkeiten',
     growth: 'in Deutschland',
   },
@@ -255,7 +255,7 @@ export default function Investors() {
                 des Lebensmitteleinkaufs gestalten wollen.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/investoren" className="btn-primary inline-flex items-center justify-center gap-2">
+                <Link href="/partner" className="btn-primary inline-flex items-center justify-center gap-2">
                   <span>Pitch Deck anfordern</span>
                   <ArrowRight className="w-5 h-5" />
                 </Link>
