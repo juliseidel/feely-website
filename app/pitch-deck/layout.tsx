@@ -24,7 +24,6 @@ const navItems = [
   { name: 'Marktanalyse', href: '/pitch-deck/marktanalyse', icon: BarChart3 },
   { name: 'Einwand-Katalog', href: '/pitch-deck/einwand-katalog', icon: MessageSquareWarning },
   { name: 'Vergleichsanalyse', href: '/pitch-deck/vergleichsanalyse', icon: GitCompare },
-  { name: 'PDF-Dokument', href: '/pitch-deck/investor-dokument', icon: Download },
 ]
 
 export default function PitchDeckLayout({

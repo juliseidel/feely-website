@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -45,7 +45,9 @@ import {
   Star,
   Percent,
   Play,
-  X
+  X,
+  Download,
+  Loader2
 } from 'lucide-react'
 
 // Slide data
@@ -698,7 +700,156 @@ const iconMap: Record<string, any> = {
 export default function PitchDeckPage() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
+  const [pdfProgress, setPdfProgress] = useState(0)
   const containerRef = useRef<HTMLDivElement>(null)
+
+  // PDF Download function
+  const generatePDF = useCallback(async () => {
+    if (isGeneratingPDF) return
+    setIsGeneratingPDF(true)
+    setPdfProgress(0)
+
+    try {
+      // Dynamically import html2pdf
+      const html2pdf = (await import('html2pdf.js')).default
+
+      // Save current slide position
+      const savedSlide = currentSlide
+
+      // Create a hidden container for rendering slides
+      const pdfContainer = document.createElement('div')
+      pdfContainer.style.position = 'fixed'
+      pdfContainer.style.left = '-9999px'
+      pdfContainer.style.top = '0'
+      pdfContainer.style.width = '1280px'
+      pdfContainer.style.background = '#000'
+      pdfContainer.style.color = '#fff'
+      pdfContainer.style.zIndex = '-1'
+      document.body.appendChild(pdfContainer)
+
+      // Build all slides as static HTML (no animations)
+      for (let i = 0; i < slides.length; i++) {
+        const slide = slides[i]
+        setPdfProgress(Math.round(((i + 1) / slides.length) * 100))
+
+        const slideEl = document.createElement('div')
+        slideEl.style.width = '1280px'
+        slideEl.style.minHeight = '720px'
+        slideEl.style.background = '#000'
+        slideEl.style.padding = '48px 64px'
+        slideEl.style.boxSizing = 'border-box'
+        slideEl.style.display = 'flex'
+        slideEl.style.flexDirection = 'column'
+        slideEl.style.justifyContent = 'center'
+        slideEl.style.position = 'relative'
+        slideEl.style.overflow = 'hidden'
+
+        if (i > 0) {
+          slideEl.style.pageBreakBefore = 'always'
+        }
+
+        // Header bar for each slide
+        const header = document.createElement('div')
+        header.style.position = 'absolute'
+        header.style.top = '0'
+        header.style.left = '0'
+        header.style.right = '0'
+        header.style.height = '4px'
+        header.style.background = `linear-gradient(to right, #22c55e ${((i + 1) / slides.length) * 100}%, rgba(255,255,255,0.1) ${((i + 1) / slides.length) * 100}%)`
+        slideEl.appendChild(header)
+
+        // Slide number
+        const slideNum = document.createElement('div')
+        slideNum.style.position = 'absolute'
+        slideNum.style.top = '16px'
+        slideNum.style.right = '24px'
+        slideNum.style.fontSize = '14px'
+        slideNum.style.color = '#6b7280'
+        slideNum.innerHTML = `<span style="color: #22c55e; font-weight: bold;">${i + 1}</span> / ${slides.length}`
+        slideEl.appendChild(slideNum)
+
+        // FEELY logo text (top-left)
+        const logo = document.createElement('div')
+        logo.style.position = 'absolute'
+        logo.style.top = '16px'
+        logo.style.left = '24px'
+        logo.style.fontSize = '16px'
+        logo.style.fontWeight = 'bold'
+        logo.style.background = 'linear-gradient(135deg, #22c55e, #10b981)'
+        logo.style.webkitBackgroundClip = 'text'
+        logo.style.webkitTextFillColor = 'transparent'
+        logo.style.backgroundClip = 'text'
+        logo.innerHTML = 'FEELY — Pitch Deck'
+        slideEl.appendChild(logo)
+
+        // Content area
+        const content = document.createElement('div')
+        content.style.marginTop = '32px'
+        content.style.flex = '1'
+        content.style.display = 'flex'
+        content.style.flexDirection = 'column'
+        content.style.justifyContent = 'center'
+
+        // Render content based on slide type
+        content.innerHTML = renderSlideToHTML(slide, i)
+        slideEl.appendChild(content)
+
+        // Footer
+        const footer = document.createElement('div')
+        footer.style.position = 'absolute'
+        footer.style.bottom = '12px'
+        footer.style.left = '24px'
+        footer.style.right = '24px'
+        footer.style.display = 'flex'
+        footer.style.justifyContent = 'space-between'
+        footer.style.fontSize = '11px'
+        footer.style.color = '#4b5563'
+        footer.innerHTML = '<span>Confidential — Nur für autorisierte Empfänger</span><span>partner@feelyapp.de</span>'
+        slideEl.appendChild(footer)
+
+        pdfContainer.appendChild(slideEl)
+      }
+
+      // Wait for content to render
+      await new Promise(resolve => setTimeout(resolve, 500))
+
+      // Generate PDF
+      const opt = {
+        margin: 0,
+        filename: 'FEELY-Pitch-Deck-2026.pdf',
+        image: { type: 'jpeg' as const, quality: 0.95 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: '#000000',
+          width: 1280,
+          windowWidth: 1280,
+        },
+        jsPDF: {
+          unit: 'px' as const,
+          format: [1280, 720] as [number, number],
+          orientation: 'landscape' as const,
+          hotfixes: ['px_scaling'],
+        },
+        pagebreak: { mode: ['css'] },
+      }
+
+      await (html2pdf() as any).set(opt).from(pdfContainer).save()
+
+      // Cleanup
+      document.body.removeChild(pdfContainer)
+
+      // Restore slide position
+      setCurrentSlide(savedSlide)
+    } catch (error) {
+      console.error('PDF generation error:', error)
+      alert('PDF-Erstellung fehlgeschlagen. Bitte versuchen Sie es erneut.')
+    } finally {
+      setIsGeneratingPDF(false)
+      setPdfProgress(0)
+    }
+  }, [currentSlide, isGeneratingPDF])
 
   // Keyboard navigation
   useEffect(() => {
@@ -804,15 +955,38 @@ export default function PitchDeckPage() {
               ))}
             </div>
 
-            {/* Next Button */}
-            <button
-              onClick={nextSlide}
-              disabled={currentSlide === slides.length - 1}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-green-500/20 hover:bg-green-500/30 text-green-400 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-            >
-              <span className="hidden sm:inline">Weiter</span>
-              <ChevronRight className="w-5 h-5" />
-            </button>
+            {/* Right Side: Download + Next */}
+            <div className="flex items-center gap-2">
+              {/* PDF Download Button */}
+              <button
+                onClick={generatePDF}
+                disabled={isGeneratingPDF}
+                className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-green-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                title="Pitch Deck als PDF herunterladen"
+              >
+                {isGeneratingPDF ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span className="hidden sm:inline text-sm">{pdfProgress}%</span>
+                  </>
+                ) : (
+                  <>
+                    <Download className="w-4 h-4" />
+                    <span className="hidden sm:inline text-sm">PDF</span>
+                  </>
+                )}
+              </button>
+
+              {/* Next Button */}
+              <button
+                onClick={nextSlide}
+                disabled={currentSlide === slides.length - 1}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-green-500/20 hover:bg-green-500/30 text-green-400 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              >
+                <span className="hidden sm:inline">Weiter</span>
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -847,6 +1021,721 @@ export default function PitchDeckPage() {
       `}</style>
     </div>
   )
+}
+
+// Static HTML renderer for PDF export
+function renderSlideToHTML(slide: any, index: number): string {
+  const greenGradient = 'background: linear-gradient(135deg, #22c55e, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;'
+  const glass = 'background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 24px;'
+  const glassSmall = 'background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 16px;'
+
+  switch (slide.type) {
+    case 'cover':
+      return `
+        <div style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 580px;">
+          <h1 style="font-size: 80px; font-weight: 900; ${greenGradient} margin-bottom: 16px;">
+            ${slide.title}
+          </h1>
+          <p style="font-size: 28px; color: #d1d5db; margin-bottom: 12px;">${slide.subtitle}</p>
+          <p style="font-size: 16px; color: #6b7280; max-width: 600px;">${slide.description}</p>
+          <div style="margin-top: 32px; color: #4b5563; font-size: 14px;">
+            Confidential Pitch Deck &bull; Januar 2026
+          </div>
+        </div>`
+
+    case 'problem-intro':
+      return `
+        <div>
+          <span style="color: #22c55e; font-weight: bold; font-size: 18px;">${slide.title}</span>
+          <h2 style="font-size: 48px; font-weight: 900; color: #fff; margin: 16px 0;">${slide.headline}</h2>
+          <p style="font-size: 18px; color: #9ca3af; line-height: 1.7; max-width: 800px;">${slide.content}</p>
+          <div style="margin-top: 24px; color: #22c55e; font-weight: bold; font-size: 20px;">Das muss sich ändern.</div>
+        </div>`
+
+    case 'problem':
+      return `
+        <div style="display: flex; gap: 48px; align-items: center;">
+          <div style="flex: 1;">
+            <div style="display: inline-block; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); border-radius: 20px; padding: 6px 16px; margin-bottom: 16px;">
+              <span style="color: #f87171; font-size: 14px;">Problem #${slide.number}</span>
+            </div>
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff; margin-bottom: 16px;">${slide.title}</h2>
+            <p style="font-size: 16px; color: #9ca3af; margin-bottom: 16px; line-height: 1.6;">${slide.content}</p>
+            <div style="${glassSmall} border-left: 4px solid #ef4444;">
+              <p style="color: #d1d5db; font-weight: 500;">${slide.highlight}</p>
+            </div>
+          </div>
+          <div style="flex: 0 0 320px; text-align: center; ${glass}">
+            <div style="font-size: 52px; font-weight: 900; ${greenGradient} margin-bottom: 8px;">${slide.metric}</div>
+            <div style="color: #6b7280; font-size: 16px;">${slide.metricLabel}</div>
+          </div>
+        </div>`
+
+    case 'problem-summary':
+      return `
+        <div style="text-align: center;">
+          <h2 style="font-size: 42px; font-weight: 900; color: #fff; margin-bottom: 32px;">${slide.title}</h2>
+          <div style="display: flex; gap: 16px; justify-content: center; margin-bottom: 24px; flex-wrap: wrap;">
+            ${slide.problems.map((p: any) => `
+              <div style="${glassSmall} text-align: center; width: 180px;">
+                <div style="color: #f87171; font-weight: bold; margin-bottom: 4px;">${p.label}</div>
+                <div style="color: #6b7280; font-size: 13px;">${p.sub}</div>
+              </div>
+            `).join('')}
+          </div>
+          <div style="${glass} display: inline-block;">
+            <p style="font-size: 18px; color: #d1d5db;">${slide.highlight}</p>
+          </div>
+        </div>`
+
+    case 'solution-intro':
+      return `
+        <div style="text-align: center;">
+          <div style="display: inline-block; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); border-radius: 20px; padding: 6px 16px; margin-bottom: 24px;">
+            <span style="color: #22c55e; font-size: 14px;">${slide.title}</span>
+          </div>
+          <h2 style="font-size: 42px; font-weight: 900; color: #fff; margin-bottom: 8px;">${slide.headline}</h2>
+          <h3 style="font-size: 36px; font-weight: 900; ${greenGradient} margin-bottom: 24px;">${slide.subheadline}</h3>
+          <p style="font-size: 18px; color: #9ca3af; max-width: 600px; margin: 0 auto;">${slide.content}</p>
+          <div style="margin-top: 24px; color: #22c55e; font-weight: bold; font-size: 20px;">In Echtzeit. Bei jedem Einkauf.</div>
+        </div>`
+
+    case 'how-it-works':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 32px;">
+            <span style="color: #22c55e; font-weight: bold; font-size: 18px;">${slide.title}</span>
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff;">${slide.subtitle}</h2>
+          </div>
+          <div style="display: flex; gap: 20px;">
+            ${slide.steps.map((step: any, i: number) => `
+              <div style="${glass} flex: 1; position: relative;">
+                <div style="position: absolute; top: -12px; left: -12px; width: 32px; height: 32px; background: #22c55e; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; font-size: 14px;">${i + 1}</div>
+                <h3 style="font-size: 16px; font-weight: bold; color: #fff; margin-bottom: 8px; margin-top: 8px;">${step.title}</h3>
+                <p style="color: #9ca3af; font-size: 13px;">${step.desc}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>`
+
+    case 'for-providers':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 32px;">
+            <span style="color: #60a5fa; font-weight: bold; font-size: 18px;">${slide.title}</span>
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff; margin-bottom: 8px;">${slide.subtitle}</h2>
+            <p style="color: #f87171;">${slide.problem}</p>
+          </div>
+          <div style="display: flex; gap: 16px; margin-bottom: 24px;">
+            ${slide.features.map((f: any) => `
+              <div style="${glass} flex: 1;">
+                <h3 style="font-size: 16px; font-weight: bold; color: #fff; margin-bottom: 8px;">${f.title}</h3>
+                <p style="color: #9ca3af; font-size: 13px;">${f.desc}</p>
+              </div>
+            `).join('')}
+          </div>
+          <div style="text-align: center;">
+            <div style="display: inline-block; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); border-radius: 16px; padding: 16px 24px;">
+              <p style="color: #22c55e; font-weight: bold; font-size: 16px;">${slide.highlight}</p>
+            </div>
+          </div>
+        </div>`
+
+    case 'feature-deep-dive':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 24px;">
+            <span style="color: #a855f7; font-weight: bold; font-size: 16px;">Feature Deep Dive</span>
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff; margin-bottom: 8px;">${slide.title}</h2>
+            <p style="font-size: 18px; color: #9ca3af;">${slide.subtitle}</p>
+          </div>
+          <div style="display: flex; gap: 16px;">
+            ${slide.keyFeatures.map((f: any, i: number) => `
+              <div style="${glass} flex: 1;">
+                <h4 style="color: #fff; font-weight: bold; margin-bottom: 8px;">${f.title}</h4>
+                <p style="color: #9ca3af; font-size: 13px;">${f.desc}</p>
+              </div>
+            `).join('')}
+          </div>
+          <div style="margin-top: 16px; ${glassSmall} border-left: 4px solid #ef4444; background: rgba(239,68,68,0.05);">
+            <p style="color: #d1d5db; font-size: 14px; font-style: italic;">"${slide.scoreExample.reason}"</p>
+          </div>
+        </div>`
+
+    case 'feature-scanner':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 24px;">
+            <span style="color: #a855f7; font-weight: bold; font-size: 16px;">Feature Deep Dive</span>
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff;">${slide.title}</h2>
+          </div>
+          <div>
+            <p style="color: #9ca3af; font-size: 16px; margin-bottom: 16px;">${slide.scenario}</p>
+            <div style="${glassSmall} border-left: 4px solid #ef4444; margin-bottom: 12px;">
+              <p style="color: #f87171;">${slide.old}</p>
+            </div>
+            <div style="${glassSmall} border-left: 4px solid #22c55e;">
+              <p style="color: #22c55e;">${slide.new}</p>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px;">
+              ${slide.features.map((f: string) => `
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="color: #22c55e;">&#10003;</span>
+                  <span style="color: #d1d5db; font-size: 14px;">${f}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>`
+
+    case 'feature-budget':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 24px;">
+            <span style="color: #a855f7; font-weight: bold; font-size: 16px;">Feature Deep Dive</span>
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff; margin-bottom: 8px;">${slide.title}</h2>
+            <p style="font-size: 18px; color: #9ca3af;">${slide.subtitle}</p>
+          </div>
+          <div style="display: flex; gap: 24px;">
+            <div style="${glass} flex: 1;">
+              <h3 style="color: #fff; font-weight: bold; font-size: 18px; margin-bottom: 12px;">${slide.budget.title}</h3>
+              ${slide.budget.features.map((f: string) => `<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><span style="color: #22c55e;">&#10003;</span><span style="color: #d1d5db; font-size: 14px;">${f}</span></div>`).join('')}
+            </div>
+            <div style="${glass} flex: 1;">
+              <h3 style="color: #fff; font-weight: bold; font-size: 18px; margin-bottom: 12px;">${slide.nutrition.title}</h3>
+              ${slide.nutrition.features.map((f: string) => `<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><span style="color: #60a5fa;">&#10003;</span><span style="color: #d1d5db; font-size: 14px;">${f}</span></div>`).join('')}
+            </div>
+          </div>
+        </div>`
+
+    case 'feature-toogoodtogo':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 32px;">
+            <span style="color: #a855f7; font-weight: bold; font-size: 16px;">Feature Deep Dive</span>
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff;">${slide.title}</h2>
+          </div>
+          <div style="display: flex; gap: 32px; align-items: center;">
+            <div style="text-align: center; flex: 0 0 300px;">
+              <div style="font-size: 52px; font-weight: 900; color: #f87171;">${slide.problem.metric}</div>
+              <div style="color: #9ca3af;">${slide.problem.label}</div>
+            </div>
+            <div style="flex: 1;">
+              <p style="color: #d1d5db; margin-bottom: 16px;">${slide.solution}</p>
+              <div style="${glass}">
+                <h4 style="color: #22c55e; font-weight: bold; margin-bottom: 12px;">WIN-WIN-WIN:</h4>
+                ${slide.benefits.map((b: any) => `<div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span style="color: #9ca3af;">${b.label}:</span><span style="color: #fff; font-weight: 500;">${b.value}</span></div>`).join('')}
+              </div>
+            </div>
+          </div>
+        </div>`
+
+    case 'market-overview':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 32px;">
+            <span style="color: #22c55e; font-weight: bold; font-size: 18px;">${slide.title}</span>
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff;">${slide.subtitle}</h2>
+          </div>
+          <div style="display: flex; gap: 16px; margin-bottom: 24px;">
+            ${slide.stats.map((s: any) => `
+              <div style="${glass} flex: 1; text-align: center;">
+                <div style="font-size: 28px; font-weight: 900; ${greenGradient} margin-bottom: 8px;">${s.value}</div>
+                <div style="color: #fff; font-weight: 500; margin-bottom: 4px;">${s.label}</div>
+                <div style="color: #6b7280; font-size: 12px;">${s.source}</div>
+              </div>
+            `).join('')}
+          </div>
+          <div style="text-align: center;"><div style="${glass} display: inline-block;"><p style="color: #d1d5db;">${slide.highlight}</p></div></div>
+        </div>`
+
+    case 'market-infrastructure':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 32px;">
+            <span style="color: #22c55e; font-weight: bold; font-size: 18px;">Der Markt</span>
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff;">${slide.title}</h2>
+          </div>
+          <div style="display: flex; gap: 20px; margin-bottom: 24px;">
+            ${slide.stats.map((s: any) => `
+              <div style="${glass} flex: 1; text-align: center;">
+                <div style="font-size: 36px; font-weight: 900; ${greenGradient} margin-bottom: 8px;">${s.value}</div>
+                <div style="color: #fff; font-weight: 500; margin-bottom: 4px;">${s.label}</div>
+                <div style="color: #6b7280; font-size: 13px;">${s.sub}</div>
+              </div>
+            `).join('')}
+          </div>
+          <div style="text-align: center;">
+            <div style="display: inline-block; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); border-radius: 16px; padding: 16px 24px;">
+              <p style="color: #22c55e; font-weight: bold; font-size: 16px;">${slide.highlight}</p>
+            </div>
+          </div>
+        </div>`
+
+    case 'market-target':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 32px;">
+            <span style="color: #22c55e; font-weight: bold; font-size: 18px;">Der Markt</span>
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff;">${slide.title}</h2>
+          </div>
+          <div style="display: flex; gap: 16px; margin-bottom: 24px;">
+            ${slide.groups.map((g: any) => `
+              <div style="${glass} flex: 1; text-align: center;">
+                <div style="font-size: 28px; font-weight: 900; color: #f87171; margin-bottom: 8px;">${g.value}</div>
+                <div style="color: #fff; font-weight: 500; margin-bottom: 4px;">${g.label}</div>
+                <div style="color: #6b7280; font-size: 12px;">${g.source}</div>
+              </div>
+            `).join('')}
+          </div>
+          <div style="text-align: center;"><div style="${glass} display: inline-block;"><p style="color: #d1d5db;">${slide.highlight}</p></div></div>
+        </div>`
+
+    case 'health-crisis':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 24px;">
+            <span style="color: #f87171; font-weight: bold; font-size: 16px;">Die Realität</span>
+            <h2 style="font-size: 36px; font-weight: 900; color: #fff; margin-bottom: 8px;">${slide.title}</h2>
+            <p style="color: #9ca3af;">${slide.subtitle}</p>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+            ${slide.sections.map((section: any) => `
+              <div style="flex: 1; min-width: 350px; ${glassSmall} background: rgba(255,255,255,0.03);">
+                <h3 style="color: ${section.color === 'red' ? '#f87171' : section.color === 'orange' ? '#fb923c' : section.color === 'purple' ? '#a855f7' : section.color === 'blue' ? '#60a5fa' : '#22c55e'}; font-weight: bold; margin-bottom: 12px;">${section.title}</h3>
+                ${section.stats.map((stat: any) => `<div style="display: flex; gap: 12px; margin-bottom: 8px;"><span style="font-weight: 900; color: ${section.color === 'red' ? '#f87171' : section.color === 'orange' ? '#fb923c' : '#a855f7'}; white-space: nowrap; font-size: 18px;">${stat.value}</span><div><p style="color: #d1d5db; font-size: 13px;">${stat.label}</p><p style="color: #6b7280; font-size: 11px;">${stat.source}</p></div></div>`).join('')}
+              </div>
+            `).join('')}
+          </div>
+          <div style="${glass} border: 1px solid rgba(34,197,94,0.2);">
+            <h4 style="color: #22c55e; font-weight: bold; margin-bottom: 8px;">${slide.conclusion.title}</h4>
+            ${slide.conclusion.points.map((p: string) => `<div style="display: flex; gap: 8px; margin-bottom: 4px;"><span style="color: #22c55e;">&#10003;</span><span style="color: #d1d5db; font-size: 14px;">${p}</span></div>`).join('')}
+            <div style="background: rgba(34,197,94,0.1); border-radius: 12px; padding: 12px; margin-top: 8px; text-align: center;">
+              <p style="color: #22c55e; font-weight: 600;">${slide.conclusion.highlight}</p>
+            </div>
+          </div>
+        </div>`
+
+    case 'instacart-proof':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 32px;">
+            <span style="color: #60a5fa; font-weight: bold; font-size: 18px;">Der Beweis</span>
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff;">${slide.title}</h2>
+          </div>
+          <div style="display: flex; gap: 32px;">
+            <div style="flex: 1;">
+              <h3 style="color: #60a5fa; font-weight: bold; margin-bottom: 16px;">Instacart 2024</h3>
+              <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                ${slide.metrics.map((m: any) => `<div style="${glassSmall} text-align: center; flex: 1; min-width: 120px;"><div style="font-size: 20px; font-weight: 900; color: #fff;">${m.value}</div><div style="color: #6b7280; font-size: 13px;">${m.label}</div></div>`).join('')}
+              </div>
+            </div>
+            <div style="flex: 1;">
+              <h3 style="color: #f87171; font-weight: bold; margin-bottom: 16px;">Was Instacart NICHT hat:</h3>
+              ${slide.difference.map((d: string) => `<div style="display: flex; gap: 8px; margin-bottom: 8px;"><span style="color: #f87171;">&#10007;</span><span style="color: #d1d5db;">${d}</span></div>`).join('')}
+              <div style="${glassSmall} background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); margin-top: 16px; text-align: center;">
+                <p style="color: #22c55e; font-weight: bold;">${slide.conclusion}</p>
+              </div>
+            </div>
+          </div>
+        </div>`
+
+    case 'competition':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 24px;">
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff; margin-bottom: 8px;">${slide.title}</h2>
+            <p style="color: #9ca3af;">${slide.subtitle}</p>
+          </div>
+          <table style="width: 100%; ${glass} border-collapse: collapse;">
+            <thead>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <th style="text-align: left; padding: 12px 16px; color: #9ca3af;">Unternehmen</th>
+                ${slide.features.map((f: string) => `<th style="text-align: center; padding: 12px 8px; color: #9ca3af; font-size: 13px;">${f}</th>`).join('')}
+              </tr>
+            </thead>
+            <tbody>
+              ${slide.competitors.map((c: any) => `
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); ${c.name === 'FEELY' ? 'background: rgba(34,197,94,0.1);' : ''}">
+                  <td style="padding: 12px 16px; font-weight: bold; color: ${c.name === 'FEELY' ? '#22c55e' : '#fff'};">${c.name}</td>
+                  <td style="text-align: center; padding: 12px 8px; color: ${c.multiRetail ? '#22c55e' : '#f87171'};">${c.multiRetail ? '&#10003;' : '&#10007;'}</td>
+                  <td style="text-align: center; padding: 12px 8px; color: ${c.health ? '#22c55e' : '#f87171'};">${c.health ? '&#10003;' : '&#10007;'}</td>
+                  <td style="text-align: center; padding: 12px 8px; color: ${c.farms === true ? '#22c55e' : c.farms === 'partial' ? '#eab308' : '#f87171'};">${c.farms === true ? '&#10003;' : c.farms === 'partial' ? '(~)' : '&#10007;'}</td>
+                  <td style="text-align: center; padding: 12px 8px; color: ${c.rural === true ? '#22c55e' : c.rural === 'partial' ? '#eab308' : '#f87171'};">${c.rural === true ? '&#10003;' : c.rural === 'partial' ? '(~)' : '&#10007;'}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+          <div style="text-align: center; margin-top: 24px;">
+            <div style="display: inline-block; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); border-radius: 16px; padding: 16px 24px;">
+              <p style="color: #22c55e; font-weight: bold; font-size: 18px;">${slide.highlight}</p>
+            </div>
+          </div>
+        </div>`
+
+    case 'business-model-overview':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 32px;">
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff; margin-bottom: 8px;">${slide.title}</h2>
+            <p style="color: #9ca3af;">${slide.subtitle}</p>
+          </div>
+          <div style="display: flex; gap: 16px; margin-bottom: 24px;">
+            ${slide.streams.map((s: any) => `
+              <div style="${glass} flex: 1; text-align: center;">
+                <div style="font-size: 36px; font-weight: 900; ${greenGradient} margin-bottom: 8px;">${s.percent}%</div>
+                <div style="color: #fff; font-weight: 500;">${s.name}</div>
+              </div>
+            `).join('')}
+          </div>
+          <div style="text-align: center;"><p style="color: #9ca3af;">${slide.note}</p></div>
+        </div>`
+
+    case 'premium-model':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 24px;">
+            <span style="color: #22c55e; font-weight: bold; font-size: 16px;">Revenue Stream #1</span>
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff; margin-bottom: 8px;">${slide.title}</h2>
+            <div style="font-size: 28px; font-weight: 900; ${greenGradient}">${slide.price}</div>
+            <div style="color: #6b7280;">${slide.yearlyPrice}</div>
+          </div>
+          <table style="width: 100%; max-width: 600px; margin: 0 auto; ${glass} border-collapse: collapse;">
+            <thead><tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"><th style="text-align: left; padding: 10px 16px; color: #9ca3af;">Feature</th><th style="text-align: center; padding: 10px; color: #9ca3af;">Free</th><th style="text-align: center; padding: 10px; color: #22c55e;">Premium</th></tr></thead>
+            <tbody>
+              ${slide.comparison.map((item: any) => `<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);"><td style="padding: 10px 16px; color: #d1d5db;">${item.feature}</td><td style="text-align: center; padding: 10px; color: ${item.free ? '#22c55e' : '#4b5563'};">${item.free ? '&#10003;' : '&#10007;'}</td><td style="text-align: center; padding: 10px; color: ${item.premium ? '#22c55e' : '#4b5563'};">${item.premium ? '&#10003;' : '&#10007;'}</td></tr>`).join('')}
+            </tbody>
+          </table>
+          <div style="text-align: center; margin-top: 16px;"><span style="color: #22c55e;">${slide.target}</span></div>
+        </div>`
+
+    case 'transaction-fees':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 32px;">
+            <span style="color: #22c55e; font-weight: bold; font-size: 16px;">Revenue Stream #2</span>
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff;">${slide.title}</h2>
+          </div>
+          <div style="display: flex; gap: 24px; margin-bottom: 24px;">
+            ${slide.fees.map((f: any) => `<div style="${glass} flex: 1; text-align: center;"><div style="font-size: 36px; font-weight: 900; ${greenGradient} margin-bottom: 8px;">${f.percent}</div><div style="color: #fff; font-weight: bold; margin-bottom: 4px;">${f.type}</div><div style="color: #6b7280; font-size: 13px;">${f.note}</div></div>`).join('')}
+          </div>
+          <div style="${glass} max-width: 400px; margin: 0 auto;">
+            <h4 style="color: #fff; font-weight: bold; margin-bottom: 12px;">Beispielrechnung:</h4>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span style="color: #9ca3af;">Warenkorb:</span><span style="color: #fff;">${slide.example.basket}</span></div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span style="color: #9ca3af;">Avg. Fee:</span><span style="color: #fff;">${slide.example.avgFee}</span></div>
+            <div style="display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px;"><span style="color: #9ca3af;">Pro Bestellung:</span><span style="color: #22c55e; font-weight: bold;">${slide.example.perOrder}</span></div>
+          </div>
+          <div style="text-align: center; margin-top: 16px;"><p style="color: #6b7280; font-size: 13px;">${slide.reference}</p></div>
+        </div>`
+
+    case 'advertising':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 24px;">
+            <span style="color: #22c55e; font-weight: bold; font-size: 16px;">Revenue Stream #3</span>
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff; margin-bottom: 8px;">${slide.title}</h2>
+            <p style="font-size: 18px; font-weight: bold; color: #60a5fa;">${slide.highlight}</p>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+            ${slide.placements.map((p: any) => `<div style="${glassSmall} flex: 1; min-width: 240px;"><h4 style="color: #fff; font-weight: bold; font-size: 14px; margin-bottom: 4px;">${p.title}</h4><p style="color: #9ca3af; font-size: 12px;">${p.desc}</p></div>`).join('')}
+          </div>
+          <div style="${glassSmall} border-left: 4px solid #60a5fa; background: rgba(96,165,250,0.05);">
+            <p style="color: #d1d5db; font-size: 14px;">${slide.reason}</p>
+          </div>
+          <div style="${glassSmall} background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.2); margin-top: 12px;">
+            <p style="color: #c084fc; font-size: 14px;">${slide.unique}</p>
+          </div>
+        </div>`
+
+    case 'b2b-services':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 32px;">
+            <span style="color: #22c55e; font-weight: bold; font-size: 16px;">Revenue Stream #4</span>
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff;">${slide.title}</h2>
+          </div>
+          <div style="display: flex; gap: 20px;">
+            ${slide.tiers.map((t: any, i: number) => `
+              <div style="${glass} flex: 1; ${i === 1 ? 'border: 2px solid rgba(34,197,94,0.5);' : ''}">
+                <h3 style="font-size: 18px; font-weight: bold; color: ${i === 1 ? '#22c55e' : '#fff'}; margin-bottom: 12px;">${t.name}</h3>
+                ${t.features.map((f: string) => `<div style="display: flex; gap: 8px; margin-bottom: 8px;"><span style="color: ${i === 1 ? '#22c55e' : '#9ca3af'};">&#10003;</span><span style="color: #d1d5db; font-size: 13px;">${f}</span></div>`).join('')}
+              </div>
+            `).join('')}
+          </div>
+        </div>`
+
+    case 'unit-economics':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 32px;">
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff;">${slide.title}</h2>
+          </div>
+          <div style="display: flex; gap: 20px; margin-bottom: 24px;">
+            <div style="${glass} flex: 1;">
+              <h3 style="color: #22c55e; font-weight: bold; margin-bottom: 12px;">${slide.revenue.title}</h3>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span style="color: #9ca3af;">Free Nutzer:</span><span style="color: #fff; font-weight: bold;">${slide.revenue.free}</span></div>
+              <div style="display: flex; justify-content: space-between;"><span style="color: #9ca3af;">Premium Nutzer:</span><span style="color: #22c55e; font-weight: bold;">${slide.revenue.premium}</span></div>
+            </div>
+            <div style="${glass} flex: 1;">
+              <h3 style="color: #f87171; font-weight: bold; margin-bottom: 12px;">${slide.costs.title}</h3>
+              <div style="font-size: 28px; font-weight: 900; color: #fff;">${slide.costs.total}</div>
+            </div>
+            <div style="${glass} flex: 1;">
+              <h3 style="color: #60a5fa; font-weight: bold; margin-bottom: 12px;">Contribution Margin</h3>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span style="color: #9ca3af;">Free:</span><span style="color: #22c55e; font-weight: bold;">${slide.margin.free}</span></div>
+              <div style="display: flex; justify-content: space-between;"><span style="color: #9ca3af;">Premium:</span><span style="color: #22c55e; font-weight: bold;">${slide.margin.premium}</span></div>
+            </div>
+          </div>
+          <div style="text-align: center;">
+            <div style="display: inline-block; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); border-radius: 16px; padding: 16px 24px;">
+              <p style="color: #22c55e; font-weight: bold; font-size: 18px;">${slide.conclusion}</p>
+            </div>
+          </div>
+        </div>`
+
+    case 'traction':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 32px;">
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff;">${slide.title}</h2>
+          </div>
+          <div style="display: flex; gap: 24px; margin-bottom: 24px;">
+            <div style="${glass} flex: 1;">
+              <h3 style="color: #22c55e; font-weight: bold; margin-bottom: 12px;">&#10003; Fertiggestellt</h3>
+              ${slide.completed.map((item: string) => `<div style="display: flex; gap: 8px; margin-bottom: 8px;"><span style="color: #22c55e;">&#10003;</span><span style="color: #d1d5db; font-size: 14px;">${item}</span></div>`).join('')}
+            </div>
+            <div style="${glass} flex: 1;">
+              <h3 style="color: #eab308; font-weight: bold; margin-bottom: 12px;">&#9202; In Progress</h3>
+              ${slide.inProgress.map((item: string) => `<div style="display: flex; gap: 8px; margin-bottom: 8px;"><span style="color: #eab308;">&#9675;</span><span style="color: #d1d5db; font-size: 14px;">${item}</span></div>`).join('')}
+            </div>
+          </div>
+          <div style="text-align: center;">
+            <div style="display: inline-block; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); border-radius: 16px; padding: 16px 24px;">
+              <p style="color: #22c55e; font-weight: bold; font-size: 16px;">${slide.highlight}</p>
+            </div>
+          </div>
+        </div>`
+
+    case 'ecosystem':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 24px;">
+            <span style="color: #22c55e; font-weight: bold; font-size: 16px;">Status</span>
+            <h2 style="font-size: 36px; font-weight: 900; color: #fff; margin-bottom: 8px;">${slide.title}</h2>
+            <p style="font-size: 16px; color: #9ca3af;">${slide.subtitle}</p>
+          </div>
+          <div style="display: flex; gap: 16px; margin-bottom: 16px;">
+            ${slide.pillars.map((p: any) => `
+              <div style="${glass} flex: 1;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <h3 style="font-weight: bold; color: #fff; font-size: 15px;">${p.title}</h3>
+                  <span style="background: rgba(34,197,94,0.2); color: #22c55e; padding: 2px 8px; border-radius: 12px; font-size: 11px;">${p.status}</span>
+                </div>
+                <p style="color: #22c55e; font-size: 12px; margin-bottom: 4px;">${p.subtitle}</p>
+                <p style="color: #9ca3af; font-size: 12px; margin-bottom: 8px;">${p.description}</p>
+                ${p.features.slice(0, 3).map((f: string) => `<div style="display: flex; gap: 6px; margin-bottom: 4px;"><span style="color: #22c55e; font-size: 12px;">&#10003;</span><span style="color: #d1d5db; font-size: 12px;">${f}</span></div>`).join('')}
+              </div>
+            `).join('')}
+          </div>
+          <div style="${glass} border: 1px solid rgba(34,197,94,0.2);">
+            <h4 style="color: #22c55e; font-weight: bold; margin-bottom: 8px; text-align: center;">${slide.conclusion.title}</h4>
+            <div style="display: flex; gap: 16px; justify-content: center; margin-bottom: 8px;">
+              ${slide.conclusion.stats.map((s: any) => `<div style="text-align: center;"><div style="font-size: 20px; font-weight: 900; color: #fff;">${s.value}</div><div style="color: #22c55e; font-size: 11px;">${s.label}</div></div>`).join('')}
+            </div>
+            <div style="background: rgba(34,197,94,0.1); border-radius: 12px; padding: 12px; text-align: center;">
+              <p style="color: #22c55e; font-weight: 600;">${slide.conclusion.highlight}</p>
+            </div>
+          </div>
+        </div>`
+
+    case 'roadmap':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 32px;">
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff;">${slide.title}</h2>
+          </div>
+          <div style="display: flex; gap: 16px;">
+            ${slide.phases.map((p: any) => `
+              <div style="${glass} flex: 1; ${p.status === 'current' ? 'border: 2px solid rgba(34,197,94,0.5);' : ''}">
+                <span style="display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 12px; ${p.status === 'current' ? 'background: rgba(34,197,94,0.2); color: #22c55e;' : 'background: rgba(255,255,255,0.1); color: #9ca3af;'} margin-bottom: 12px;">${p.status === 'current' ? 'Aktuell' : 'Geplant'}</span>
+                <h3 style="font-size: 16px; font-weight: bold; color: #fff; margin-bottom: 4px;">${p.name}</h3>
+                <p style="color: #6b7280; font-size: 13px; margin-bottom: 12px;">${p.timeline}</p>
+                ${p.goals.map((g: string) => `<div style="display: flex; gap: 6px; margin-bottom: 6px;"><span style="color: ${p.status === 'current' ? '#22c55e' : '#6b7280'}; font-size: 13px;">&#10003;</span><span style="color: #9ca3af; font-size: 13px;">${g}</span></div>`).join('')}
+              </div>
+            `).join('')}
+          </div>
+        </div>`
+
+    case 'team-search':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 24px;">
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff; margin-bottom: 8px;">${slide.title}</h2>
+            <p style="font-size: 18px; color: #22c55e; font-weight: bold;">${slide.subtitle}</p>
+            <p style="color: #9ca3af; margin-top: 12px;">${slide.intro}</p>
+          </div>
+          <div style="display: flex; gap: 16px;">
+            ${slide.roles.map((r: any) => `
+              <div style="${glass} flex: 1;">
+                <h3 style="font-size: 18px; font-weight: bold; color: #fff; margin-bottom: 8px;">${r.title}</h3>
+                <div style="display: inline-block; background: rgba(34,197,94,0.2); border-radius: 12px; padding: 4px 12px; margin-bottom: 12px;">
+                  <span style="color: #22c55e; font-size: 13px; font-weight: bold;">Equity: ${r.equity}</span>
+                </div>
+                ${r.requirements.map((req: string) => `<div style="display: flex; gap: 6px; margin-bottom: 6px;"><span style="color: #9ca3af;">&#10003;</span><span style="color: #9ca3af; font-size: 13px;">${req}</span></div>`).join('')}
+              </div>
+            `).join('')}
+          </div>
+        </div>`
+
+    case 'founder':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 24px;">
+            <div style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid rgba(34,197,94,0.3); margin: 0 auto 12px; overflow: hidden; background: #1a1a1a;">
+              <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #22c55e; font-size: 32px; font-weight: 900;">J</div>
+            </div>
+            <p style="color: #22c55e; font-weight: 500;">Juli Seidel</p>
+            <p style="color: #6b7280; font-size: 13px;">Gründer & Entwickler</p>
+            <h2 style="font-size: 32px; font-weight: 900; color: #fff; margin-top: 12px;">${slide.title}</h2>
+            <p style="color: #9ca3af;">${slide.subtitle}</p>
+          </div>
+          <div style="display: flex; gap: 20px;">
+            <div style="${glass} flex: 1;">
+              <p style="color: #d1d5db; font-style: italic; font-size: 14px; margin-bottom: 12px;">"${slide.story}"</p>
+              <h4 style="color: #fff; font-weight: bold; font-size: 14px; margin-bottom: 8px;">Meine Geschichte:</h4>
+              ${slide.background.map((b: string) => `<div style="display: flex; gap: 6px; margin-bottom: 6px;"><span style="color: #f87171;">&#9829;</span><span style="color: #9ca3af; font-size: 12px;">${b}</span></div>`).join('')}
+            </div>
+            <div style="flex: 1;">
+              <h4 style="color: #fff; font-weight: bold; font-size: 14px; margin-bottom: 8px;">Was ich mitbringe:</h4>
+              ${slide.strengths.map((s: any) => `<div style="${glassSmall} margin-bottom: 8px;"><h5 style="color: #22c55e; font-weight: bold; font-size: 13px; margin-bottom: 4px;">${s.title}</h5><p style="color: #9ca3af; font-size: 12px;">${s.desc}</p></div>`).join('')}
+            </div>
+          </div>
+        </div>`
+
+    case 'investment':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 32px;">
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff; margin-bottom: 12px;">${slide.title}</h2>
+            <div style="font-size: 42px; font-weight: 900; ${greenGradient} margin-bottom: 8px;">${slide.amount}</div>
+            <p style="color: #9ca3af;">${slide.round}</p>
+          </div>
+          <div style="display: flex; gap: 24px;">
+            <div style="${glass} flex: 1;">
+              <h3 style="color: #fff; font-weight: bold; margin-bottom: 16px;">Mittelverwendung:</h3>
+              ${slide.useOfFunds.map((item: any) => `
+                <div style="margin-bottom: 12px;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                    <span style="color: #d1d5db;">${item.category}</span>
+                    <span style="color: #22c55e; font-weight: bold;">${item.percent}%</span>
+                  </div>
+                  <div style="height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
+                    <div style="height: 100%; width: ${item.percent}%; background: linear-gradient(to right, #22c55e, #10b981); border-radius: 4px;"></div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+            <div style="${glass} flex: 1;">
+              <h3 style="color: #fff; font-weight: bold; margin-bottom: 16px;">Was Investoren bekommen:</h3>
+              ${slide.investorsBenefit.map((b: string) => `<div style="display: flex; gap: 8px; margin-bottom: 10px;"><span style="color: #22c55e;">&#10003;</span><span style="color: #d1d5db;">${b}</span></div>`).join('')}
+            </div>
+          </div>
+        </div>`
+
+    case 'why-now':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 32px;">
+            <span style="color: #22c55e; font-weight: bold; font-size: 16px;">Timing</span>
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff;">${slide.title}</h2>
+          </div>
+          <div style="max-width: 700px; margin: 0 auto;">
+            ${slide.reasons.map((r: any, i: number) => `
+              <div style="${glassSmall} margin-bottom: 12px; display: flex; gap: 16px; align-items: flex-start;">
+                <div style="width: 32px; height: 32px; background: rgba(34,197,94,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                  <span style="color: #22c55e; font-weight: bold;">${i + 1}</span>
+                </div>
+                <div>
+                  <h4 style="color: #fff; font-weight: bold;">${r.title}</h4>
+                  <p style="color: #9ca3af; font-size: 14px;">${r.desc}</p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+          <div style="text-align: center; margin-top: 24px;">
+            <div style="display: inline-block; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); border-radius: 16px; padding: 16px 24px;">
+              <p style="color: #22c55e; font-weight: bold; font-size: 16px;">${slide.conclusion}</p>
+            </div>
+          </div>
+        </div>`
+
+    case 'risks':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 24px;">
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff; margin-bottom: 8px;">${slide.title}</h2>
+            <p style="color: #9ca3af;">Ehrliche Einschätzung</p>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 16px;">
+            ${slide.risks.map((r: any) => `
+              <div style="${glass} flex: 1; min-width: 45%;">
+                <h3 style="color: #eab308; font-weight: bold; margin-bottom: 8px;">${r.risk}</h3>
+                <p style="color: #f87171; font-size: 14px; margin-bottom: 8px;">"${r.question}"</p>
+                <div style="background: rgba(34,197,94,0.1); border-radius: 12px; padding: 12px; border: 1px solid rgba(34,197,94,0.2);">
+                  <p style="color: #22c55e; font-size: 13px;"><strong>Mitigierung:</strong> ${r.mitigation}</p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+          <div style="text-align: center;"><p style="color: #9ca3af;">${slide.conclusion}</p></div>
+        </div>`
+
+    case 'cta':
+      return `
+        <div style="text-align: center;">
+          <h2 style="font-size: 42px; font-weight: 900; color: #fff; margin-bottom: 24px;">${slide.title}</h2>
+          <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 24px; max-width: 700px; margin-left: auto; margin-right: auto;">
+            ${slide.summary.map((item: string) => `
+              <div style="${glassSmall} text-align: left; width: 200px;">
+                <span style="color: #22c55e;">&#10003;</span>
+                <p style="color: #d1d5db; font-size: 13px; margin-top: 4px;">${item}</p>
+              </div>
+            `).join('')}
+          </div>
+          <p style="font-size: 24px; font-weight: bold; color: #fff; margin-bottom: 24px;">${slide.question}</p>
+          <div style="${glass} max-width: 600px; margin: 0 auto;">
+            <p style="color: #d1d5db; font-style: italic; margin-bottom: 8px;">${slide.quote}</p>
+            <p style="color: #22c55e; font-weight: 500;">${slide.author}</p>
+          </div>
+        </div>`
+
+    case 'appendix':
+      return `
+        <div>
+          <div style="text-align: center; margin-bottom: 32px;">
+            <h2 style="font-size: 42px; font-weight: 900; color: #fff;">${slide.title}</h2>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; max-width: 700px; margin: 0 auto 32px;">
+            ${slide.resources.map((r: any) => `
+              <div style="${glass} width: 300px;">
+                <h3 style="color: #fff; font-weight: bold; margin-bottom: 4px;">${r.name}</h3>
+                <p style="color: #9ca3af; font-size: 13px;">${r.desc}</p>
+              </div>
+            `).join('')}
+          </div>
+          <div style="text-align: center; ${glass} display: inline-block;">
+            <div style="margin-bottom: 8px;">
+              <span style="color: #22c55e;">${slide.contact.email}</span>
+              <span style="color: #4b5563; margin: 0 12px;">|</span>
+              <span style="color: #22c55e;">${slide.contact.website}</span>
+            </div>
+            <p style="color: #6b7280; font-size: 13px;">${slide.disclaimer}</p>
+          </div>
+        </div>`
+
+    default:
+      return `<div style="text-align: center; color: #fff; font-size: 24px;">${slide.title || 'Slide'}</div>`
+  }
 }
 
 // Slide renderer function
