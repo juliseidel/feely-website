@@ -45,7 +45,8 @@ import {
   Star,
   Percent,
   Play,
-  X
+  X,
+  Download
 } from 'lucide-react'
 
 // Slide data
@@ -803,6 +804,16 @@ export default function PitchDeckPage() {
                 />
               ))}
             </div>
+
+            {/* PDF Download Button */}
+            <a
+              href="/FEELY-Pitch-Deck.pdf"
+              download="FEELY-Pitch-Deck.pdf"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-all"
+            >
+              <Download className="w-5 h-5" />
+              <span className="hidden sm:inline">PDF</span>
+            </a>
 
             {/* Next Button */}
             <button
