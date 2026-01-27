@@ -704,39 +704,48 @@ export default function PitchDeckPage() {
   const [pdfProgress, setPdfProgress] = useState(0)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  // PDF Download function
+  // PDF Download function - renders each slide individually with html2canvas + jsPDF
   const generatePDF = useCallback(async () => {
     if (isGeneratingPDF) return
     setIsGeneratingPDF(true)
     setPdfProgress(0)
 
     try {
-      // Dynamically import html2pdf
-      const html2pdf = (await import('html2pdf.js')).default
+      // Dynamically import jsPDF and html2canvas
+      const { jsPDF } = await import('jspdf')
+      const html2canvas = (await import('html2canvas')).default
 
-      // Save current slide position
-      const savedSlide = currentSlide
+      // Create PDF in landscape 16:9
+      const pdf = new jsPDF({
+        orientation: 'landscape',
+        unit: 'px',
+        format: [1280, 720],
+        hotfixes: ['px_scaling'],
+      })
 
-      // Create a hidden container for rendering slides
-      const pdfContainer = document.createElement('div')
-      pdfContainer.style.position = 'fixed'
-      pdfContainer.style.left = '-9999px'
-      pdfContainer.style.top = '0'
-      pdfContainer.style.width = '1280px'
-      pdfContainer.style.background = '#000'
-      pdfContainer.style.color = '#fff'
-      pdfContainer.style.zIndex = '-1'
-      document.body.appendChild(pdfContainer)
+      // Create a visible rendering container (covered by overlay)
+      const renderContainer = document.createElement('div')
+      renderContainer.style.position = 'fixed'
+      renderContainer.style.top = '0'
+      renderContainer.style.left = '0'
+      renderContainer.style.width = '1280px'
+      renderContainer.style.height = '720px'
+      renderContainer.style.zIndex = '9998'
+      renderContainer.style.overflow = 'hidden'
+      renderContainer.style.opacity = '0.01' // nearly invisible but still rendered
+      renderContainer.style.pointerEvents = 'none'
+      document.body.appendChild(renderContainer)
 
-      // Build all slides as static HTML (no animations)
+      // Render each slide one by one
       for (let i = 0; i < slides.length; i++) {
         const slide = slides[i]
         setPdfProgress(Math.round(((i + 1) / slides.length) * 100))
 
+        // Create slide element
         const slideEl = document.createElement('div')
         slideEl.style.width = '1280px'
-        slideEl.style.minHeight = '720px'
-        slideEl.style.background = '#000'
+        slideEl.style.height = '720px'
+        slideEl.style.background = '#000000'
         slideEl.style.padding = '48px 64px'
         slideEl.style.boxSizing = 'border-box'
         slideEl.style.display = 'flex'
@@ -744,104 +753,67 @@ export default function PitchDeckPage() {
         slideEl.style.justifyContent = 'center'
         slideEl.style.position = 'relative'
         slideEl.style.overflow = 'hidden'
+        slideEl.style.fontFamily = 'system-ui, -apple-system, sans-serif'
 
-        if (i > 0) {
-          slideEl.style.pageBreakBefore = 'always'
-        }
-
-        // Header bar for each slide
+        // Progress bar
         const header = document.createElement('div')
-        header.style.position = 'absolute'
-        header.style.top = '0'
-        header.style.left = '0'
-        header.style.right = '0'
-        header.style.height = '4px'
-        header.style.background = `linear-gradient(to right, #22c55e ${((i + 1) / slides.length) * 100}%, rgba(255,255,255,0.1) ${((i + 1) / slides.length) * 100}%)`
+        header.style.cssText = `position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, #22c55e ${((i + 1) / slides.length) * 100}%, rgba(255,255,255,0.1) ${((i + 1) / slides.length) * 100}%);`
         slideEl.appendChild(header)
 
         // Slide number
         const slideNum = document.createElement('div')
-        slideNum.style.position = 'absolute'
-        slideNum.style.top = '16px'
-        slideNum.style.right = '24px'
-        slideNum.style.fontSize = '14px'
-        slideNum.style.color = '#6b7280'
+        slideNum.style.cssText = 'position: absolute; top: 16px; right: 24px; font-size: 14px; color: #6b7280;'
         slideNum.innerHTML = `<span style="color: #22c55e; font-weight: bold;">${i + 1}</span> / ${slides.length}`
         slideEl.appendChild(slideNum)
 
-        // FEELY logo text (top-left)
+        // FEELY logo
         const logo = document.createElement('div')
-        logo.style.position = 'absolute'
-        logo.style.top = '16px'
-        logo.style.left = '24px'
-        logo.style.fontSize = '16px'
-        logo.style.fontWeight = 'bold'
-        logo.style.background = 'linear-gradient(135deg, #22c55e, #10b981)'
-        logo.style.webkitBackgroundClip = 'text'
-        logo.style.webkitTextFillColor = 'transparent'
-        logo.style.backgroundClip = 'text'
-        logo.innerHTML = 'FEELY — Pitch Deck'
+        logo.style.cssText = 'position: absolute; top: 16px; left: 24px; font-size: 16px; font-weight: bold; color: #22c55e;'
+        logo.textContent = 'FEELY — Pitch Deck'
         slideEl.appendChild(logo)
 
-        // Content area
+        // Content
         const content = document.createElement('div')
-        content.style.marginTop = '32px'
-        content.style.flex = '1'
-        content.style.display = 'flex'
-        content.style.flexDirection = 'column'
-        content.style.justifyContent = 'center'
-
-        // Render content based on slide type
+        content.style.cssText = 'margin-top: 32px; flex: 1; display: flex; flex-direction: column; justify-content: center;'
         content.innerHTML = renderSlideToHTML(slide, i)
         slideEl.appendChild(content)
 
         // Footer
         const footer = document.createElement('div')
-        footer.style.position = 'absolute'
-        footer.style.bottom = '12px'
-        footer.style.left = '24px'
-        footer.style.right = '24px'
-        footer.style.display = 'flex'
-        footer.style.justifyContent = 'space-between'
-        footer.style.fontSize = '11px'
-        footer.style.color = '#4b5563'
+        footer.style.cssText = 'position: absolute; bottom: 12px; left: 24px; right: 24px; display: flex; justify-content: space-between; font-size: 11px; color: #4b5563;'
         footer.innerHTML = '<span>Confidential — Nur für autorisierte Empfänger</span><span>partner@feelyapp.de</span>'
         slideEl.appendChild(footer)
 
-        pdfContainer.appendChild(slideEl)
-      }
+        // Clear and add to visible container
+        renderContainer.innerHTML = ''
+        renderContainer.appendChild(slideEl)
 
-      // Wait for content to render
-      await new Promise(resolve => setTimeout(resolve, 500))
+        // Wait for DOM to render
+        await new Promise(resolve => setTimeout(resolve, 100))
 
-      // Generate PDF
-      const opt = {
-        margin: 0,
-        filename: 'FEELY-Pitch-Deck-2026.pdf',
-        image: { type: 'jpeg' as const, quality: 0.95 },
-        html2canvas: {
+        // Capture with html2canvas
+        const canvas = await html2canvas(slideEl, {
           scale: 2,
           useCORS: true,
           backgroundColor: '#000000',
           width: 1280,
-          windowWidth: 1280,
-        },
-        jsPDF: {
-          unit: 'px' as const,
-          format: [1280, 720] as [number, number],
-          orientation: 'landscape' as const,
-          hotfixes: ['px_scaling'],
-        },
-        pagebreak: { mode: ['css'] },
+          height: 720,
+          logging: false,
+        })
+
+        // Add to PDF
+        const imgData = canvas.toDataURL('image/jpeg', 0.92)
+        if (i > 0) {
+          pdf.addPage([1280, 720], 'landscape')
+        }
+        pdf.addImage(imgData, 'JPEG', 0, 0, 1280, 720)
       }
 
-      await (html2pdf() as any).set(opt).from(pdfContainer).save()
-
       // Cleanup
-      document.body.removeChild(pdfContainer)
+      document.body.removeChild(renderContainer)
 
-      // Restore slide position
-      setCurrentSlide(savedSlide)
+      // Save
+      pdf.save('FEELY-Pitch-Deck-2026.pdf')
     } catch (error) {
       console.error('PDF generation error:', error)
       alert('PDF-Erstellung fehlgeschlagen. Bitte versuchen Sie es erneut.')
@@ -849,7 +821,7 @@ export default function PitchDeckPage() {
       setIsGeneratingPDF(false)
       setPdfProgress(0)
     }
-  }, [currentSlide, isGeneratingPDF])
+  }, [isGeneratingPDF])
 
   // Keyboard navigation
   useEffect(() => {
