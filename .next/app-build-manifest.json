@@ -1,172 +1,200 @@
 {
   "pages": {
     "/_not-found": [
-      "static/chunks/webpack-7c4ff15672e31cb8.js",
+      "static/chunks/webpack-a225c01a14b0aee8.js",
       "static/chunks/fd9d1056-803f3afc98c64581.js",
       "static/chunks/69-684234321b8ea2ca.js",
       "static/chunks/main-app-db03ed491dedbe62.js",
       "static/chunks/app/_not-found-7544f47909dc9de3.js"
     ],
     "/layout": [
-      "static/chunks/webpack-7c4ff15672e31cb8.js",
+      "static/chunks/webpack-a225c01a14b0aee8.js",
       "static/chunks/fd9d1056-803f3afc98c64581.js",
       "static/chunks/69-684234321b8ea2ca.js",
       "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/css/9fd1b24d66841ddf.css",
-      "static/chunks/app/layout-62a61a400519fd37.js"
-    ],
-    "/anbieter/page": [
-      "static/chunks/webpack-7c4ff15672e31cb8.js",
-      "static/chunks/fd9d1056-803f3afc98c64581.js",
-      "static/chunks/69-684234321b8ea2ca.js",
-      "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
-      "static/chunks/app/anbieter/page-bfc78dbf25dd7fc3.js"
+      "static/css/a7ffbdf1235efaf7.css",
+      "static/chunks/app/layout-3ea32196b1998385.js"
     ],
     "/agb/page": [
-      "static/chunks/webpack-7c4ff15672e31cb8.js",
+      "static/chunks/webpack-a225c01a14b0aee8.js",
       "static/chunks/fd9d1056-803f3afc98c64581.js",
       "static/chunks/69-684234321b8ea2ca.js",
       "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
-      "static/chunks/app/agb/page-83f210c1e780887d.js"
+      "static/chunks/807-a9a2e8eec6d83f00.js",
+      "static/chunks/646-2ff60ff87ad740d5.js",
+      "static/chunks/app/agb/page-77b8108097a9333a.js"
     ],
-    "/datenschutz/page": [
-      "static/chunks/webpack-7c4ff15672e31cb8.js",
+    "/anbieter/page": [
+      "static/chunks/webpack-a225c01a14b0aee8.js",
       "static/chunks/fd9d1056-803f3afc98c64581.js",
       "static/chunks/69-684234321b8ea2ca.js",
       "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
-      "static/chunks/app/datenschutz/page-406e3ed6d7f82020.js"
+      "static/chunks/807-a9a2e8eec6d83f00.js",
+      "static/chunks/646-2ff60ff87ad740d5.js",
+      "static/chunks/app/anbieter/page-2989f048a1be516a.js"
     ],
     "/entdecken/page": [
-      "static/chunks/webpack-7c4ff15672e31cb8.js",
+      "static/chunks/webpack-a225c01a14b0aee8.js",
       "static/chunks/fd9d1056-803f3afc98c64581.js",
       "static/chunks/69-684234321b8ea2ca.js",
       "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
-      "static/chunks/417-cb8f9c110d76cb61.js",
-      "static/chunks/app/entdecken/page-53ba9b3180f2201c.js"
+      "static/chunks/807-a9a2e8eec6d83f00.js",
+      "static/chunks/646-2ff60ff87ad740d5.js",
+      "static/chunks/417-50c364a5728d1dd8.js",
+      "static/chunks/app/entdecken/page-2253bc248bb637fa.js"
+    ],
+    "/datenschutz/page": [
+      "static/chunks/webpack-a225c01a14b0aee8.js",
+      "static/chunks/fd9d1056-803f3afc98c64581.js",
+      "static/chunks/69-684234321b8ea2ca.js",
+      "static/chunks/main-app-db03ed491dedbe62.js",
+      "static/chunks/807-a9a2e8eec6d83f00.js",
+      "static/chunks/646-2ff60ff87ad740d5.js",
+      "static/chunks/app/datenschutz/page-344f5ea7c8c41c1c.js"
     ],
     "/impressum/page": [
-      "static/chunks/webpack-7c4ff15672e31cb8.js",
+      "static/chunks/webpack-a225c01a14b0aee8.js",
       "static/chunks/fd9d1056-803f3afc98c64581.js",
       "static/chunks/69-684234321b8ea2ca.js",
       "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
-      "static/chunks/app/impressum/page-6bf527e8aaf9f170.js"
-    ],
-    "/page": [
-      "static/chunks/webpack-7c4ff15672e31cb8.js",
-      "static/chunks/fd9d1056-803f3afc98c64581.js",
-      "static/chunks/69-684234321b8ea2ca.js",
-      "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
-      "static/chunks/703-23c37065e0ba0066.js",
-      "static/chunks/605-8d6e5a866f513b70.js",
-      "static/chunks/app/page-3b20b1fedde50d18.js"
-    ],
-    "/partner/hoflaeden/page": [
-      "static/chunks/webpack-7c4ff15672e31cb8.js",
-      "static/chunks/fd9d1056-803f3afc98c64581.js",
-      "static/chunks/69-684234321b8ea2ca.js",
-      "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
-      "static/chunks/app/partner/hoflaeden/page-f8ab423f44c871ed.js"
-    ],
-    "/partner/supermaerkte/page": [
-      "static/chunks/webpack-7c4ff15672e31cb8.js",
-      "static/chunks/fd9d1056-803f3afc98c64581.js",
-      "static/chunks/69-684234321b8ea2ca.js",
-      "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
-      "static/chunks/app/partner/supermaerkte/page-5e7f7bf05205337b.js"
-    ],
-    "/partner-zugang/page": [
-      "static/chunks/webpack-7c4ff15672e31cb8.js",
-      "static/chunks/fd9d1056-803f3afc98c64581.js",
-      "static/chunks/69-684234321b8ea2ca.js",
-      "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
-      "static/chunks/app/partner-zugang/page-10080bb6d31076e8.js"
+      "static/chunks/807-a9a2e8eec6d83f00.js",
+      "static/chunks/646-2ff60ff87ad740d5.js",
+      "static/chunks/app/impressum/page-3fdfd95f53c30194.js"
     ],
     "/investoren/page": [
-      "static/chunks/webpack-7c4ff15672e31cb8.js",
+      "static/chunks/webpack-a225c01a14b0aee8.js",
       "static/chunks/fd9d1056-803f3afc98c64581.js",
       "static/chunks/69-684234321b8ea2ca.js",
       "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
-      "static/chunks/app/investoren/page-6a11410f68c2ffaa.js"
+      "static/chunks/807-a9a2e8eec6d83f00.js",
+      "static/chunks/646-2ff60ff87ad740d5.js",
+      "static/chunks/app/investoren/page-73724b1137816d1c.js"
     ],
-    "/support/page": [
-      "static/chunks/webpack-7c4ff15672e31cb8.js",
+    "/page": [
+      "static/chunks/webpack-a225c01a14b0aee8.js",
       "static/chunks/fd9d1056-803f3afc98c64581.js",
       "static/chunks/69-684234321b8ea2ca.js",
       "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
-      "static/chunks/app/support/page-447a2a6c9aa62cc9.js"
+      "static/chunks/807-a9a2e8eec6d83f00.js",
+      "static/chunks/646-2ff60ff87ad740d5.js",
+      "static/chunks/703-23c37065e0ba0066.js",
+      "static/chunks/605-2648e3471131d850.js",
+      "static/chunks/app/page-3f425b480efd5b66.js"
+    ],
+    "/partner-zugang/page": [
+      "static/chunks/webpack-a225c01a14b0aee8.js",
+      "static/chunks/fd9d1056-803f3afc98c64581.js",
+      "static/chunks/69-684234321b8ea2ca.js",
+      "static/chunks/main-app-db03ed491dedbe62.js",
+      "static/chunks/807-a9a2e8eec6d83f00.js",
+      "static/chunks/646-2ff60ff87ad740d5.js",
+      "static/chunks/app/partner-zugang/page-b473231b422452d2.js"
+    ],
+    "/partner/hoflaeden/page": [
+      "static/chunks/webpack-a225c01a14b0aee8.js",
+      "static/chunks/fd9d1056-803f3afc98c64581.js",
+      "static/chunks/69-684234321b8ea2ca.js",
+      "static/chunks/main-app-db03ed491dedbe62.js",
+      "static/chunks/807-a9a2e8eec6d83f00.js",
+      "static/chunks/646-2ff60ff87ad740d5.js",
+      "static/chunks/app/partner/hoflaeden/page-707da06a91edbab3.js"
+    ],
+    "/partner/supermaerkte/page": [
+      "static/chunks/webpack-a225c01a14b0aee8.js",
+      "static/chunks/fd9d1056-803f3afc98c64581.js",
+      "static/chunks/69-684234321b8ea2ca.js",
+      "static/chunks/main-app-db03ed491dedbe62.js",
+      "static/chunks/807-a9a2e8eec6d83f00.js",
+      "static/chunks/646-2ff60ff87ad740d5.js",
+      "static/chunks/app/partner/supermaerkte/page-10ab7109eb50360e.js"
     ],
     "/zugang/page": [
-      "static/chunks/webpack-7c4ff15672e31cb8.js",
+      "static/chunks/webpack-a225c01a14b0aee8.js",
       "static/chunks/fd9d1056-803f3afc98c64581.js",
       "static/chunks/69-684234321b8ea2ca.js",
       "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
+      "static/chunks/807-a9a2e8eec6d83f00.js",
+      "static/chunks/646-2ff60ff87ad740d5.js",
       "static/chunks/703-23c37065e0ba0066.js",
-      "static/chunks/app/zugang/page-f51f92595882e59c.js"
+      "static/chunks/app/zugang/page-4261703dde9dd9ec.js"
+    ],
+    "/support/page": [
+      "static/chunks/webpack-a225c01a14b0aee8.js",
+      "static/chunks/fd9d1056-803f3afc98c64581.js",
+      "static/chunks/69-684234321b8ea2ca.js",
+      "static/chunks/main-app-db03ed491dedbe62.js",
+      "static/chunks/807-a9a2e8eec6d83f00.js",
+      "static/chunks/646-2ff60ff87ad740d5.js",
+      "static/chunks/app/support/page-a3e3836c321763ca.js"
     ],
     "/pitch-deck/layout": [
-      "static/chunks/webpack-7c4ff15672e31cb8.js",
+      "static/chunks/webpack-a225c01a14b0aee8.js",
       "static/chunks/fd9d1056-803f3afc98c64581.js",
       "static/chunks/69-684234321b8ea2ca.js",
       "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
+      "static/chunks/807-a9a2e8eec6d83f00.js",
+      "static/chunks/646-2ff60ff87ad740d5.js",
       "static/chunks/703-23c37065e0ba0066.js",
-      "static/chunks/app/pitch-deck/layout-469bc03dac36c609.js"
-    ],
-    "/pitch-deck/einwand-katalog/page": [
-      "static/chunks/webpack-7c4ff15672e31cb8.js",
-      "static/chunks/fd9d1056-803f3afc98c64581.js",
-      "static/chunks/69-684234321b8ea2ca.js",
-      "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
-      "static/chunks/415-574ef6befd713458.js",
-      "static/chunks/app/pitch-deck/einwand-katalog/page-8ad44bf80fb28985.js"
-    ],
-    "/pitch-deck/marktanalyse/page": [
-      "static/chunks/webpack-7c4ff15672e31cb8.js",
-      "static/chunks/fd9d1056-803f3afc98c64581.js",
-      "static/chunks/69-684234321b8ea2ca.js",
-      "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
-      "static/chunks/app/pitch-deck/marktanalyse/page-52604a4a0e3fd79f.js"
-    ],
-    "/pitch-deck/page": [
-      "static/chunks/webpack-7c4ff15672e31cb8.js",
-      "static/chunks/fd9d1056-803f3afc98c64581.js",
-      "static/chunks/69-684234321b8ea2ca.js",
-      "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
-      "static/chunks/703-23c37065e0ba0066.js",
-      "static/chunks/580-0aa0edb1a86d4916.js",
-      "static/chunks/app/pitch-deck/page-1b4be9c2bf41bb21.js"
+      "static/chunks/app/pitch-deck/layout-beb9ed8b8ce18d72.js"
     ],
     "/pitch-deck/executive-summary/page": [
-      "static/chunks/webpack-7c4ff15672e31cb8.js",
+      "static/chunks/webpack-a225c01a14b0aee8.js",
       "static/chunks/fd9d1056-803f3afc98c64581.js",
       "static/chunks/69-684234321b8ea2ca.js",
       "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
+      "static/chunks/807-a9a2e8eec6d83f00.js",
+      "static/chunks/646-2ff60ff87ad740d5.js",
       "static/chunks/703-23c37065e0ba0066.js",
-      "static/chunks/app/pitch-deck/executive-summary/page-2350e964b133bd4a.js"
+      "static/chunks/app/pitch-deck/executive-summary/page-f2496119616b4b9e.js"
+    ],
+    "/pitch-deck/einwand-katalog/page": [
+      "static/chunks/webpack-a225c01a14b0aee8.js",
+      "static/chunks/fd9d1056-803f3afc98c64581.js",
+      "static/chunks/69-684234321b8ea2ca.js",
+      "static/chunks/main-app-db03ed491dedbe62.js",
+      "static/chunks/807-a9a2e8eec6d83f00.js",
+      "static/chunks/646-2ff60ff87ad740d5.js",
+      "static/chunks/415-e063569ea0e166b2.js",
+      "static/chunks/app/pitch-deck/einwand-katalog/page-9b58648a716b6e3e.js"
+    ],
+    "/pitch-deck/investor-dokument/page": [
+      "static/chunks/webpack-a225c01a14b0aee8.js",
+      "static/chunks/fd9d1056-803f3afc98c64581.js",
+      "static/chunks/69-684234321b8ea2ca.js",
+      "static/chunks/main-app-db03ed491dedbe62.js",
+      "static/chunks/807-a9a2e8eec6d83f00.js",
+      "static/chunks/102-b973ceeb370c1e12.js",
+      "static/chunks/app/pitch-deck/investor-dokument/page-5a8dc645ca508b6f.js"
+    ],
+    "/pitch-deck/marktanalyse/page": [
+      "static/chunks/webpack-a225c01a14b0aee8.js",
+      "static/chunks/fd9d1056-803f3afc98c64581.js",
+      "static/chunks/69-684234321b8ea2ca.js",
+      "static/chunks/main-app-db03ed491dedbe62.js",
+      "static/chunks/807-a9a2e8eec6d83f00.js",
+      "static/chunks/646-2ff60ff87ad740d5.js",
+      "static/chunks/app/pitch-deck/marktanalyse/page-4c7361ef87867fea.js"
+    ],
+    "/pitch-deck/page": [
+      "static/chunks/webpack-a225c01a14b0aee8.js",
+      "static/chunks/fd9d1056-803f3afc98c64581.js",
+      "static/chunks/69-684234321b8ea2ca.js",
+      "static/chunks/main-app-db03ed491dedbe62.js",
+      "static/chunks/807-a9a2e8eec6d83f00.js",
+      "static/chunks/646-2ff60ff87ad740d5.js",
+      "static/chunks/703-23c37065e0ba0066.js",
+      "static/chunks/102-b973ceeb370c1e12.js",
+      "static/chunks/701-55fe64a588456fd9.js",
+      "static/chunks/app/pitch-deck/page-7f7f389597536d03.js"
     ],
     "/pitch-deck/vergleichsanalyse/page": [
-      "static/chunks/webpack-7c4ff15672e31cb8.js",
+      "static/chunks/webpack-a225c01a14b0aee8.js",
       "static/chunks/fd9d1056-803f3afc98c64581.js",
       "static/chunks/69-684234321b8ea2ca.js",
       "static/chunks/main-app-db03ed491dedbe62.js",
-      "static/chunks/925-def9b01150068b08.js",
-      "static/chunks/app/pitch-deck/vergleichsanalyse/page-6489737030b20c4f.js"
+      "static/chunks/807-a9a2e8eec6d83f00.js",
+      "static/chunks/646-2ff60ff87ad740d5.js",
+      "static/chunks/app/pitch-deck/vergleichsanalyse/page-8fd8409f3e702062.js"
     ]
   }
 }
