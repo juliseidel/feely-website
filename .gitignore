@@ -1,1 +1,11 @@
 node_modules
+.next/cache/webpack/client-development/
+.next/cache/webpack/server-development/
+.next/server/vendor-chunks/
+.next/static/chunks/
+.next/static/css/app/
+.next/static/development/
+.next/static/webpack/
+slide-screenshots/
+capture-slides.js
+create-pdf.py
