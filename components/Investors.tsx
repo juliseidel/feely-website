@@ -87,7 +87,7 @@ export default function Investors() {
         >
           <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-2 mb-6">
             <TrendingUp className="w-4 h-4 text-blue-400" />
-            <span className="text-blue-400 font-medium text-sm">Für Investoren</span>
+            <span className="text-blue-400 font-medium text-sm">Für Partner</span>
           </div>
 
           <h2 className="text-4xl md:text-6xl font-black mb-6">
