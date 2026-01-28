@@ -20,23 +20,23 @@ import Link from 'next/link'
 
 const marketStats = [
   {
-    value: '€380 Mrd.',
-    label: 'Deutscher Lebensmittelmarkt',
-    growth: '+2.3% jährlich',
+    value: '€209,7 Mrd.',
+    label: 'Lebensmittelmarkt Deutschland',
+    growth: 'EHI 2024',
   },
   {
-    value: '€12 Mrd.',
-    label: 'Online-Lebensmittelhandel DE',
-    growth: '+18% jährlich',
+    value: '~€11 Mrd.',
+    label: 'Online-Lebensmittelhandel',
+    growth: '→ €18 Mrd. bis 2030',
   },
   {
-    value: '47%',
-    label: 'Nutzer mit Gesundheitsfokus',
-    growth: 'steigend',
+    value: '70 Mio.',
+    label: 'Potenzielle B2C-Nutzer',
+    growth: 'in Deutschland',
   },
   {
-    value: '23 Mio.',
-    label: 'Menschen mit Allergien/Unverträglichkeiten',
+    value: '23+ Mio.',
+    label: 'Menschen mit Allergien',
     growth: 'in Deutschland',
   },
 ]
@@ -178,10 +178,11 @@ export default function Investors() {
 
               <div className="space-y-4">
                 {[
-                  { label: 'Transaktionsgebühren', desc: 'Provision auf vermittelte Einkäufe' },
-                  { label: 'Premium-Abos', desc: 'Erweiterte KI-Analysen für Endnutzer' },
-                  { label: 'Partner-Pakete', desc: 'Marketing-Tools für Anbieter' },
-                  { label: 'Daten-Insights', desc: 'Anonymisierte Marktanalysen (B2B)' },
+                  { label: 'Premium-Abo (€9,99/Mo)', desc: 'Personalisierte KI-Analyse' },
+                  { label: 'Transaktionsgebühren (3–5%)', desc: 'Provision auf Bestellungen' },
+                  { label: 'Händler-Dashboard (€49–199/Mo)', desc: 'Plattformzugang & Analytics' },
+                  { label: 'Promoted Products', desc: 'Werbung & Sichtbarkeit (CPM/CPC)' },
+                  { label: 'B2B Insights', desc: 'Daten für Krankenkassen & Industrie' },
                 ].map((item) => (
                   <div key={item.label} className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
@@ -255,7 +256,7 @@ export default function Investors() {
                 des Lebensmitteleinkaufs gestalten wollen.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/investoren" className="btn-primary inline-flex items-center justify-center gap-2">
+                <Link href="/partner" className="btn-primary inline-flex items-center justify-center gap-2">
                   <span>Pitch Deck anfordern</span>
                   <ArrowRight className="w-5 h-5" />
                 </Link>

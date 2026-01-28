@@ -853,10 +853,10 @@ export default function EntdeckenPage() {
                   <ArrowRight className="w-5 h-5" />
                 </Link>
                 <Link
-                  href="/investoren"
+                  href="/partner"
                   className="btn-secondary inline-flex items-center justify-center gap-2"
                 >
-                  <span>Für Investoren</span>
+                  <span>Für Partner</span>
                 </Link>
               </div>
             </div>

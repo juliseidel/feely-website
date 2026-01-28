@@ -13,7 +13,7 @@ const footerLinks = {
   partner: [
     { name: 'Für Supermärkte', href: '/partner/supermaerkte' },
     { name: 'Für Hofläden', href: '/partner/hoflaeden' },
-    { name: 'Investoren', href: '/investoren' },
+    { name: 'Für Partner', href: '/partner' },
     { name: 'Kontakt', href: '#kontakt' },
   ],
   rechtliches: [
