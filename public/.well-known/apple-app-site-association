@@ -1,0 +1,16 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": [
+          "6F3XXPC7TZ.com.feely.app"
+        ],
+        "paths": [
+          "/invite/*",
+          "/join/*"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Du wurdest zu FEELY eingeladen!</title>
+  <meta name="description" content="Jemand moechte, dass du FEELY ausprobierst - die App die dir zeigt, wie gesund deine Lebensmittel wirklich sind.">
+  <meta property="og:title" content="Du wurdest zu FEELY eingeladen!">
+  <meta property="og:description" content="Erfahre wie gesund deine Lebensmittel wirklich sind - mit FEELY.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_DE">
+  <link rel="icon" href="/favicon.ico">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0A0A0A;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 20px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .logo-wrap {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      margin-bottom: 32px;
+    }
+    .logo-glow {
+      position: absolute;
+      inset: -20px;
+      background: rgba(16, 185, 129, 0.15);
+      border-radius: 50%;
+      filter: blur(24px);
+    }
+    .logo-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+    }
+    .subtitle {
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      max-width: 340px;
+      line-height: 1.5;
+      font-size: 15px;
+      margin-bottom: 40px;
+    }
+
+    .code-card {
+      width: 100%;
+      max-width: 360px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(16,185,129,0.2);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .code-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .code-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .code-text {
+      font-size: 22px;
+      font-weight: 700;
+      color: #34D399;
+      letter-spacing: 3px;
+    }
+    .copy-btn {
+      background: rgba(16,185,129,0.1);
+      border: none;
+      color: #10B981;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .copy-btn:hover { background: rgba(16,185,129,0.2); }
+    .code-hint {
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      margin-top: 12px;
+      line-height: 1.4;
+    }
+
+    .download-btn {
+      width: 100%;
+      max-width: 360px;
+      background: linear-gradient(135deg, #10B981, #059669);
+      color: #fff;
+      font-size: 17px;
+      font-weight: 600;
+      border: none;
+      border-radius: 16px;
+      padding: 16px;
+      cursor: pointer;
+      transition: transform 0.1s, opacity 0.2s;
+      margin-bottom: 12px;
+    }
+    .download-btn:active { transform: scale(0.98); }
+    .download-btn:hover { opacity: 0.9; }
+
+    .alt-link {
+      color: rgba(255,255,255,0.4);
+      font-size: 13px;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .alt-link:hover { color: rgba(255,255,255,0.6); }
+
+    .trust {
+      margin-top: 48px;
+      width: 100%;
+      max-width: 360px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .trust-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .trust-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: rgba(16,185,129,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .trust-icon svg {
+      width: 14px;
+      height: 14px;
+      color: #34D399;
+    }
+    .trust-text {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.4;
+    }
+
+    .footer {
+      margin-top: 48px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* Hidden on desktop */
+    .mobile-only { display: block; }
+    @media (min-width: 768px) {
+      .both-stores { display: flex; gap: 10px; margin-bottom: 12px; }
+      .both-stores .download-btn { flex: 1; margin-bottom: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="logo-wrap">
+    <div class="logo-glow"></div>
+    <img src="/images/logo.png" alt="FEELY" class="logo-img">
+  </div>
+
+  <h1>Du wurdest eingeladen!</h1>
+  <p class="subtitle">
+    Jemand moechte, dass du FEELY ausprobierst — die App die dir zeigt, wie gesund deine Lebensmittel wirklich sind.
+  </p>
+
+  <div class="code-card">
+    <div class="code-label">Dein Einladungscode</div>
+    <div class="code-row">
+      <span class="code-text" id="codeDisplay">FEELY-...</span>
+      <button class="copy-btn" id="copyBtn" onclick="copyCode()">Kopieren</button>
+    </div>
+    <p class="code-hint" id="codeHint">Der Code wurde automatisch kopiert.</p>
+  </div>
+
+  <button class="download-btn" id="downloadBtn" onclick="downloadApp()">App herunterladen</button>
+
+  <a href="#" class="alt-link" id="altLink" style="display:none;">Oder im Google Play Store laden</a>
+
+  <div class="trust">
+    <div class="trust-row">
+      <div class="trust-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+      </div>
+      <span class="trust-text">100% kostenlos — keine versteckten Kosten</span>
+    </div>
+    <div class="trust-row">
+      <div class="trust-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+      </div>
+      <span class="trust-text">Deine Daten bleiben privat und sicher</span>
+    </div>
+    <div class="trust-row">
+      <div class="trust-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+      </div>
+      <span class="trust-text">Verstehe was du isst — lebe gesuender</span>
+    </div>
+  </div>
+
+  <p class="footer">FEELY &copy; 2026</p>
+
+  <script>
+    var APP_STORE = 'https://apps.apple.com/app/feely-gesund-einkaufen/id6757958972';
+    var PLAY_STORE = 'https://play.google.com/store/apps/details?id=de.juliseidel.feelyapp';
+
+    // Code aus URL extrahieren: /invite/ABCDEF
+    var pathParts = window.location.pathname.split('/');
+    var code = '';
+    for (var i = 0; i < pathParts.length; i++) {
+      if (pathParts[i] === 'invite' && pathParts[i + 1]) {
+        code = pathParts[i + 1].toUpperCase();
+        break;
+      }
+    }
+
+    var fullCode = code ? 'FEELY-' + code : '';
+    var codeDisplay = document.getElementById('codeDisplay');
+    var codeHint = document.getElementById('codeHint');
+    var downloadBtn = document.getElementById('downloadBtn');
+    var altLink = document.getElementById('altLink');
+
+    // Plattform erkennen
+    var ua = navigator.userAgent.toLowerCase();
+    var isIOS = /iphone|ipad|ipod/.test(ua);
+    var isAndroid = /android/.test(ua);
+
+    // Code anzeigen
+    if (fullCode) {
+      codeDisplay.textContent = fullCode;
+
+      // Automatisch kopieren
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(fullCode).then(function() {
+          codeHint.textContent = 'Der Code wurde automatisch kopiert. Gib ihn bei der Registrierung ein.';
+        }).catch(function() {
+          codeHint.textContent = 'Tippe auf "Kopieren" und gib den Code bei der Registrierung ein.';
+        });
+      } else {
+        codeHint.textContent = 'Tippe auf "Kopieren" und gib den Code bei der Registrierung ein.';
+      }
+
+      // Deep-Link Versuch (App oeffnen falls installiert)
+      try {
+        var deepLink = 'feely://invite/' + code;
+        window.location.href = deepLink;
+      } catch(e) {}
+    } else {
+      codeDisplay.textContent = '...';
+      codeHint.textContent = 'Kein Einladungscode gefunden.';
+    }
+
+    // Download-Button
+    if (isIOS) {
+      downloadBtn.textContent = 'Im App Store laden';
+    } else if (isAndroid) {
+      downloadBtn.textContent = 'Im Play Store laden';
+    } else {
+      downloadBtn.textContent = 'Im App Store laden';
+      altLink.style.display = 'block';
+      altLink.textContent = 'Oder im Google Play Store laden';
+      altLink.href = PLAY_STORE;
+    }
+
+    function downloadApp() {
+      // Nochmal kopieren vor Weiterleitung
+      if (fullCode && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(fullCode).catch(function(){});
+      }
+      if (isAndroid) {
+        window.location.href = PLAY_STORE;
+      } else {
+        window.location.href = APP_STORE;
+      }
+    }
+
+    function copyCode() {
+      if (!fullCode) return;
+      var btn = document.getElementById('copyBtn');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(fullCode).then(function() {
+          btn.textContent = 'Kopiert!';
+          setTimeout(function() { btn.textContent = 'Kopieren'; }, 2000);
+        });
+      } else {
+        // Fallback
+        var ta = document.createElement('textarea');
+        ta.value = fullCode;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        btn.textContent = 'Kopiert!';
+        setTimeout(function() { btn.textContent = 'Kopieren'; }, 2000);
+      }
+    }
+  </script>
+
+</body>
+</html>
