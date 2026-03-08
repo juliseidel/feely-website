@@ -7,6 +7,14 @@
     {
       "source": "/invite/:code/",
       "destination": "/invite/index.html"
+    },
+    {
+      "source": "/session/:code",
+      "destination": "/session/index.html"
+    },
+    {
+      "source": "/session/:code/",
+      "destination": "/session/index.html"
     }
   ],
   "headers": [
