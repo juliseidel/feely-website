@@ -202,20 +202,20 @@ export default function InvestorenPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <a
-                href="mailto:hello@feelyapp.de?subject=Pitch%20Deck%20Anfrage"
+              <Link
+                href="/partner-zugang"
                 className="btn-primary inline-flex items-center justify-center gap-2"
               >
                 <Mail className="w-5 h-5" />
                 <span>Pitch Deck anfordern</span>
-              </a>
-              <a
-                href="#kontakt"
+              </Link>
+              <Link
+                href="/zugang"
                 className="btn-secondary inline-flex items-center justify-center gap-2"
               >
-                <Phone className="w-5 h-5" />
-                <span>Gespräch vereinbaren</span>
-              </a>
+                <Lock className="w-5 h-5" />
+                <span>Zugangscode eingeben</span>
+              </Link>
             </div>
 
             {/* Key metrics banner */}
@@ -689,11 +689,11 @@ export default function InvestorenPage() {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
                 <a
-                  href="mailto:hello@feelyapp.de?subject=Investment%20Anfrage"
+                  href="mailto:partner@feelyapp.de?subject=Investment%20Anfrage"
                   className="btn-primary inline-flex items-center justify-center gap-2"
                 >
                   <Mail className="w-5 h-5" />
-                  <span>hello@feelyapp.de</span>
+                  <span>partner@feelyapp.de</span>
                 </a>
                 <a
                   href="tel:+4917668263213"
